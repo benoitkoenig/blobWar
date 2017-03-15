@@ -1,0 +1,21 @@
+{
+  "name": "BlobWar",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "babel Source -d ./"
+  },
+  "description": "Two persons game",
+  "homepage": "localhost:8080",
+  "email": "benoit.koenig@yahoo.fr",
+  "man": "./README.md",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-env": "^1.2.1",
+    "babel-preset-es2015-node": "^6.1.1",
+    "babel-preset-react": "^6.23.0"
+  }
+}

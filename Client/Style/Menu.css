@@ -1,0 +1,134 @@
+.menu {
+	height: 100%;
+}
+
+/* Cards */
+
+#cardsMenu {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0.5em 0.25em 0em 0.5em;
+	width: calc(50% - 0.75em);
+	height: calc(100% - 1em);
+	border: 1px solid #E0E0E0;
+	border-radius: 0.2em;
+	overflow: hidden;
+}
+
+#cardsMenu:not(.noCard)>.blank, #cardsMenu:not(.noCard)>#cardsTutorial, #cardsMenu.noCard>.cardMenu {
+	display: none;
+}
+
+#cardsMenu>.blank {
+	height: calc(45% - 3em);
+}
+
+#yourCards {
+	background-color: #FAFAFA;
+	border-bottom: 1px solid #C0C0C0;
+	text-align: center;
+	padding: 0.2em 0em;
+}
+
+#cardsChoose, #cardsRandom {
+	text-align: center;
+	color: #6599ff;
+	cursor: pointer;
+}
+
+#cardsMenu:not(.noCard)>#cardsChoose, #cardsMenu:not(.noCard)>#cardsRandom {
+	display: inline-block;
+	margin: 0em 0.5em;
+	width: calc(50% - 1em);
+}
+
+#cardsMenu:not(.noCard)>#cardsChoose {
+	text-align: right;
+}
+
+#cardsMenu:not(.noCard)>#cardsRandom {
+	text-align: left;
+}
+
+#cardsChoose>img, #cardsRandom>img {
+	width: 2em;
+}
+
+#cardsChoose>span, #cardsRandom>span {
+	vertical-align: 50%;
+}
+
+
+
+#cardsTutorial {
+	text-align: center;
+}
+
+#cardsTutorial>span {
+	color: #6599ff;
+	cursor: pointer;
+}
+
+.cardMenu {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0.5em 0.25em;
+	width: calc(50% - 0.5em);
+	height: 60%;
+	border-radius: 0.2em;
+	border: 1px solid #F0F0F0;
+	background-color: #FFF;
+}
+
+.cardMenu .title {
+	text-align: center;
+	border-bottom: 1px solid #C0C0C0;
+	background-color: #FAFAFA;
+	padding: 0.2em 0em;
+}
+
+.cardMenu .description {
+	margin: 0.5em;
+	height: calc(100% - 6em);
+}
+
+.cardMenu img {
+	margin: 0px calc(50% - 2.25em);
+	width: 4.5em;
+}
+
+/* Start buttons */
+
+#start {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0.5em 0.5em 0em 0.25em;
+	width: calc(50% - 0.75em);
+	height: calc(100% - 1em);
+	text-align: center;
+	overflow: hidden;
+}
+
+#start>* {
+	text-align: center;
+	width: 50%;
+}
+
+#start>.blank {
+	height: calc(40% - 4em);
+	width: 100%;
+}
+
+#start>*:not(.blank) {
+	border: 1px solid #6599ff;
+	border-radius: 0.1em;
+	color: #6599ff;
+	margin: 1em 25%;
+	padding: 0.5em 0em;
+	cursor: pointer;
+}
+
+#startTutorial {
+	background-color: #6599ff;
+	color: #FFF !important;
+}

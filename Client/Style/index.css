@@ -1,0 +1,33 @@
+body, html {
+	margin: 0px;
+	font-family: "Lato"; /* TODO : think about including Lato */
+	font-size: 20px;
+	height: 100%;
+}
+
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#container {
+	height: calc(100% - 3em);
+}
+
+/* Alert */
+
+#darkPart {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#alertContainer {
+	position: absolute;
+	background-color: #FEFEFE;
+	border-radius: 0.2em;
+}

@@ -1,0 +1,63 @@
+.matchMaker {
+	text-align: center;
+	top: 6em;
+	height: 10em;
+	left: 30%;
+	right: 30%;
+}
+
+#matchMakerLookForOpponent {
+	margin-top: 2.5em;
+}
+
+#matchMakerCancel {
+	margin-top: 1.5em;
+	display: inline-block;
+	border: 1px solid #AAA;
+	color: #AAA;
+	border-radius: 0.1em;
+	padding: 0.2em 1em;
+	cursor: pointer;
+}
+
+#matchMakerCountDown {
+	margin-top: 2em;
+}
+
+#matchMakerCountDownValue {
+	margin-top: 1em;
+	font-size: 1.5em;
+}
+
+@keyframes point1 {
+	0% {opacity: 0;}
+	24% {opacity: 0;}
+	25% {opacity: 1;}
+	99% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+@keyframes point2 {
+	0% {opacity: 0;}
+	49% {opacity: 0;}
+	50% {opacity: 1;}
+	99% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+@keyframes point3 {
+	0% {opacity: 0;}
+	74% {opacity: 0;}
+	75% {opacity: 1;}
+	99% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+.threePointsAnimation>span {
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+.threePointsAnimation>span:nth-child(1) {animation-name: point1;}
+.threePointsAnimation>span:nth-child(2) {animation-name: point2;}
+.threePointsAnimation>span:nth-child(3) {animation-name: point3;}

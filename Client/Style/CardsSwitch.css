@@ -1,0 +1,58 @@
+.cardsSwitch {
+	height: 100%;
+}
+
+#cardsContainer {
+	height: calc(100% - 4em);
+}
+
+/* I have no clue why I have a margin above the cards, bu I've got the same problem on menu with startGame and cardsMenu */
+.card {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0.5em 0.25em;
+	width: calc(25% - 0.5em);
+	height: calc(50% - 1em);
+	border-radius: 0.2em;
+	border: 1px solid #E0E0E0;
+	background-color: #FFF;
+}
+
+.card .title {
+	text-align: center;
+	border-bottom: 1px solid #C0C0C0;
+	background-color: #FAFAFA;
+	padding: 0.2em 0em;
+}
+
+.card .description {
+	margin: 0.5em;
+	height: calc(100% - 6em);
+	overflow: auto;
+}
+
+.card .button>div {
+	width: 50%;
+	text-align: center;
+	display: inline-block;
+}
+
+.card .button>div:nth-child(2) {
+	border-left: 1px solid #F0F0F0;
+}
+
+.card .button>div>img {
+	/* This image ratio is 3 width for 1 height */
+	width: 4.5em;
+	cursor: pointer;
+}
+
+#confirmButton {
+	float: right;
+	background-color: #6599ff;
+	padding: 0.5em 2em;
+	margin: 1em 0.5em 0em 0em;
+	color: #fff;
+	border-radius: 0.2em;
+	cursor: pointer;
+}
