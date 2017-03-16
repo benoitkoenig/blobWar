@@ -33,27 +33,58 @@ var Switch = function (_Card) {
 	_createClass(Switch, [{
 		key: "trigger",
 		value: function trigger(data, army) {
-			this._speeds = [];
+			this._speeds = [null, null, null];
+			this._ids = [];
 			this._counter = 15;
 			for (var id in army) {
-				this._speeds.push({
-					x: (army[(id + 1) % 3].x - army[id].x) / this._counter,
-					y: (army[(id + 1) % 3].y - army[id].y) / this._counter
-				});
-				army[id].status = "fury";
-				army[id].destination = null;
+				if (army[id].alive) this._ids.push(parseInt(id));
+			}
+			if (this._ids.length <= 1) {
+				this._ids = [];
+				return;
+			}
+			for (var indexChar in this._ids) {
+				var index = parseInt(indexChar);
+				this._speeds[this._ids[index]] = {
+					x: (army[this._ids[(index + 1) % this._ids.length]].x - army[this._ids[index]].x) / this._counter,
+					y: (army[this._ids[(index + 1) % this._ids.length]].y - army[this._ids[index]].y) / this._counter
+				};
+				army[this._ids[index]].status = "fury";
+				army[this._ids[index]].destination = null;
 			}
 		}
 	}, {
 		key: "iterate",
 		value: function iterate(army, enemy) {
 			if (this._counter == 0) return;
-			for (var id in army) {
-				army[id].x += this._speeds[id].x;
-				army[id].y += this._speeds[id].y;
-				army[id].removeIterate = true;
-				if (this._counter == 1) army[id].status = "normal";
+			var _iteratorNormalCompletion = true;
+			var _didIteratorError = false;
+			var _iteratorError = undefined;
+
+			try {
+				for (var _iterator = this._ids[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					var id = _step.value;
+
+					army[id].x += this._speeds[id].x;
+					army[id].y += this._speeds[id].y;
+					army[id].removeIterate = true;
+					if (this._counter == 1) army[id].status = "normal";
+				}
+			} catch (err) {
+				_didIteratorError = true;
+				_iteratorError = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion && _iterator.return) {
+						_iterator.return();
+					}
+				} finally {
+					if (_didIteratorError) {
+						throw _iteratorError;
+					}
+				}
 			}
+
 			this._counter -= 1;
 		}
 	}]);
