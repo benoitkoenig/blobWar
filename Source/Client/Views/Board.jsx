@@ -40,32 +40,40 @@ class BlobView extends React.Component {
 	}
 }
 
-class BoardView extends React.Component {
+class Board extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.mouseClick = this.mouseClick.bind(this);
 		this.rightClick = this.rightClick.bind(this);
 		this.mouseMove = this.mouseMove.bind(this);
+		this.keyPressed = this.keyPressed.bind(this);
 		this.mousePos = {x: 0, y: 0};
 		this.state = {idBlob: 0, army: [], enemy: []}
 	}
 
+	keyPressed(ev) {
+		if (ev.code == "Space") { // Triggers the first spell
+			this.props.nodeConnection.triggerCard(0, this.state.idBlob, this.mousePos);
+		}
+		var id = ev.code == "KeyW" ? 0 : ev.code == "KeyE" ? 1 : ev.code == "KeyR" ? 2 : null;
+		if (id != null) this.setState({idBlob: id});
+	}
+
 	componentWillMount() {
 		// Listen to keyboard events for the blob's selection and the space key card
-		document.addEventListener("keypress", (ev) => {
-			var id = ev.code == "KeyW" ? 0 : ev.code == "KeyE" ? 1 : ev.code == "KeyR" ? 2 : null;
-			if (id != null) this.setState({idBlob: id});
-			if (ev.code == "Space") { // Triggers the first spell
-				this.props.nodeConnection.triggerCard(0, this.state.idBlob, this.mousePos);
-			}
-		});
+		document.addEventListener("keypress", this.keyPressed);
 		this.props.nodeConnection.on("update", (data) => {
 			this.setState({
 				army: data.army,
 				enemy: data.enemy
 			});
 		});
+	}
+
+	componentWillUnmount() {
+		// Stops listening to the events, otherwise it doesn't stop and causes issues
+		document.removeEventListener("keypress", this.keyPressed);
 	}
 
 	_getPosition(mouseX, mouseY) {
@@ -103,13 +111,13 @@ class BoardView extends React.Component {
 			blobs.push(<BlobView blob={this.state.enemy[i]} selected={this.state.idBlob==i} idBlob={i} team={false} />);
 		}
 		return (
-			<div id="boardContainer">
+			<div id="boardContainer" onContextMenu={this.rightClick} onMouseMove={this.mouseMove}>
 				<div className="boardCards">
 					<BoardCard title={this.props.cards.getCard(0)} description={this.props.cards.getDesc(0)} buttonName='ButtonSpace' />
 					<BoardCard title={this.props.cards.getCard(1)} description={this.props.cards.getDesc(1)} buttonName='ButtonRightClick' />
 					<BoardCard title="Move" description="" buttonName='ButtonLeftClick' moveCard={true} />
 				</div>
-				<div className="board" onClick={this.mouseClick} onContextMenu={this.rightClick} onMouseMove={this.mouseMove}>
+				<div className="board" onClick={this.mouseClick}>
 					<div id="boardHeightSetter"></div>
 					{blobs}
 				</div>

@@ -43,6 +43,8 @@ class Player {
 
 	emit() {} // HumanPlayer overrides this, BotPlayer doesn't
 
+	clear() {}
+
 	_doWeKillIt(blob, enemyBlob) {
 		if (Math.sqrt(Math.pow(enemyBlob.x-blob.x, 2) + Math.pow(enemyBlob.y-blob.y, 2)) > 0.04) return false;
 		if (!blob.alive || !enemyBlob.alive) return false;
@@ -101,6 +103,12 @@ export class HumanPlayer extends Player {
 			this._cards[data.id].trigger(data, this._army);
 		});
 
+	}
+
+	clear() {
+		this._socket.removeAllListeners("setDestination");
+		this._socket.removeAllListeners("disconnect");
+		this._socket.removeAllListeners("triggerCard");
 	}
 
 	isStillConnected() { return this._connected; }

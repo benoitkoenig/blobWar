@@ -9,17 +9,19 @@ const startGame = (player1, player2) => {
 		const toKill2 = player2.iterateCards(player1);
 		player1.kill(toKill2);
 		player2.kill(toKill1);
-		if (player1.lost() && player2.lost()) {
-			player1.emit("endOfGame", "It's a draw");
-			player2.emit("endOfGame", "It's a draw");
-			clearInterval(iteration);
-		} else if (player1.lost()) {
-			player1.emit("endOfGame", "Defeat");
-			player2.emit("endOfGame", "Victory !");
-			clearInterval(iteration);
-		} else if (player2.lost()) {
-			player1.emit("endOfGame", "Victory !");
-			player2.emit("endOfGame", "Defeat");
+		if (player1.lost() || player2.lost()) {
+			if (player1.lost() && player2.lost()) {
+				player1.emit("endOfGame", "It's a draw");
+				player2.emit("endOfGame", "It's a draw");
+			} else if (player1.lost()) {
+				player1.emit("endOfGame", "Defeat");
+				player2.emit("endOfGame", "Victory !");
+			} else if (player2.lost()) {
+				player1.emit("endOfGame", "Victory !");
+				player2.emit("endOfGame", "Defeat");
+			}
+			player1.clear();
+			player2.clear();
 			clearInterval(iteration);
 		} else {
 			const army1 = player1.getArmy();

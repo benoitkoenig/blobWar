@@ -94,6 +94,9 @@ var Player = function () {
 		value: function emit() {} // HumanPlayer overrides this, BotPlayer doesn't
 
 	}, {
+		key: "clear",
+		value: function clear() {}
+	}, {
 		key: "_doWeKillIt",
 		value: function _doWeKillIt(blob, enemyBlob) {
 			if (Math.sqrt(Math.pow(enemyBlob.x - blob.x, 2) + Math.pow(enemyBlob.y - blob.y, 2)) > 0.04) return false;
@@ -196,6 +199,13 @@ var HumanPlayer = exports.HumanPlayer = function (_Player2) {
 			this._socket.on("triggerCard", function (data) {
 				_this5._cards[data.id].trigger(data, _this5._army);
 			});
+		}
+	}, {
+		key: "clear",
+		value: function clear() {
+			this._socket.removeAllListeners("setDestination");
+			this._socket.removeAllListeners("disconnect");
+			this._socket.removeAllListeners("triggerCard");
 		}
 	}, {
 		key: "isStillConnected",

@@ -1,6 +1,8 @@
-body, html {
+@font-face { font-family: "Lato"; src: url('/Assets/Lato-Medium.ttf'); }
+
+body, html, #body, #body>div {
 	margin: 0px;
-	font-family: "Lato"; /* TODO : think about including Lato */
+	font-family: "Lato";
 	font-size: 20px;
 	height: 100%;
 }
@@ -14,8 +16,6 @@ body, html {
 #container {
 	height: calc(100% - 3em);
 }
-
-/* Alert */
 
 #darkPart {
 	position: absolute;

@@ -83,42 +83,52 @@ var BlobView = function (_React$Component2) {
 	return BlobView;
 }(React.Component);
 
-var BoardView = function (_React$Component3) {
-	_inherits(BoardView, _React$Component3);
+var Board = function (_React$Component3) {
+	_inherits(Board, _React$Component3);
 
-	function BoardView(props) {
-		_classCallCheck(this, BoardView);
+	function Board(props) {
+		_classCallCheck(this, Board);
 
-		var _this3 = _possibleConstructorReturn(this, (BoardView.__proto__ || Object.getPrototypeOf(BoardView)).call(this, props));
+		var _this3 = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
 
 		_this3.mouseClick = _this3.mouseClick.bind(_this3);
 		_this3.rightClick = _this3.rightClick.bind(_this3);
 		_this3.mouseMove = _this3.mouseMove.bind(_this3);
+		_this3.keyPressed = _this3.keyPressed.bind(_this3);
 		_this3.mousePos = { x: 0, y: 0 };
 		_this3.state = { idBlob: 0, army: [], enemy: [] };
 		return _this3;
 	}
 
-	_createClass(BoardView, [{
+	_createClass(Board, [{
+		key: "keyPressed",
+		value: function keyPressed(ev) {
+			if (ev.code == "Space") {
+				// Triggers the first spell
+				this.props.nodeConnection.triggerCard(0, this.state.idBlob, this.mousePos);
+			}
+			var id = ev.code == "KeyW" ? 0 : ev.code == "KeyE" ? 1 : ev.code == "KeyR" ? 2 : null;
+			if (id != null) this.setState({ idBlob: id });
+		}
+	}, {
 		key: "componentWillMount",
 		value: function componentWillMount() {
 			var _this4 = this;
 
 			// Listen to keyboard events for the blob's selection and the space key card
-			document.addEventListener("keypress", function (ev) {
-				var id = ev.code == "KeyW" ? 0 : ev.code == "KeyE" ? 1 : ev.code == "KeyR" ? 2 : null;
-				if (id != null) _this4.setState({ idBlob: id });
-				if (ev.code == "Space") {
-					// Triggers the first spell
-					_this4.props.nodeConnection.triggerCard(0, _this4.state.idBlob, _this4.mousePos);
-				}
-			});
+			document.addEventListener("keypress", this.keyPressed);
 			this.props.nodeConnection.on("update", function (data) {
 				_this4.setState({
 					army: data.army,
 					enemy: data.enemy
 				});
 			});
+		}
+	}, {
+		key: "componentWillUnmount",
+		value: function componentWillUnmount() {
+			// Stops listening to the events, otherwise it doesn't stop and causes issues
+			document.removeEventListener("keypress", this.keyPressed);
 		}
 	}, {
 		key: "_getPosition",
@@ -162,7 +172,7 @@ var BoardView = function (_React$Component3) {
 			}
 			return React.createElement(
 				"div",
-				{ id: "boardContainer" },
+				{ id: "boardContainer", onContextMenu: this.rightClick, onMouseMove: this.mouseMove },
 				React.createElement(
 					"div",
 					{ className: "boardCards" },
@@ -172,7 +182,7 @@ var BoardView = function (_React$Component3) {
 				),
 				React.createElement(
 					"div",
-					{ className: "board", onClick: this.mouseClick, onContextMenu: this.rightClick, onMouseMove: this.mouseMove },
+					{ className: "board", onClick: this.mouseClick },
 					React.createElement("div", { id: "boardHeightSetter" }),
 					blobs
 				)
@@ -180,5 +190,5 @@ var BoardView = function (_React$Component3) {
 		}
 	}]);
 
-	return BoardView;
+	return Board;
 }(React.Component);
