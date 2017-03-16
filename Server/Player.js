@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.HumanPlayer = exports.BotPlayer = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // A JSON to load them all would be handy
 
 var _Dash = require("./Cards/Dash.js");
 
@@ -31,6 +31,10 @@ var _Revive = require("./Cards/Revive.js");
 
 var _Revive2 = _interopRequireDefault(_Revive);
 
+var _Switch = require("./Cards/Switch.js");
+
+var _Switch2 = _interopRequireDefault(_Switch);
+
 var _Blob = require("./Blob.js");
 
 var _Blob2 = _interopRequireDefault(_Blob);
@@ -43,16 +47,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// A JSON to load them all would be handy
-
-var Cards = {};
-
-Cards["Dash"] = _Dash2.default;
-Cards["Bloc"] = _Bloc2.default;
-Cards["Ghost"] = _Ghost2.default;
-Cards["Kamikaze"] = _Kamikaze2.default;
-Cards["Gravity"] = _Gravity2.default;
-Cards["Revive"] = _Revive2.default;
+var Cards = {
+	Dash: _Dash2.default,
+	Bloc: _Bloc2.default,
+	Ghost: _Ghost2.default,
+	Kamikaze: _Kamikaze2.default,
+	Gravity: _Gravity2.default,
+	Revive: _Revive2.default,
+	Switch: _Switch2.default
+};
 
 var Player = function () {
 	function Player(firstPlayer, cards) {

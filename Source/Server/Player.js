@@ -1,20 +1,22 @@
 // A JSON to load them all would be handy
 
-const Cards = {};
-
 import Dash from "./Cards/Dash.js"
 import Bloc from "./Cards/Bloc.js"
 import Ghost from "./Cards/Ghost.js"
 import Kamikaze from "./Cards/Kamikaze.js"
 import Gravity from "./Cards/Gravity.js"
 import Revive from "./Cards/Revive.js"
+import Switch from "./Cards/Switch.js"
 
-Cards["Dash"] = Dash;
-Cards["Bloc"] = Bloc;
-Cards["Ghost"] = Ghost;
-Cards["Kamikaze"] = Kamikaze;
-Cards["Gravity"] = Gravity;
-Cards["Revive"] = Revive;
+const Cards = {
+	Dash: Dash,
+	Bloc: Bloc,
+	Ghost: Ghost,
+	Kamikaze: Kamikaze,
+	Gravity: Gravity,
+	Revive: Revive,
+	Switch: Switch
+}
 
 import Blob from "./Blob.js"
 

@@ -9,7 +9,8 @@ class Cards extends Event {
 			{title: "Ghost", description: "The blob turns into a ghost, meaning he can go through enemies. The spell is canceled when triggered again"},
 			{title: "Kamikaze", description: "The blob runs in a straight line with a hat. He dies upon hitting a wall"},
 			{title: "Gravity", description: "The blob attracts enemy blobs in vicinity. The spell will only stop at the death of the blob"},
-			{title: "Revive", description: "Two seconds after casting this spell, if the blob has died, he is revived with a five-second hat. Can only be used once a game"}
+			{title: "Revive", description: "Two seconds after casting this spell, if the blob has died, he is revived with a five-second hat. Can only be used once a game"},
+			{title: "Switch", description: "The three blobs take each other's place, dash to each other's place and wearing a hat on the process, forming a death triangle"}
 		];
 	}
 

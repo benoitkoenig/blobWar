@@ -1,7 +1,7 @@
 class Body extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {"Container": "Menu", "Alert": "Null"}
+		this.state = {"Container": "Menu", "Alert": null}
 	}
 
 	componentWillMount() {
@@ -21,7 +21,6 @@ class Body extends React.Component {
 		if (this.state.Container == "Board") container = (<Board displayer={displayer} nodeConnection={nodeConnection} cards={cards} />);
 		if (this.state.Container == "CardsSwitch") container = (<CardsSwitch displayer={displayer} cards={cards} />);
 
-		if (this.state.Alert == null) alert = (<div></div>);
 		if (this.state.Alert == "MatchMaker") alert = (<MatchMaker displayer={displayer} nodeConnection={nodeConnection} />);
 		if (this.state.Alert == "CountDownToMatchMade") alert = (<CountDownToMatchMade displayer={displayer} nodeConnection={nodeConnection} />);
 		if (this.state.Alert == "NoCardsNoMatchMaking") alert = (<NoCardsNoMatchMaking displayer={displayer} />);

@@ -23,7 +23,7 @@ class BlobView extends React.Component {
 		if (!data.alive) return <div></div>;
 		const style = {
 			left: (data.x-0.05)*100 + "%",
-			top: (data.y-0.05)*100 + "%",
+			top: (data.y-0.075)*100 + "%", // We align the position to the base of the blob, which is slighlty below the png's center
 			opacity: data.status == "ghost" ? 0.3 : 1
 		}
 		const name = this.props.team ? "Blob" : "Enemy";

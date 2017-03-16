@@ -63,7 +63,7 @@ var BlobView = function (_React$Component2) {
 			if (!data.alive) return React.createElement("div", null);
 			var style = {
 				left: (data.x - 0.05) * 100 + "%",
-				top: (data.y - 0.05) * 100 + "%",
+				top: (data.y - 0.075) * 100 + "%", // We align the position to the base of the blob, which is slighlty below the png's center
 				opacity: data.status == "ghost" ? 0.3 : 1
 			};
 			var name = this.props.team ? "Blob" : "Enemy";

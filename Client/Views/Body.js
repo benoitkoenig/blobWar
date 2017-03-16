@@ -16,7 +16,7 @@ var Body = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this, props));
 
-		_this.state = { "Container": "Menu", "Alert": "Null" };
+		_this.state = { "Container": "Menu", "Alert": null };
 		return _this;
 	}
 
@@ -42,7 +42,6 @@ var Body = function (_React$Component) {
 			if (this.state.Container == "Board") container = React.createElement(Board, { displayer: displayer, nodeConnection: nodeConnection, cards: cards });
 			if (this.state.Container == "CardsSwitch") container = React.createElement(CardsSwitch, { displayer: displayer, cards: cards });
 
-			if (this.state.Alert == null) alert = React.createElement("div", null);
 			if (this.state.Alert == "MatchMaker") alert = React.createElement(MatchMaker, { displayer: displayer, nodeConnection: nodeConnection });
 			if (this.state.Alert == "CountDownToMatchMade") alert = React.createElement(CountDownToMatchMade, { displayer: displayer, nodeConnection: nodeConnection });
 			if (this.state.Alert == "NoCardsNoMatchMaking") alert = React.createElement(NoCardsNoMatchMaking, { displayer: displayer });
