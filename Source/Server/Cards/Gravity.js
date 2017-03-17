@@ -1,26 +1,20 @@
-import Card from "./Card.js"
+import Card from "./Generic/Card.js"
 
 export default class Gravity extends Card {
 	constructor() {
 		super();
-		this._idBlob = null;
+		this.composeWith(["BlobMustFit", "FirstToCast", "RemoveIterate"]);
 	}
 
+	setStatus(blob) {}
+
 	trigger(data, army) {
-		const blob = army[data.idBlob];
-		if (this._idBlob != null || !blob.canCastSpell || !blob.alive) return;
-		this._idBlob = data.idBlob;
-		blob.destination = null;
+		if (super.trigger(data, army)) return;
 	}
 
 	iterate(army, enemy) {
-		if (this._idBlob == null) return;
+		if (super.iterate(army, enemy)) return;
 		const blob = army[this._idBlob];
-		blob.removeIterate = true;
-		if (!blob.alive) {
-			this._idBlob = null;
-			return;
-		}
 		for (var i=0 ; i<enemy.length ; i++) {
 			const dist = Math.sqrt(Math.pow(enemy[i].x-blob.x, 2) + Math.pow(enemy[i].y-blob.y, 2));
 			const speed = .001 / dist;

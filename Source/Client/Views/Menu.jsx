@@ -21,7 +21,7 @@ class CardsMenu extends React.Component {
 				<div className="blank"></div>
 				<div id="cardsRandom" onClick={this.props.randomCards}><img src="Assets/Dices.png" /><span> Get random cards </span></div>
 				<div id="cardsChoose" onClick={() => {this.props.displayer.trigger("Container", "CardsSwitch")}}><img src="Assets/Cards.png" /><span> Choose your cards </span></div>
-				<div id="cardsTutorial"> Dont know what to do ? See <span id='cardsTutorialButton'>How to play</span> </div>
+				<div id="cardsTutorial"> Dont know what to do ? See <span id='cardsTutorialButton' onClick={() => {this.props.displayer.trigger("Alert", "HowToPlay")}}>How to play</span> </div>
 				<CardMenu title={noCard ? "" : this.props.cards.card0} description={noCard ? "" : this.props.cards.desc0} isSpace={true} />
 				<CardMenu title={noCard ? "" : this.props.cards.card1} description={noCard ? "" : this.props.cards.desc1} isSpace={false} />
 			</div>

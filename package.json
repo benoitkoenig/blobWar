@@ -2,8 +2,7 @@
   "name": "BlobWar",
   "version": "0.1.0",
   "scripts": {
-    "start": "node app.js",
-    "build": "babel Source -d ./"
+    "start": "babel Source -d ./ && node app.js"
   },
   "description": "Two persons game",
   "homepage": "localhost:8080",

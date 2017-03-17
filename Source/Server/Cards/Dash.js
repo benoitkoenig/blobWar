@@ -1,35 +1,35 @@
-import Card from "./Card.js"
+import Card from "./Generic/Card.js"
 
 export default class Dash extends Card {
 	constructor() {
 		super();
-		this._counter = 0;
+		this._counterMax = 7;
+		this.composeWith(["BlobMustFit", "FirstToCast", "UseOnce", "Counter", "RemoveIterate"]);
+	}
+
+	setStatus(blob) {
+		blob.destination = null;
+		blob.status = "fury";
+	}
+
+	endOfCounter(army, enemy) {
+		const blob = army[this._idBlob];
+		blob.status = "normal";
+		blob.canCastSpell = true;
 		this._idBlob = null;
-		this._used = false;
+		this._used = (!this._canBeReused);
 	}
 
 	trigger(data, army) {
+		if (super.trigger(data, army)) return;
 		const blob = army[data.idBlob];
-		if (this._idBlob != null || !blob.canCastSpell || !blob.alive || this._counter != 0 || this._used) return;
-		this._idBlob = data.idBlob;
-		this._counter = 6;
 		this._destination = data.destination;
-		blob.destination = null;
-		blob.status = "fury";
-		blob.canCastSpell = false;
-		this._used = true;
+		this._canBeReused = false;
 	}
 
 	iterate(army, enemy) {
-		if (this._counter == 0) return;
+		if (super.iterate(army, enemy)) return;
 		const blob = army[this._idBlob];
-		if (this._counter == 1) {
-			blob.status = "normal";
-			blob.canCastSpell = true;
-			this._idBlob = null;
-		}
-		this._counter -= 1;
-		blob.removeIterate = true;
 		const speed = 0.02;
 		const distance = Math.sqrt(Math.pow(this._destination.x-blob.x, 2) + Math.pow(this._destination.y-blob.y, 2));
 		if (distance != 0) {
@@ -43,10 +43,10 @@ export default class Dash extends Card {
 			blob.x += (this._destination.x-blob.x) / distance * speed;
 			blob.y += (this._destination.y-blob.y) / distance * speed;
 		}
-		for (var i=0 ; i<enemy.length ; i++) {
+		for (let i in enemy) {// If we kill an opponent, _used goes to false
 			const dist = Math.sqrt(Math.pow(enemy[i].x-blob.x, 2) + Math.pow(enemy[i].y-blob.y, 2));
-			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") { // This means we are responsible for his death
-				this._used = false;
+			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") {
+				this._canBeReused = true;
 			}
 		}
 	}

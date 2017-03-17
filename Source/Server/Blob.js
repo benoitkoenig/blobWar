@@ -11,6 +11,16 @@ export default class Blob {
 		this.canCastSpell = true;
 	}
 
+	_cancelPreviousSpell() {
+
+	}
+
+	cancelPreviousSpell(newSpell) {
+		// When calling this, we cat the previous function and replace it with a new - or null
+		if (this._cancelPreviousSpell != null) this._cancelPreviousSpell();
+		this._cancelPreviousSpell = newSpell;
+	}
+
 	// Only used at initialisation
 	setPosition(xPos, yPos, orientationVal) {
 		this.x = xPos;

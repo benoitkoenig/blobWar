@@ -1,28 +1,30 @@
-import Card from "./Card.js"
+import Card from "./Generic/Card.js"
 
 export default class Bloc extends Card {
 	constructor() {
 		super();
-		this._idBlob = null;
+		this.composeWith(["BlobMustFit", "LastToCast"]);
 	}
 
-	trigger(data, army) {
-		const blob = army[data.idBlob];
-		if (!blob.canCastSpell || !blob.alive) return;
-		if (this._idBlob != null) {
-			army[this._idBlob].status = "normal";
-		}
-		this._idBlob = data.idBlob;
+	setStatus(blob) {
 		blob.destination = null;
 		blob.status = "fury";
 	}
 
+	removeStatus(blob) {
+		blob.status = "normal";
+	}
+
+	trigger(data, army) {
+		if (super.trigger(data, army)) return;
+	}
+
 	iterate(army, enemy) {
-		if (this._idBlob == null) return;
+		if (super.iterate(army, enemy)) return;
 		const blob = army[this._idBlob];
 		if (blob.destination != null) {
-			blob.status = "normal";
-			this._idBlob = null;
+			blob.cancelPreviousSpell();
 		}
 	}
+
 }

@@ -1,5 +1,5 @@
 class Card extends React.Component {
-	// Cards displayed in the colorSwitch, qith buttons to select them either on space bar or on right click
+	// Cards displayed in the colorSwitch, with buttons to select them either on space bar or on right click
 	constructor(props) {
 		super(props);
 		this.assignFirstSpell = this.assignFirstSpell.bind(this);
