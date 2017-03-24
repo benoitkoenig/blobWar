@@ -1,12 +1,22 @@
-import {BotPlayer, HumanPlayer} from "./Player.js"
+import IdlePlayer from "./Players/Idle.js"
+import HumanPlayer from "./Players/Human.js"
+import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
+import BotBlocGravity from "./Players/BotBlocGravity.js"
+
+const Bots = [
+	BotGhostKamikaze,
+	BotBlocGravity
+];
 
 // A whole game consists in this piece of code being repeted 40 times per second
 const startGame = (player1, player2) => {
 	let iteration = setInterval(() => {
-		player1.iterate();
-		player2.iterate();
-		const toKill1 = player1.iterateCards(player2);
-		const toKill2 = player2.iterateCards(player1);
+		player1.iterateBlobs(player2.getArmy());
+		player2.iterateBlobs(player1.getArmy());
+		player1.iterateCards(player2);
+		player2.iterateCards(player1);
+		const toKill1 = player1.whoToKill(player2);
+		const toKill2 = player2.whoToKill(player1);
 		player1.kill(toKill2);
 		player2.kill(toKill1);
 		if (player1.lost() || player2.lost()) {
@@ -26,8 +36,8 @@ const startGame = (player1, player2) => {
 		} else {
 			const army1 = player1.getArmy();
 			const army2 = player2.getArmy();
-			player1.emit("update", {army: player1.getArmy(), enemy: player2.getArmy()});
-			player2.emit("update", {army: player2.getArmy(), enemy: player1.getArmy()});
+			player1.emit("update", {army: player1.getArmyData(), enemy: player2.getArmyData()});
+			player2.emit("update", {army: player2.getArmyData(), enemy: player1.getArmyData()});
 			if (!player1.isStillConnected() && !player2.isStillConnected()) clearInterval(iteration);
 		}
 	}, 25);
@@ -68,6 +78,12 @@ exports.playerJoin = (() => {
 })();
 
 // Training mode
+exports.playerAgainstIdle = (socket, data) => {
+	// startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
+	startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
+}
+
 exports.playerAgainstBot = (socket, data) => {
-	startGame(new HumanPlayer(socket, true, data), new BotPlayer());
+	// startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
+	startGame(new HumanPlayer(socket, true, data), new Bots[parseInt(Math.random()*Bots.length)]());
 }

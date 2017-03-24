@@ -1,7 +1,7 @@
 // Only for singleBlobSpell
 export default {
 	init: function() {
-		this.removeIterate = true;
+		this._cancelable = true;
 	},
 
 	triggerCheck: function(data, army) {},

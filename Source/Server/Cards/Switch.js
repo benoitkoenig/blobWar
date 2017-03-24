@@ -1,17 +1,14 @@
 import Card from "./Generic/Card.js"
 // Switch is composed with little classes bc it is the only spell acting on all three blobs simultaneously
-// It can be cast on blob which canCastSpell is false, bc it doesn't concern a single blob
 export default class Switch extends Card {
 	constructor() {
-		super();
-		this._counterMax = 16;
-		this.composeWith(["UseOnce", "Counter"]);
+		super(["UseOnce", "Counter"]);
+		this.counterMax = 16;
 	}
 
 	endOfCounter(army, enemy) {
 		for (let id of this._ids) {
 			army[id].status = "normal";
-			army[id].canCastSpell = true;
 		}
 	}
 
@@ -31,17 +28,17 @@ export default class Switch extends Card {
 				y: (army[this._ids[(index+1)%this._ids.length]].y - army[this._ids[index]].y) / this._counter
 			};
 			army[this._ids[index]].status = "fury";
-			army[this._ids[index]].canCastSpell = false;
 			army[this._ids[index]].destination = null;
+			army[this._ids[index]].currentSpell = {}
 		}
 	}
 
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
 		for (let id of this._ids) {
+			army[id].destination = null; // removeIterate doesn't work here
 			army[id].x += this._speeds[id].x;
 			army[id].y += this._speeds[id].y;
-			army[id].removeIterate = true;
 		}
 	}
 }

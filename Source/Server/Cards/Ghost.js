@@ -2,12 +2,7 @@ import Card from "./Generic/Card.js"
 
 export default class Ghost extends Card {
 	constructor() {
-		super();
-		this.composeWith(["BlobMustFit", "LastToCast"]);
-	}
-
-	setStatus(blob) {
-		blob.status = "ghost";
+		super(["SingleBlobSpell", "LastToCast", "Cancelable"]);
 	}
 
 	removeStatus(blob) {
@@ -16,6 +11,7 @@ export default class Ghost extends Card {
 
 	trigger(data, army) {
 		if (super.trigger(data, army)) return;
+		this.blob.status = "ghost";
 	}
 
 	iterate(army, enemy) {

@@ -2,49 +2,43 @@ import Card from "./Generic/Card.js"
 
 export default class Dash extends Card {
 	constructor() {
-		super();
-		this._counterMax = 7;
-		this.composeWith(["BlobMustFit", "FirstToCast", "UseOnce", "Counter", "RemoveIterate"]);
-	}
-
-	setStatus(blob) {
-		blob.destination = null;
-		blob.status = "fury";
+		super(["SingleBlobSpell", "FirstToCast", "UseOnce", "Counter", "RemoveIterate"]);
+		this.counterMax = 7;
 	}
 
 	endOfCounter(army, enemy) {
-		const blob = army[this._idBlob];
-		blob.status = "normal";
-		blob.canCastSpell = true;
-		this._idBlob = null;
 		this._used = (!this._canBeReused);
+		if (this.blob == null) return; // Happens if the blob has died
+		this.blob.status = "normal";
+		this.blob.currentSpell = null;
+		this.blob = null;
 	}
 
 	trigger(data, army) {
 		if (super.trigger(data, army)) return;
-		const blob = army[data.idBlob];
 		this._destination = data.destination;
 		this._canBeReused = false;
+		this.blob.destination = null;
+		this.blob.status = "fury";
 	}
 
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
-		const blob = army[this._idBlob];
 		const speed = 0.02;
-		const distance = Math.sqrt(Math.pow(this._destination.x-blob.x, 2) + Math.pow(this._destination.y-blob.y, 2));
+		const distance = Math.sqrt(Math.pow(this._destination.x-this.blob.x, 2) + Math.pow(this._destination.y-this.blob.y, 2));
 		if (distance != 0) {
-			blob.orientation = Math.abs(this._destination.x-blob.x) >= Math.abs(this._destination.y-blob.y) ? (this._destination.x >= blob.x ? 0 : 2) : (this._destination.y >= blob.y ? 1 : 3);
+			this.blob.orientation = Math.abs(this._destination.x-this.blob.x) >= Math.abs(this._destination.y-this.blob.y) ? (this._destination.x >= this.blob.x ? 0 : 2) : (this._destination.y >= this.blob.y ? 1 : 3);
 		}
 		if (distance <= speed) {
-			blob.x = this._destination.x;
-			blob.y = this._destination.y;
-			blob.destination = null;
+			this.blob.x = this._destination.x;
+			this.blob.y = this._destination.y;
+			this.blob.destination = null;
 		} else {
-			blob.x += (this._destination.x-blob.x) / distance * speed;
-			blob.y += (this._destination.y-blob.y) / distance * speed;
+			this.blob.x += (this._destination.x-this.blob.x) / distance * speed;
+			this.blob.y += (this._destination.y-this.blob.y) / distance * speed;
 		}
-		for (let i in enemy) {// If we kill an opponent, _used goes to false
-			const dist = Math.sqrt(Math.pow(enemy[i].x-blob.x, 2) + Math.pow(enemy[i].y-blob.y, 2));
+		for (let i in enemy) {// If we kill an opponent, the spell can be re-used
+			const dist = Math.sqrt(Math.pow(enemy[i].x-this.blob.x, 2) + Math.pow(enemy[i].y-this.blob.y, 2));
 			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") {
 				this._canBeReused = true;
 			}

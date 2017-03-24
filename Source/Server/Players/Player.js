@@ -1,12 +1,11 @@
-// A JSON to load them all would be handy
-
-import Dash from "./Cards/Dash.js"
-import Bloc from "./Cards/Bloc.js"
-import Ghost from "./Cards/Ghost.js"
-import Kamikaze from "./Cards/Kamikaze.js"
-import Gravity from "./Cards/Gravity.js"
-import Revive from "./Cards/Revive.js"
-import Switch from "./Cards/Switch.js"
+import Dash from "../Cards/Dash.js"
+import Bloc from "../Cards/Bloc.js"
+import Ghost from "../Cards/Ghost.js"
+import Kamikaze from "../Cards/Kamikaze.js"
+import Gravity from "../Cards/Gravity.js"
+import Revive from "../Cards/Revive.js"
+import Switch from "../Cards/Switch.js"
+import Orbit from "../Cards/Orbit.js"
 
 const Cards = {
 	Dash: Dash,
@@ -15,12 +14,13 @@ const Cards = {
 	Kamikaze: Kamikaze,
 	Gravity: Gravity,
 	Revive: Revive,
-	Switch: Switch
+	Switch: Switch,
+	Orbit: Orbit
 }
 
-import Blob from "./Blob.js"
+import Blob from "../Blob.js"
 
-class Player {
+export default class Player {
 	constructor(firstPlayer, cards) {
 		this._army = [new Blob(), new Blob(), new Blob()];
 		this._cards = [new Cards[cards[0]](), new Cards[cards[1]]()];
@@ -37,8 +37,6 @@ class Player {
 
 	}
 
-	iterate() { this._army.forEach(blob => { blob.iterate(); }); }
-
 	getArmy() { return this._army; }
 
 	getArmyData() { return [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()]; }
@@ -46,6 +44,8 @@ class Player {
 	emit() {} // HumanPlayer overrides this, BotPlayer doesn't
 
 	clear() {}
+
+	isStillConnected() { return false; }
 
 	_doWeKillIt(blob, enemyBlob) {
 		if (Math.sqrt(Math.pow(enemyBlob.x-blob.x, 2) + Math.pow(enemyBlob.y-blob.y, 2)) > 0.04) return false;
@@ -55,9 +55,14 @@ class Player {
 		return true;
 	}
 
+	iterateBlobs() { this._army.forEach(blob => { blob.iterate(); }); }
+
 	iterateCards(enemyPlayer) {
-		let toKill = [];
 		this._cards.forEach(card => { card.iterate(this._army, enemyPlayer.getArmy()); });
+	}
+
+	whoToKill(enemyPlayer) {
+		let toKill = [];
 		this._army.forEach((blob) => {
 			enemyPlayer.getArmyData().forEach((enemyBlob, enemyId) => {
 				if (this._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
@@ -74,47 +79,5 @@ class Player {
 		if (deads == 3) return true;
 		return false;
 	}
-
-}
-
-// An idle opponent to train on
-export class BotPlayer extends Player {
-
-	constructor() {
-		super(false, ["Dash", "Bloc"]);
-	}
-
-	isStillConnected() { return false; }
-
-}
-
-// A human player with a socket
-export class HumanPlayer extends Player {
-	constructor(socket, firstPlayer, data) {
-		super(firstPlayer, data);
-		this._socket = socket;
-		this._initSockets();
-		this._connected = true;
-
-	}
-
-	_initSockets() {
-		this._socket.on("setDestination", (data) => { this._army[data.id].destination = {x: data.x, y: data.y}; });
-		this._socket.on("disconnect", () => { this._connected = false; });
-		this._socket.on("triggerCard", (data) => {
-			this._cards[data.id].trigger(data, this._army);
-		});
-
-	}
-
-	clear() {
-		this._socket.removeAllListeners("setDestination");
-		this._socket.removeAllListeners("disconnect");
-		this._socket.removeAllListeners("triggerCard");
-	}
-
-	isStillConnected() { return this._connected; }
-
-	emit(name, data) { this._socket.emit(name, data); }
 
 }

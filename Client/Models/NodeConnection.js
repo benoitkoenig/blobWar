@@ -36,6 +36,12 @@ class NodeConnection extends Event {
 		this._socket.emit("PlayAgainstBot", [cards.getCard(0), cards.getCard(1)]); // How comes cards are defined here ?
 	}
 
+	initTrainingGame() {
+		this._socket.on("update", (data) => {this.trigger("update", data)});
+		this._socket.on("endOfGame", this._endOfGame);
+		this._socket.emit("PlayAgainstIdle", [cards.getCard(0), cards.getCard(1)]);
+	}
+
 	cancelMatchMaking() {
 		this._socket.emit("cancelMatchMaking");
 	}

@@ -8,7 +8,7 @@ export default {
 	},
 
 	triggerDo: function(data, army) {
-		this._counter = this._counterMax;
+		this._counter = this.counterMax;
 	},
 
 	iterate: function(army, enemy) {

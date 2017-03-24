@@ -13,6 +13,7 @@ app.use("/", express.static(__dirname+"/Client"));
 
 // When a user connects, he can either look for an opponent or fight an idle opponent (bot)
 io.sockets.on("connection", (socket) => {
+	socket.on("PlayAgainstIdle", (data) => { game.playerAgainstIdle(socket, data); });
 	socket.on("PlayAgainstBot", (data) => { game.playerAgainstBot(socket, data); });
 	socket.on("MatchMaking", (data) => { game.playerJoin(socket, data); });
 });

@@ -35,6 +35,7 @@ class Menu extends React.Component {
 		super(props);
 		this.startGame = this.startGame.bind(this);
 		this.startBotGame = this.startBotGame.bind(this);
+		this.startTrainingGame = this.startTrainingGame.bind(this);
 		this.randomCards = this.randomCards.bind(this);
 		this.state = {
 			cardsValue: {
@@ -56,12 +57,22 @@ class Menu extends React.Component {
 		}
 	}
 
-	// Start the game against an idle opponent
+	// Start the game against a bot
 	startBotGame() {
 		if (this.state.cardsValue.card0 == null || this.state.cardsValue.card1 == null) {
 			this.props.displayer.trigger("Alert", "NoCardsNoMatchMaking");
 		} else {
 			this.props.nodeConnection.initBotGame();
+			this.props.displayer.trigger("Container", "Board");
+		}
+	}
+
+	// Start the game against an idle opponent
+	startTrainingGame() {
+		if (this.state.cardsValue.card0 == null || this.state.cardsValue.card1 == null) {
+			this.props.displayer.trigger("Alert", "NoCardsNoMatchMaking");
+		} else {
+			this.props.nodeConnection.initTrainingGame();
 			this.props.displayer.trigger("Container", "Board");
 		}
 	}
@@ -88,7 +99,8 @@ class Menu extends React.Component {
 					<div className="blank"></div>
 					<div id="startTutorial" onClick={() => {this.props.displayer.trigger("Alert", "HowToPlay")}}> How to play </div>
 					<div id="startMatchMaking" onClick={this.startGame}> Match Making </div>
-					<div id="startBotGame" onClick={this.startBotGame}> Training Mod </div>
+					<div id="startBotGame" onClick={this.startBotGame}> Play against a bot </div>
+					<div id="startTrainingGame" onClick={this.startTrainingGame}> Training Mod </div>
 				</div>
 			</div>
 		);

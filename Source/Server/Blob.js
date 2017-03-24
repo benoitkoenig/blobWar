@@ -7,18 +7,7 @@ export default class Blob {
 		this.alive = true;
 		this.destination = null;
 		this.status = "normal"; // normal means if he collides an enemy blob, he dies. fury means he will kill but not die
-		this.removeIterate = false;
-		this.canCastSpell = true;
-	}
-
-	_cancelPreviousSpell() {
-
-	}
-
-	cancelPreviousSpell(newSpell) {
-		// When calling this, we cat the previous function and replace it with a new - or null
-		if (this._cancelPreviousSpell != null) this._cancelPreviousSpell();
-		this._cancelPreviousSpell = newSpell;
+		this.currentSpell = null; // Used in singleBlobSpell generic card
 	}
 
 	// Only used at initialisation
@@ -30,10 +19,7 @@ export default class Blob {
 
 	// Manage the movement of the blob
 	iterate() {
-		if (this.removeIterate) {
-			this.removeIterate = false;
-			return;
-		}
+		if (this.currentSpell && this.currentSpell.removeIterate) return;
 		if (this.destination == null || !this.alive) return;
 		const speed = 0.005;
 		const distance = Math.sqrt(Math.pow(this.destination.x-this.x, 2) + Math.pow(this.destination.y-this.y, 2));
