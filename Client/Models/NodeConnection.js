@@ -2,7 +2,12 @@
 class NodeConnection extends Event {
 	constructor(cards, displayer) {
 		super();
-		this._socket = io.connect(document.location.href);
+		if (document.location.href == "chrome-extension://ppgjjdfalfmimoecbfhpggbmofjmpani/Client/index.html") {
+			// This is nw
+			this._socket = io.connect("http://blobwar.herokuapp.com/");
+		} else {
+			this._socket = io.connect(document.location.href);
+		}
 		this.endOfGameValue = null; // The only stored value, to know who won
 		this._displayer = displayer;
 		this._endOfGame = this._endOfGame.bind(this);

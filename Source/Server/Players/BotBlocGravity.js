@@ -18,9 +18,9 @@ export default class BotBlocGravity extends Player {
 			this._cards[1].trigger({idBlob: 1}, this._army);
 			this._timerTillPulling = -1;
 		} else if (!this._army[0].alive && !this._army[2].alive && this._timerTillPulling == null) { // Both 0 and 2 are dead, so 1 starts a bloc which he will eventually rade for a gravity
-			if (this._cards[0]._idBlob == null) this._cards[0].trigger({idBlob: 1}, this._army);
+			if (this._cards[0].blob == null) this._cards[0].trigger({idBlob: 1}, this._army);
 			this._timerTillPulling = 160;
-		} else if (this._cards[1]._idBlob == null && this.pullingBlob == 0) { // Blob 0, which pulls first, died
+		} else if (this._cards[1].blob == null && this.pullingBlob == 0) { // Blob 0, which pulls first, died
 			this._cards[1].trigger({idBlob: 2}, this._army);
 			this.pullingBlob = 2;
 		} else if (this.pullingBlob != null) {
@@ -29,7 +29,7 @@ export default class BotBlocGravity extends Player {
 			const blobToMove = this._closestBlob(posToBloc);
 			if (blobToMove != null) {
 				if (Math.pow(this._army[blobToMove].x - posToBloc.x, 2) + Math.pow(this._army[blobToMove].y - posToBloc.y, 2) < 0.0001) {
-					if (this._cards[0]._idBlob != blobToMove) {
+					if (this._cards[0].blob != this._army[blobToMove]) {
 						this._cards[0].trigger({idBlob: blobToMove}, this._army);
 					};
 				} else {

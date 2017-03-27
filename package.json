@@ -1,6 +1,7 @@
 {
   "name": "BlobWar",
   "version": "0.1.0",
+  "main": "Client/index.html",
   "scripts": {
     "start": "babel Source -d ./ && node app.js"
   },
