@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "Client/index.html",
   "scripts": {
-    "start": "babel Source -d ./ && node app.js"
+    "devStart": "babel Source -d ./ && node app.js",
+    "start": "node app.js"
   },
   "description": "Two persons game",
   "homepage": "localhost:8080",
