@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "socket.io": "^1.7.3",
-    /* I took off babel from devDependencies bc I want heroku to compile the code, to keep it off the git commits */
+    "//": "I took off babel from devDependencies bc I want heroku to compile the code, to keep it off the git commits",
     "babel-cli": "^6.23.0",
     "babel-preset-env": "^1.2.1",
     "babel-preset-es2015-node": "^6.1.1",
