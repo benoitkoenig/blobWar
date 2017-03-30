@@ -3,9 +3,7 @@
   "version": "0.1.1",
   "main": "Client/index.html",
   "scripts": {
-    "build": "webpack",
-    "start": "node app.js",
-    "heroku-postbuild": "webpack -p --progress"
+    "start": "webpack && node app.js"
   },
   "description": "Two persons game",
   "homepage": "localhost:8080",
