@@ -1,4 +1,6 @@
-class NoCardsNoMatchMaking extends React.Component {
+import React from "react";
+
+export class NoCardsNoMatchMaking extends React.Component {
 	constructor(props) {
 		super(props);
 		this.gotIt = this.gotIt.bind(this);
@@ -25,7 +27,7 @@ class NoCardsNoMatchMaking extends React.Component {
 	}
 }
 
-class CountDownToMatchMade extends React.Component {
+export class CountDownToMatchMade extends React.Component {
 	constructor(props) {
 		super(props);
 		props.nodeConnection.on("countDownToGame", (timeLeft) => {
@@ -51,7 +53,7 @@ class CountDownToMatchMade extends React.Component {
 	}
 }
 
-class MatchMaker extends React.Component {
+export class MatchMaker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.cancelMatchMaking = this.cancelMatchMaking.bind(this);

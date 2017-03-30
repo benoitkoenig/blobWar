@@ -1,3 +1,5 @@
+import React from "react";
+
 class CardMenu extends React.Component {
 	// A card. Quite similar to cards in CardsSwitch
 	render() {
@@ -29,7 +31,7 @@ class CardsMenu extends React.Component {
 	}
 }
 
-class Menu extends React.Component {
+export default class Menu extends React.Component {
 	// Main menu
 	constructor(props) {
 		super(props);

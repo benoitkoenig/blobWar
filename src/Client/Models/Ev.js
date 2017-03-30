@@ -1,5 +1,5 @@
-// An event class, to attach events like in Backbone.Events. I think it is a pretty clever way to organize code
-class Event {
+// An event class, to attach events like in Backbone.Events
+export default class Ev {
 
 	constructor() {
 		this.Event_events = {};

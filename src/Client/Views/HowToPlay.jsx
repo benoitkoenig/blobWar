@@ -1,4 +1,6 @@
-class HowToPlay extends React.Component {
+import React from "react";
+
+export default class HowToPlay extends React.Component {
 	// A simple alert with a back button
 	render() {
 		return (

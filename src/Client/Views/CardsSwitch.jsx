@@ -1,3 +1,5 @@
+import React from "react";
+
 class Card extends React.Component {
 	// Cards displayed in the colorSwitch, with buttons to select them either on space bar or on right click
 	constructor(props) {
@@ -25,7 +27,7 @@ class Card extends React.Component {
 
 }
 
-class CardsSwitch extends React.Component {
+export default class CardsSwitch extends React.Component {
 
 	constructor(props) {
 		super(props);

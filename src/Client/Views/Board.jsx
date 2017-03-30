@@ -1,3 +1,5 @@
+import React from "react";
+
 class BoardCard extends React.Component {
 	// It is mostly the same as CardsMenu -> I could merge the classes
 	render() {
@@ -40,7 +42,7 @@ class BlobView extends React.Component {
 	}
 }
 
-class Board extends React.Component {
+export default class Board extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -105,10 +107,10 @@ class Board extends React.Component {
 	render() {
 		const blobs = [];
 		for (let i=0 ; i<this.state.army.length ; i++) {
-			blobs.push(<BlobView blob={this.state.army[i]} selected={this.state.idBlob==i} idBlob={i} team={true} />);
+			blobs.push(<BlobView key={i.toString()} blob={this.state.army[i]} selected={this.state.idBlob==i} idBlob={i} team={true} />);
 		}
 		for (let i=0 ; i<this.state.enemy.length ; i++) {
-			blobs.push(<BlobView blob={this.state.enemy[i]} selected={this.state.idBlob==i} idBlob={i} team={false} />);
+			blobs.push(<BlobView key={(i+this.state.army.length).toString()} blob={this.state.enemy[i]} selected={this.state.idBlob==i} idBlob={i} team={false} />);
 		}
 		return (
 			<div id="boardContainer" onContextMenu={this.rightClick} onMouseMove={this.mouseMove}>

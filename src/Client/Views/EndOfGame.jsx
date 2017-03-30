@@ -1,4 +1,6 @@
-class EndOfGame extends React.Component {
+import React from "react";
+
+export default class EndOfGame extends React.Component {
 	// A simple alert with a button to the menu
 	constructor(props) {
 		super(props);

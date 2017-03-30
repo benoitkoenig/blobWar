@@ -1,5 +1,8 @@
-// Node connection mostly consists in the socket
-class NodeConnection extends Event {
+import Ev from "./Ev";
+import io from 'socket.io-client';
+
+export default class NodeConnection extends Ev {
+	// Node connection mostly consists in the socket
 	constructor(cards, displayer) {
 		super();
 		if (document.location.href == "chrome-extension://ppgjjdfalfmimoecbfhpggbmofjmpani/Client/index.html") {
@@ -10,6 +13,7 @@ class NodeConnection extends Event {
 		}
 		this.endOfGameValue = null; // The only stored value, to know who won
 		this._displayer = displayer;
+		this._cards = cards;
 		this._endOfGame = this._endOfGame.bind(this);
 	}
 
@@ -30,7 +34,7 @@ class NodeConnection extends Event {
 		this._socket.on("update", (data) => {this.trigger("update", data)});
 		this._socket.on("endOfGame", this._endOfGame);
 		this._socket.on("countDownToGame", (timeLeft) => { this.trigger("countDownToGame", timeLeft); });
-		this._socket.emit("MatchMaking", [cards.getCard(0), cards.getCard(1)]);
+		this._socket.emit("MatchMaking", [this._cards.getCard(0), this._cards.getCard(1)]);
 		this.trigger("lookingForOpponent");
 	}
 
@@ -38,13 +42,13 @@ class NodeConnection extends Event {
 	initBotGame() {
 		this._socket.on("update", (data) => {this.trigger("update", data)});
 		this._socket.on("endOfGame", this._endOfGame);
-		this._socket.emit("PlayAgainstBot", [cards.getCard(0), cards.getCard(1)]); // How comes cards are defined here ?
+		this._socket.emit("PlayAgainstBot", [this._cards.getCard(0), this._cards.getCard(1)]); // How comes cards are defined here ?
 	}
 
 	initTrainingGame() {
 		this._socket.on("update", (data) => {this.trigger("update", data)});
 		this._socket.on("endOfGame", this._endOfGame);
-		this._socket.emit("PlayAgainstIdle", [cards.getCard(0), cards.getCard(1)]);
+		this._socket.emit("PlayAgainstIdle", [this._cards.getCard(0), this._cards.getCard(1)]);
 	}
 
 	cancelMatchMaking() {

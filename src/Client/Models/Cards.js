@@ -1,4 +1,6 @@
-class Cards extends Event {
+import Ev from "./Ev";
+
+export default class Cards extends Ev {
 
 	constructor() {
 		super();

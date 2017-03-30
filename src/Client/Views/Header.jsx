@@ -1,5 +1,6 @@
-// The header doesn't have actions so far
-class Header extends React.Component {
+import React from "react";
+
+export default class Header extends React.Component {
 	render() {
 		return (
 			<div id="header">
