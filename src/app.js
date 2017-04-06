@@ -12,9 +12,15 @@ app.use("/", express.static(__dirname+"/Client"));
 
 // When a user connects, he can either look for an opponent or fight an idle opponent (bot)
 io.on("connection", (socket) => {
-	socket.on("PlayAgainstIdle", (data) => { game.playerAgainstIdle(socket, data); });
-	socket.on("PlayAgainstBot", (data) => { game.playerAgainstBot(socket, data); });
-	socket.on("MatchMaking", (data) => { game.playerJoin(socket, data); });
+	socket.on("action", (action) => {
+		if (action.category === "Idle") {
+			game.playerAgainstIdle(socket, action.cards);
+		} else if (action.category === "Bot") {
+			game.playerAgainstBot(socket, action.cards);
+		} else if (action.category === "MatchMaking") {
+			game.playerJoin(socket, action.cards);
+		}
+	});
 });
 
 server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku

@@ -1,18 +1,30 @@
-import Ev from "./Models/Ev.js";
-import Cards from "./Models/Cards.js";
-import NodeConnection from "./Models/NodeConnection.js";
-
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from "react-dom";
+import {connect, Provider} from "react-redux";
+import {createStore, combineReducers, applyMiddleware} from "redux";
+import createSocketIoMiddleware from 'redux-socket.io';
+import io from 'socket.io-client';
 
-import Body from "./Views/Body.jsx";
+import Cards from "./Reducers/Cards.js";
+import Navigation from "./Reducers/Navigation.js";
+import GameState from "./Reducers/GameState.js";
 
-// I think the displayer can - and should - be traded for a function in Body
-const displayer = new Ev();
-const cards = new Cards();
-const nodeConnection = new NodeConnection(cards, displayer);
+import Body from "./Components/Body.jsx";
 
-ReactDOM.render(
-	<Body displayer={displayer} nodeConnection={nodeConnection} cards={cards} />,
-	document.getElementById("body")
+const reducers = combineReducers({
+	Cards,
+	Navigation,
+	GameState
+});
+
+let socket = io('http://localhost:8080');
+let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
+
+let store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);
+
+render(
+	<Provider store={store}>
+		<Body />
+	</Provider>,
+	document.getElementById('body')
 )

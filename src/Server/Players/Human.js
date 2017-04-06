@@ -7,26 +7,28 @@ export default class HumanPlayer extends Player {
 		this._socket = socket;
 		this._initSockets();
 		this._connected = true;
-
 	}
 
 	_initSockets() {
-		this._socket.on("setDestination", (data) => { this._army[data.id].destination = {x: data.x, y: data.y}; });
-		this._socket.on("disconnect", () => { this._connected = false; });
-		this._socket.on("triggerCard", (data) => {
-			this._cards[data.id].trigger(data, this._army);
+		this._socket.on("action", (action) => {
+			if (action.type == "server/setDestination") {
+				this._army[action.idBlob].destination = action.destination;
+			} else if (action.type == "server/triggerCard") {
+				this._cards[action.idCard].trigger({idBlob: action.idBlob, destination: action.destination}, this._army);
+			}
 		});
+		this._socket.on("disconnect", () => { this._connected = false; });
 
 	}
 
 	clear() {
-		this._socket.removeAllListeners("setDestination");
-		this._socket.removeAllListeners("disconnect");
-		this._socket.removeAllListeners("triggerCard");
+		this._socket.removeAllListeners("server/setDestination");
+		this._socket.removeAllListeners("server/disconnect");
+		this._socket.removeAllListeners("server/triggerCard");
 	}
 
 	isStillConnected() { return this._connected; }
 
-	emit(name, data) { this._socket.emit(name, data); }
+	emit(data) { this._socket.emit("action", data); }
 
 }

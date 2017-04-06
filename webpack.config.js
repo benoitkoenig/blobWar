@@ -22,7 +22,7 @@ module.exports = [
 						presets: ["env", "react", "es2015-node"]
 					}
 				},
-				{ test: /\.json$/, loader: "json-loader" }
+				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
 			]
 		},
 		externals: {
@@ -45,7 +45,7 @@ module.exports = [
 						presets: ["env", "react", "es2015-node"]
 					}
 				},
-				{ test: /\.json$/, loader: "json-loader" }
+				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
 			]
 		}
 	}
