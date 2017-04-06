@@ -5,7 +5,7 @@ module.exports = [
 			path: __dirname,
 			filename: 'app.js'
 		},
-		target: 'node',
+		target: 'electron',
 		node: {
 			__dirname: false,
 			fs: "empty",

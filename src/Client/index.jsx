@@ -17,7 +17,8 @@ const reducers = combineReducers({
 	GameState
 });
 
-let socket = io(document.location.href);
+// Connect on address url, or on localhost
+let socket = io((window.location.href).split(":")[0] === "file" ? "http://localhost:8080/" : window.location.href);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 let store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);

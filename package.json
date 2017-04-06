@@ -1,12 +1,15 @@
 {
   "name": "BlobWar",
   "version": "0.1.1",
-  "main": "Client/index.html",
+  "main": "app.js",
   "scripts": {
-    "start": "webpack && node app.js"
+    "start": "webpack && node app.js",
+    "webpack": "webpack",
+    "electron": "electron",
+    "electron-packager": "electron-packager . blobwar --out=desktopApps --all"
   },
   "description": "Two persons game",
-  "homepage": "localhost:8080",
+  "homepage": "http://blobwar.herokuapp.com",
   "email": "benoit.koenig@yahoo.fr",
   "man": "./README.md",
   "dependencies": {
@@ -25,5 +28,9 @@
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3",
     "webpack": "^2.3.2"
+  },
+  "devDependencies": {
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0"
   }
 }
