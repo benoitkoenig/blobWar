@@ -3,14 +3,16 @@ import {connect} from "react-redux";
 import {createStore} from "redux";
 import {Link} from "react-router-dom";
 
+import {buttons} from "../Assets/assets.js";
+
 const Card = ({cardIndex, title, description, firstSpell, secondSpell, setCard}) => {
 	return (
 		<div className="card">
 			<div className="title">{title}</div>
 			<div className="description">{description}</div>
 			<div className='button'>
-				<div><img src={`Assets/ButtonSpace${firstSpell ? "Blue" : ""}.png`} onClick={() => { setCard(0, cardIndex); }} /></div>
-				<div><img src={`Assets/ButtonRightClick${secondSpell ? "Blue" : ""}.png`} onClick={() => { setCard(1, cardIndex); }} /></div>
+				<div><img src={buttons[firstSpell ? "blue" : "normal"].space} onClick={() => { setCard(0, cardIndex); }} /></div>
+				<div><img src={buttons[secondSpell ? "blue" : "normal"].right} onClick={() => { setCard(1, cardIndex); }} /></div>
 			</div>
 		</div>
 	);

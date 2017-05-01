@@ -3,13 +3,15 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {createStore} from "redux";
 
+import {buttons, dices, cards as cardsSrc} from "../Assets/assets.js";
+
 const CardMenu = ({title, description, isSpace}) => {
 	// A card. Quite similar to cards in CardsSwitch
 	return (
 		<div className="cardMenu">
 			<div className="title">{title}</div>
 			<div className="description">{description}</div>
-			<img src={`Assets/${isSpace ? "ButtonSpace" : "ButtonRightClick"}.png`} />
+			<img src={buttons.normal[isSpace ? "space" : "right"]} />
 		</div>
 	);
 }
@@ -21,8 +23,8 @@ const CardsMenu = ({cards, randomCards, chooseCards, displayAlert}) => {
 		<div id="cardsMenu" className={noCard ? "noCard" : ""}>
 			<div id="yourCards"> Your Cards </div>
 			<div className="blank"></div>
-			<div id="cardsRandom" onClick={randomCards}><img src="Assets/Dices.png" /><span> Get random cards </span></div>
-			<div id="cardsChoose"><Link to='/Cards'><img src="Assets/Cards.png" /><span> Choose your cards </span></Link></div>
+			<div id="cardsRandom" onClick={randomCards}><img src={dices} /><span> Get random cards </span></div>
+			<div id="cardsChoose"><Link to='/Cards'><img src={cardsSrc} /><span> Choose your cards </span></Link></div>
 			<div id="cardsTutorial"> Dont know what to do ? See <span id='cardsTutorialButton' onClick={() => {displayAlert("HowToPlay")}}>How to play</span> </div>
 			<CardMenu title={noCard ? "" : cards[0].title} description={noCard ? "" : cards[0].description} isSpace={true} />
 			<CardMenu title={noCard ? "" : cards[1].title} description={noCard ? "" : cards[1].description} isSpace={false} />

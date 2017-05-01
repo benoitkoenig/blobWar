@@ -2,13 +2,15 @@ import React from "react";
 import {connect} from "react-redux";
 import {createStore} from "redux";
 
+import {buttons, blobs, enemies, pointers, hats} from "../Assets/assets.js";
+
 const Card = ({title, description, buttonName, moveCard}) => {
 	// It is mostly the same as CardsMenu
 	return (
 		<div className={`boardCard${moveCard ? " moveCard" : ""}`}>
 			<div className="title">{title}</div>
 			<div className="description">{description}</div>
-			<img src={`Assets/${buttonName}.png`} />
+			<img src={buttons.normal[buttonName]} />
 		</div>
 	);
 }
@@ -29,15 +31,15 @@ class Blob extends React.Component {
 			top: (this.props.blob.y-0.075)*100 + "%", // We align the position to the base of the blob, which is slighlty below the png's center
 			opacity: this.props.blob.status == "ghost" ? 0.3 : 1
 		}
-		const name = this.props.team ? "Blob" : "Enemy";
+		const blobSrc = this.props.team ? blobs[this.props.blob.orientation] : enemies[this.props.blob.orientation];
 		const hatStyle = { visibility: this.props.blob.status == "fury" ? "visible" : "hidden" }
-		const keyBlob = this.props.selected ? "Active" : this.props.idBlob == 0 ? "W" : this.props.idBlob == 1 ? "E" : "R";
+		const keyBlob = this.props.selected ? "active" : this.props.idBlob == 0 ? "w" : this.props.idBlob == 1 ? "e" : "r";
 		const pointerStyle = {visibility: (this.props.team ? "visible" : "hidden")}
 		return (
 			<div className="blob" style={style}>
-				<img src={`Assets/${name}${this.props.blob.orientation}.png`} />
-				<img src={`Assets/Hat${this.hatId}.png`} style={hatStyle} />
-				<img src={`Assets/Pointer${keyBlob}.png`} style={pointerStyle} />
+				<img src={blobSrc} />
+				<img src={hats[this.hatId]} style={hatStyle} />
+				<img src={pointers[keyBlob]} style={pointerStyle} />
 			</div>
 		);
 	}
@@ -112,9 +114,9 @@ class Board extends React.Component {
 		return (
 			<div id="boardContainer" className="containerElement" onContextMenu={(ev) => {ev.preventDefault() ; this.props.triggerCard(this.state.idBlob, 1, this.getPosition(ev.clientX, ev.clientY))}} onMouseMove={(ev) => {this.mousePos = this.getPosition(ev.clientX, ev.clientY)}}>
 				<div className="boardCards">
-					<Card title={this.props.cards[0].title} description={this.props.cards[0].description} buttonName='ButtonSpace' moveCard={false} />
-					<Card title={this.props.cards[1].title} description={this.props.cards[1].description} buttonName='ButtonRightClick' moveCard={false} />
-					<Card title="Move" description="" buttonName='ButtonLeftClick' moveCard={true} />
+					<Card title={this.props.cards[0].title} description={this.props.cards[0].description} buttonName='space' moveCard={false} />
+					<Card title={this.props.cards[1].title} description={this.props.cards[1].description} buttonName='right' moveCard={false} />
+					<Card title="Move" description="" buttonName='left' moveCard={true} />
 				</div>
 				<div className="board" onClick={(ev) => {this.props.setDestination(this.state.idBlob, this.getPosition(ev.clientX, ev.clientY))}}>
 					<div id="boardHeightSetter"></div>
