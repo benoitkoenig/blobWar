@@ -1,7 +1,9 @@
 import React from "react";
-import {render} from "react-dom";
-import {connect, Provider} from "react-redux";
-import {createStore, combineReducers, applyMiddleware} from "redux";
+import ReactDOM from "react-dom";
+/* I'm thinking of taking off react-router, as it creates more problems than it solves. I'm actually only keeping it because this whole project aims at testing new tools */
+import { Redirect, BrowserRouter, IndexRoute, Route, Link } from 'react-router-dom';
+import { Provider } from "react-redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 
@@ -9,7 +11,11 @@ import Cards from "./Reducers/Cards.js";
 import Navigation from "./Reducers/Navigation.js";
 import GameState from "./Reducers/GameState.js";
 
-import Body from "./Components/Body.jsx";
+import Header from "./Components/Header.jsx";
+import Alert from "./Components/Alert.jsx";
+import Menu from "./Components/Menu.jsx";
+import CardsSwitch from "./Components/CardsSwitch.jsx";
+import Board from "./Components/Board.jsx";
 
 const reducers = combineReducers({
 	Cards,
@@ -23,9 +29,23 @@ let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 let store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);
 
-render(
-	<Provider store={store}>
-		<Body />
-	</Provider>,
-	document.getElementById('body')
-)
+ReactDOM.render(
+	(
+		<Provider store={store}>
+			<BrowserRouter>
+				<div>
+					<Header />
+					<Route path="/">
+						<Redirect to="/Menu" />
+					</Route>
+					<Route path="/Menu" component={Menu} />
+					<Route path="/Cards" component={CardsSwitch} />
+					<Route path="/Board" component={Board} />
+					<Alert />
+				</div>
+			</BrowserRouter>
+		</Provider>
+
+	),
+    document.getElementById('body')
+);

@@ -1,7 +1,3 @@
-.cardsSwitch {
-	height: 100%;
-}
-
 #cardsContainer {
 	height: calc(100% - 4em);
 }

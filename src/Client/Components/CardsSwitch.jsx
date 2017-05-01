@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {createStore} from "redux";
+import {Link} from "react-router-dom";
 
 const Card = ({cardIndex, title, description, firstSpell, secondSpell, setCard}) => {
 	return (
@@ -35,9 +36,9 @@ const CardsSwitch = ({cards, data, setCard, goBack}) => {
 		cardsElement.push(<Card key={i.toString()} cardIndex={i} title={data[i].title} description={data[i].description} setCard={setCard} firstSpell={cards[0] == i} secondSpell={cards[1] == i} />);
 	}
 	return (
-		<div className='cardsSwitch'>
+		<div className='cardsSwitch containerElement'>
 			<div id='cardsContainer'> {cardsElement} </div>
-			<div id='confirmButton' onClick={goBack}> Confirm </div>
+			<Link id='confirmButton' to="/Menu"> Confirm </Link>
 		</div>
 	);
 }

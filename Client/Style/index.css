@@ -13,7 +13,7 @@ body, html, #body, #body>div {
 	-webkit-box-sizing: border-box;
 }
 
-#container {
+.containerElement {
 	height: calc(100% - 3em);
 }
 
@@ -30,4 +30,10 @@ body, html, #body, #body>div {
 	position: absolute;
 	background-color: #FEFEFE;
 	border-radius: 0.2em;
+}
+
+a {
+	text-decoration: none;
+	color: #6599ff;
+	display: inline;
 }
