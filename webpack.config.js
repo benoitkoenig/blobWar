@@ -45,7 +45,8 @@ module.exports = [
 						presets: ["env", "react", "es2015-node"]
 					}
 				},
-				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
+				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
+				{ test: /\.css$/, loader: "style-loader!css-loader" }
 			]
 		}
 	}

@@ -50,11 +50,9 @@
 	width: 2em;
 }
 
-#cardsChoose>span, #cardsRandom>span {
+#cardsChoose span, #cardsRandom span {
 	vertical-align: 50%;
 }
-
-
 
 #cardsTutorial {
 	text-align: center;
