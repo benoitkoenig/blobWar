@@ -17,14 +17,14 @@ import Menu from "./Components/Menu.jsx";
 import CardsSwitch from "./Components/CardsSwitch.jsx";
 import Board from "./Components/Board.jsx";
 
-import "./StyleSheets/Board.css"
-import "./StyleSheets/CardsSwitch.css"
-import "./StyleSheets/EndOfGame.css"
-import "./StyleSheets/Header.css"
-import "./StyleSheets/HowToPlay.css"
-import "./StyleSheets/MatchMaker.css"
-import "./StyleSheets/Menu.css"
-import "./StyleSheets/index.css"
+import "./StyleSheets/Board.css";
+import "./StyleSheets/CardsSwitch.css";
+import "./StyleSheets/EndOfGame.css";
+import "./StyleSheets/Header.css";
+import "./StyleSheets/HowToPlay.css";
+import "./StyleSheets/MatchMaker.css";
+import "./StyleSheets/Menu.css";
+import "./StyleSheets/index.css";
 
 const reducers = combineReducers({
 	Cards,

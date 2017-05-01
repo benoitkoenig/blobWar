@@ -1,3 +1,5 @@
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = [
 	{
 		entry: './src/app.js',
@@ -48,6 +50,12 @@ module.exports = [
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
 				{ test: /\.css$/, loader: "style-loader!css-loader" }
 			]
-		}
+		},
+		plugins: [
+			new HtmlWebpackPlugin({
+				template: './src/Client/index.html',
+				inject: 'body',
+			})
+		]
 	}
 ]
