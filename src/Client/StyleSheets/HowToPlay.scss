@@ -1,0 +1,27 @@
+@import 'config';
+
+.howToPlay {
+	top: 2em;
+	left: 20%;
+	right: 20%;
+	max-height: calc(100% - 4em);
+	overflow: auto;
+
+	p {
+		margin: 2em;
+	}
+
+	.goBack {
+		@extend p;
+		display: inline-block;
+		border: 1px solid #444;
+		border-radius: 0.2em;
+		padding: 0.5em 2em;
+		cursor: pointer;
+	}
+
+	.blue {
+		color: $sky-blue;
+	}
+
+}

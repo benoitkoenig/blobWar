@@ -1,0 +1,22 @@
+.endOfGame {
+	text-align: center;
+	top: 6em;
+	height: 10em;
+	left: 30%;
+	right: 30%;
+
+	p {
+		margin-top: 1em;
+		font-size: 1.5em;
+	}
+
+	.goBack {
+		margin-top: 0.5em;
+		display: inline-block;
+		border: 1px solid #444;
+		border-radius: 0.2em;
+		padding: 0.5em 2em;
+		cursor: pointer;
+	}
+
+}

@@ -53,11 +53,15 @@
 	100% {opacity: 0;}
 }
 
-.threePointsAnimation>span {
-	animation-duration: 5s;
-	animation-iteration-count: infinite;
-}
+.threePointsAnimation {
 
-.threePointsAnimation>span:nth-child(1) {animation-name: point1;}
-.threePointsAnimation>span:nth-child(2) {animation-name: point2;}
-.threePointsAnimation>span:nth-child(3) {animation-name: point3;}
+	span {
+		animation-duration: 5s;
+		animation-iteration-count: infinite;
+	}
+
+	span:nth-child(1) {animation-name: point1;}
+	span:nth-child(2) {animation-name: point2;}
+	span:nth-child(3) {animation-name: point3;}
+
+}

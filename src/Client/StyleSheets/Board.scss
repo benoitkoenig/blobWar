@@ -1,5 +1,8 @@
+@import 'config';
+
 #boardContainer {
 	width: 100%;
+	@include containerElement();
 }
 
 /* The board itself with the blobs */
@@ -22,11 +25,12 @@
 .blob {
 	position: absolute;
 	width: 10%;
-}
 
-.blob>img {
-	width: 100%;
-	position: absolute;
+	img {
+		width: 100%;
+		position: absolute;
+	}
+
 }
 
 /* The cards next to the board */
@@ -40,13 +44,10 @@
 }
 
 .boardCard {
-	display: inline-block;
-	vertical-align: top;
+	@include card();
 	margin: 0.25em 0.25em;
 	width: calc(100% - 0.5em);
-	border-radius: 0.2em;
-	border: 1px solid #F0F0F0;
-	background-color: #FFF;
+
 }
 
 .boardCard:not(.moveCard) {
@@ -55,21 +56,4 @@
 
 .boardCard.moveCard {
 	height: calc(20% - 0.5em);
-}
-
-.boardCard .title {
-	text-align: center;
-	border-bottom: 1px solid #C0C0C0;
-	background-color: #FAFAFA;
-	padding: 0.2em 0em;
-}
-
-.boardCard .description {
-	margin: 0.5em;
-	height: calc(100% - 6em);
-}
-
-.boardCard img {
-	margin: 0px calc(50% - 2.25em);
-	width: 4.5em;
 }

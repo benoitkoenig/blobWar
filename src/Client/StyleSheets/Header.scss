@@ -1,5 +1,7 @@
+@import 'config';
+
 #header {
-	background-color: #6599ff;
+	background-color: $sky-blue;
 	height: 3em;
 	box-shadow: 0px 2px 4px #888;
 }
@@ -8,15 +10,16 @@
 	float: left;
 	margin: 0.5em 0em 0em 0.5em;
 	cursor: pointer;
-}
 
-#logo>img {
-	width: 2em;
-}
+	img {
+		width: 2em;
+	}
 
-#logo>span {
-	vertical-align: 50%;
-	color: #FFF;
+	span {
+		vertical-align: 50%;
+		color: #FFF;
+	}
+
 }
 
 #login {

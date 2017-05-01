@@ -59,7 +59,7 @@ const Menu = ({cards, randomCards, displayAlert, startGame, startMatchMaking}) =
 
 	// The left side of the menu is a different React class bc it is quite complex, while the right side consists only of three buttons
 	return (
-		<div className="menu containerElement">
+		<div id="menu">
 			<CardsMenu className="cardsMenuContainer" randomCards={randomCards} cards={cards} displayAlert={displayAlert} />
 			<div id="start">
 				<div className="blank"></div>

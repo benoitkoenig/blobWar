@@ -38,7 +38,7 @@ const CardsSwitch = ({cards, data, setCard, goBack}) => {
 		cardsElement.push(<Card key={i.toString()} cardIndex={i} title={data[i].title} description={data[i].description} setCard={setCard} firstSpell={cards[0] == i} secondSpell={cards[1] == i} />);
 	}
 	return (
-		<div className='cardsSwitch containerElement'>
+		<div id='cardsSwitch'>
 			<div id='cardsContainer'> {cardsElement} </div>
 			<Link id='confirmButton' to="/Menu"> Confirm </Link>
 		</div>

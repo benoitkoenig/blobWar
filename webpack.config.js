@@ -48,7 +48,8 @@ module.exports = [
 					}
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
-				{ test: /\.css$/, loader: "style-loader!css-loader" },
+				// { test: /\.css$/, loader: "style-loader!css-loader" },
+				{ test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
 				{ test: /\.(woff|png|jpg|gif)$/, loader: 'url-loader?limit=100000' }
 			]
 		},

@@ -1,5 +1,7 @@
 @font-face { font-family: "Lato"; src: url('/Assets/Lato-Medium.ttf'); }
 
+@import 'config';
+
 body, html, #body, #body>div {
 	margin: 0px;
 	font-family: "Lato";
@@ -11,10 +13,6 @@ body, html, #body, #body>div {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-}
-
-.containerElement {
-	height: calc(100% - 3em);
 }
 
 #darkPart {
@@ -34,6 +32,6 @@ body, html, #body, #body>div {
 
 a {
 	text-decoration: none;
-	color: #6599ff;
+	color: $sky-blue;
 	display: inline;
 }

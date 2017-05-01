@@ -112,7 +112,7 @@ class Board extends React.Component {
 			blobs.push(<Blob key={(i+this.props.army.length).toString()} blob={this.props.enemy[i]} selected={false} idBlob={i} team={false} />);
 		}
 		return (
-			<div id="boardContainer" className="containerElement" onContextMenu={(ev) => {ev.preventDefault() ; this.props.triggerCard(this.state.idBlob, 1, this.getPosition(ev.clientX, ev.clientY))}} onMouseMove={(ev) => {this.mousePos = this.getPosition(ev.clientX, ev.clientY)}}>
+			<div id="boardContainer" onContextMenu={(ev) => {ev.preventDefault() ; this.props.triggerCard(this.state.idBlob, 1, this.getPosition(ev.clientX, ev.clientY))}} onMouseMove={(ev) => {this.mousePos = this.getPosition(ev.clientX, ev.clientY)}}>
 				<div className="boardCards">
 					<Card title={this.props.cards[0].title} description={this.props.cards[0].description} buttonName='space' moveCard={false} />
 					<Card title={this.props.cards[1].title} description={this.props.cards[1].description} buttonName='right' moveCard={false} />
