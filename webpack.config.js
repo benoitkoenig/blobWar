@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = [
 	{
@@ -27,9 +28,10 @@ module.exports = [
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
 			]
 		},
-		externals: {
+		externals: [nodeExternals()]
+/*		externals: {
 			"socket.io": "commonjs socket.io"
-		}
+		}*/
 	},
 	{
 		entry: './src/Client/index.jsx',

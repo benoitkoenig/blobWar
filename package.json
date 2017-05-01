@@ -35,7 +35,8 @@
     "socket.io-client": "^1.7.3",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.2"
+    "webpack": "^2.3.2",
+    "webpack-node-externals": "^1.5.4"
   },
   "devDependencies": {
     "electron": "^1.6.2",
