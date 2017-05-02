@@ -1,12 +1,8 @@
 import Card from "./Generic/Card.js"
 
-export default class Bloc extends Card {
+class Bloc extends Card {
 	constructor() {
 		super(["SingleBlobSpell", "LastToCast", "Cancelable"]);
-	}
-
-	removeStatus(blob) {
-		blob.status = "normal";
 	}
 
 	trigger(data, army) {
@@ -19,5 +15,10 @@ export default class Bloc extends Card {
 		if (super.iterate(army, enemy)) return;
 		if (this.blob.destination != null) this.cancel();
 	}
-
 }
+
+Bloc.prototype.removeStatus = function(blob) {
+	blob.status = "normal";
+}
+
+export default Bloc;

@@ -61,7 +61,7 @@ app.on('activate', () => {
 import http from "http";
 import express from "express";
 import socket from "socket.io";
-import game from "./Server/Game.js";
+import Game from "./Server/Game.js";
 
 const appExpress = express();
 const server = http.createServer(appExpress);
@@ -73,11 +73,11 @@ appExpress.use("/", express.static(__dirname+"/Client"));
 io.on("connection", (socket) => {
 	socket.on("action", (action) => {
 		if (action.category === "Idle") {
-			game.playerAgainstIdle(socket, action.cards);
+			Game.playerAgainstIdle(socket, action.cards);
 		} else if (action.category === "Bot") {
-			game.playerAgainstBot(socket, action.cards);
+			Game.playerAgainstBot(socket, action.cards);
 		} else if (action.category === "MatchMaking") {
-			game.playerJoin(socket, action.cards);
+			Game.playerJoin(socket, action.cards);
 		}
 	});
 });

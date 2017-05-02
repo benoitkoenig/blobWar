@@ -22,16 +22,13 @@ const CardCategory = {
 	Cancelable: Cancelable
 };
 
-export default class Card {
-
+class Card {
 	constructor(composedWith) {
 		this._composedWith = composedWith;
 		for (let name of composedWith) {
 			CardCategory[name].init.call(this);
 		}
 	}
-
-	cancel() {}
 
 	trigger(data, army) {
 		let shouldReturn = false;
@@ -51,5 +48,8 @@ export default class Card {
 		}
 		return returnOk;
 	}
-
 }
+
+Card.prototype.cancel = function() {}
+
+export default Card;

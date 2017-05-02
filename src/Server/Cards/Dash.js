@@ -1,17 +1,9 @@
 import Card from "./Generic/Card.js"
 
-export default class Dash extends Card {
+class Dash extends Card {
 	constructor() {
 		super(["SingleBlobSpell", "FirstToCast", "UseOnce", "Counter", "RemoveIterate"]);
 		this.counterMax = 7;
-	}
-
-	endOfCounter(army, enemy) {
-		this._used = (!this._canBeReused);
-		if (this.blob == null) return; // Happens if the blob has died
-		this.blob.status = "normal";
-		this.blob.currentSpell = null;
-		this.blob = null;
 	}
 
 	trigger(data, army) {
@@ -44,5 +36,14 @@ export default class Dash extends Card {
 			}
 		}
 	}
-
 }
+
+Dash.prototype.endOfCounter = function(army, enemy) {
+	this._used = (!this._canBeReused);
+	if (this.blob == null) return; // Happens if the blob has died
+	this.blob.status = "normal";
+	this.blob.currentSpell = null;
+	this.blob = null;
+}
+
+export default Dash;

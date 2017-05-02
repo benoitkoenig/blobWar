@@ -94,5 +94,5 @@ const playerAgainstBot = (socket, data) => {
 export default {
 	playerJoin,
 	playerAgainstIdle,
-	startGame
+	playerAgainstBot
 }
