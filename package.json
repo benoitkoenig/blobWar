@@ -6,7 +6,8 @@
     "start": "webpack && node app.js",
     "webpack": "webpack",
     "electron": "electron",
-    "electron-packager": "electron-packager . blobwar --out=desktopApps --all"
+    "electron-packager": "electron-packager . blobwar --out=desktopApps --all",
+    "test": "mocha-webpack ./test/test.js"
   },
   "description": "Two persons game",
   "homepage": "http://blobwar.herokuapp.com",
@@ -39,7 +40,10 @@
     "webpack-node-externals": "^1.5.4"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "electron": "^1.6.2",
-    "electron-packager": "^8.6.0"
+    "electron-packager": "^8.6.0",
+    "mocha": "^3.3.0",
+    "mocha-webpack": "^0.7.0"
   }
 }

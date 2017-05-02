@@ -48,10 +48,10 @@ const startGame = (player1, player2) => {
 }
 
 // Match Making
-exports.playerJoin = (() => {
+const playerJoin = (() => {
 	let waitingSocket = null;
 	let waitingData = null;
-	const disconnect = (action) => { if (action.type == "server/cancelMatchMaking") waitingSocket = null; }
+	const disconnect = (action) => { if (action === "transport close" || action.type === "server/cancelMatchMaking") waitingSocket = null; }
 	return (socket, data) => {
 		if (waitingSocket == null) {
 			waitingSocket = socket;
@@ -83,10 +83,16 @@ exports.playerJoin = (() => {
 })();
 
 // Training mode
-exports.playerAgainstIdle = (socket, data) => {
+const playerAgainstIdle = (socket, data) => {
 	startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
 }
 
-exports.playerAgainstBot = (socket, data) => {
+const playerAgainstBot = (socket, data) => {
 	startGame(new HumanPlayer(socket, true, data), new Bots[parseInt(Math.random()*Bots.length)]());
+}
+
+export default {
+	playerJoin,
+	playerAgainstIdle,
+	startGame
 }
