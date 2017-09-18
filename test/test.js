@@ -1,7 +1,4 @@
-import BlobTest from "./blob.test.js";
-import GameTest from "./game.test.js";
-
-BlobTest();
-GameTest();
+import "./blob.test";
+import "./game.test";
 
 // That's two unit tests done: many more to go !

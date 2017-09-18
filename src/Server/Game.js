@@ -14,7 +14,7 @@ const startGame = (player1, player2) => {
 	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData()});
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
-	let iteration = setInterval(() => {
+	const iteration = setInterval(() => {
 		player1.iterateBlobs(player2.getArmy());
 		player2.iterateBlobs(player1.getArmy());
 		player1.iterateCards(player2);
@@ -47,37 +47,39 @@ const startGame = (player1, player2) => {
 	}, 25);
 }
 
+const initCountdown = (socket1, data1, socket2, data2) => {
+	[0, 1, 2, 3].forEach((i) => {
+		setTimeout(() => {
+			socket1.emit("action", { type: "countdown", value: 3-i });
+			socket2.emit("action", { type: "countdown", value: 3-i });
+			if (i === 3) startGame(
+				new HumanPlayer(socket1, true, data1),
+				new HumanPlayer(socket2, false, data2)
+			);
+		}, 1000*i);
+	});
+}
+
 // Match Making
 const playerJoin = (() => {
-	let waitingSocket = null;
-	let waitingData = null;
-	const disconnect = (action) => { if (action === "transport close" || action.type === "server/cancelMatchMaking") waitingSocket = null; }
+	let waiting = null;
+	const disconnect = (action) => {
+		if (action === "transport close" || action.type === "server/cancelMatchMaking") {
+			waiting = null;
+		}
+	}
 	return (socket, data) => {
-		if (waitingSocket == null) {
-			waitingSocket = socket;
-			waitingData = data;
-			waitingSocket.on("disconnect", disconnect);
-			waitingSocket.emit("action", {type: "countdown", value: null});
-			waitingSocket.on("action", disconnect);
+		if (waiting === null) {
+			waiting = { socket, data };
+			socket.emit("action", {type: "countdown", value: null});
+			socket.on("disconnect", disconnect);
+			socket.on("action", disconnect);
 		} else {
-			// We set the countdown
-			((socket1, data1, socket2, data2) => {
-				[0, 1, 2, 3].forEach((i) => {
-					setTimeout(() => {
-						socket1.emit("action", {type: "countdown", value: 3-i});
-						socket2.emit("action", {type: "countdown", value: 3-i});
-						// (i == 3) End of the countdown. The game starts here
-						if (i == 3) startGame(
-							new HumanPlayer(socket1, true, data1),
-							new HumanPlayer(socket2, false, data2)
-						);
-					}, 1000*i);
-				});
-			})(waitingSocket, waitingData, socket, data);
-			// We clear waiting Socket for the next player to join
-			waitingSocket.removeListener("disconnect", disconnect);
-			waitingSocket.removeListener("action", disconnect);
-			waitingSocket = null;
+			// We set the countdown and clear waiting Socket for the next player to join
+			initCountdown(waiting.socket, waiting.data, socket, data);
+			waiting.socket.removeListener("disconnect", disconnect);
+			waiting.socket.removeListener("action", disconnect);
+			waiting = null;
 		}
 	}
 })();

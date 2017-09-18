@@ -1,19 +1,16 @@
 import React from "react";
-import {connect} from "react-redux";
-import {createStore} from "redux";
+import { connect } from "react-redux";
 
-import {buttons, blobs, enemies, pointers, hats} from "../Assets/assets.js";
+import { buttons, blobs, enemies, pointers, hats } from "../Assets/assets.js";
 
-const Card = ({title, description, buttonName, moveCard}) => {
-	// It is mostly the same as CardsMenu
-	return (
-		<div className={`boardCard${moveCard ? " moveCard" : ""}`}>
-			<div className="title">{title}</div>
-			<div className="description">{description}</div>
-			<img src={buttons.normal[buttonName]} />
-		</div>
-	);
-}
+// It is mostly the same as CardsMenu
+const Card = ({ title, description, buttonName, moveCard }) => (
+	<div className={`boardCard${moveCard ? " moveCard" : ""}`}>
+		<div className="title">{title}</div>
+		<div className="description">{description}</div>
+		<img src={buttons.normal[buttonName]} />
+	</div>
+);
 
 // const Blob = ({blob, selected, idBlob, team}) => {
 class Blob extends React.Component {
@@ -46,8 +43,8 @@ class Blob extends React.Component {
 
 }
 
-const mapStateToProps = (state, ownProps) => {
-	return {
+const mapStateToProps = (state, ownProps) => (
+	{
 		cards: [
 			state.Cards.cards[0] === null ? null : state.Cards.data[state.Cards.cards[0]],
 			state.Cards.cards[1] === null ? null : state.Cards.data[state.Cards.cards[1]]
@@ -56,16 +53,16 @@ const mapStateToProps = (state, ownProps) => {
 		enemy: state.GameState.enemy,
 		idBlob: state.GameState.idBlob
 	}
-}
+)
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
+const mapDispatchToProps = (dispatch, ownProps) => (
+	{
 		displayContainer: (name) => { dispatch({type: "DisplayContainer", name: name}); },
 		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); },
 		setDestination: (idBlob, destination) => { dispatch({type: "server/setDestination", idBlob: idBlob, destination: destination}); },
 		triggerCard: (idBlob, idCard, destination) => { dispatch({type: "server/triggerCard", idBlob: idBlob, idCard: idCard, destination: destination}); },
 	}
-}
+)
 
 class Board extends React.Component {
 

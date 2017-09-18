@@ -33,10 +33,10 @@ const reducers = combineReducers({
 });
 
 // Connect on address url, or on localhost
-let socket = io((window.location.href).split(":")[0] === "file" ? "http://localhost:8080/" : window.location.href);
-let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
+const socket = io((window.location.href).split(":")[0] === "file" ? "http://localhost:8080/" : window.location.href);
+const socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
-let store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);
+const store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);
 
 ReactDOM.render(
 	(

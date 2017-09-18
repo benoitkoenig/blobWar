@@ -1,19 +1,18 @@
 import React from "react";
-import {connect} from "react-redux";
-import {createStore} from "redux";
+import { connect } from "react-redux";
 
-const mapStateToProps = (state, ownProps) => {
-	return {
+const mapStateToProps = (state, ownProps) => (
+	{
 		text: state.GameState.endOfGameValue
 	}
-}
+)
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
+const mapDispatchToProps = (dispatch, ownProps) => (
+	{
 		displayContainer: (name) => { dispatch({type: "DisplayContainer", name: name}); },
 		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); }
 	}
-}
+)
 
 const EndOfGame = ({displayAlert, displayContainer, text}) => {
 

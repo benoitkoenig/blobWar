@@ -1,6 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
-import {createStore} from "redux";
+import { connect } from "react-redux";
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -17,7 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	}
 }
 
-const MatchMaking = ({displayAlert, displayContainer, countdown, needCards, cancelMatchMaking}) => {
+const MatchMaking = ({ displayAlert, displayContainer, countdown, needCards, cancelMatchMaking }) => {
 
 	const cancel = () => {
 		displayContainer("Menu");

@@ -1,22 +1,19 @@
 import React from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {createStore} from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import {buttons, dices, cards as cardsSrc} from "../Assets/assets.js";
+import { buttons, dices, cards as cardsSrc } from "../Assets/assets.js";
 
-const CardMenu = ({title, description, isSpace}) => {
-	// A card. Quite similar to cards in CardsSwitch
-	return (
-		<div className="cardMenu">
-			<div className="title">{title}</div>
-			<div className="description">{description}</div>
-			<img src={buttons.normal[isSpace ? "space" : "right"]} />
-		</div>
-	);
-}
+// A card. Quite similar to cards in CardsSwitch
+const CardMenu = ({ title, description, isSpace }) => (
+	<div className="cardMenu">
+		<div className="title">{title}</div>
+		<div className="description">{description}</div>
+		<img src={buttons.normal[isSpace ? "space" : "right"]} />
+	</div>
+);
 
-const CardsMenu = ({cards, randomCards, chooseCards, displayAlert}) => {
+const CardsMenu = ({ cards, randomCards, chooseCards, displayAlert }) => {
 	// The left side of the menu. Two states exists : both card are defined, or not
 	const noCard = (cards[0] === null || cards[1] === null);
 	return (
@@ -32,17 +29,17 @@ const CardsMenu = ({cards, randomCards, chooseCards, displayAlert}) => {
 	);
 }
 
-const mapStateToProps = (state, ownProps) => {
-	return {
+const mapStateToProps = (state, ownProps) => (
+	{
 		cards: [
 			state.Cards.cards[0] === null ? null : state.Cards.data[state.Cards.cards[0]],
 			state.Cards.cards[1] === null ? null : state.Cards.data[state.Cards.cards[1]]
 		]
 	}
-}
+)
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
+const mapDispatchToProps = (dispatch, ownProps) => (
+	{
 		randomCards: () => { dispatch({type: "RandomCards"}); },
 		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); },
 		startGame: (category, cards) => {
@@ -53,23 +50,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			}
 		}
 	}
-}
+)
 
-const Menu = ({cards, randomCards, displayAlert, startGame, startMatchMaking}) => {
-
-	// The left side of the menu is a different React class bc it is quite complex, while the right side consists only of three buttons
-	return (
-		<div id="menu">
-			<CardsMenu className="cardsMenuContainer" randomCards={randomCards} cards={cards} displayAlert={displayAlert} />
-			<div id="start">
-				<div className="blank"></div>
-				<div id="startTutorial" onClick={() => {displayAlert("HowToPlay")}}> How to play </div>
-				<div id="startMatchMaking" onClick={() => {startGame("MatchMaking", cards)}}> Match Making </div>
-				<div id="startBotGame" onClick={() => {startGame("Bot", cards)}}> Play against a bot </div>
-				<div id="startTrainingGame" onClick={() => {startGame("Idle", cards)}}> Training Mod </div>
-			</div>
+// The left side of the menu is a different React class bc it is quite complex, while the right side consists only of three buttons
+const Menu = ({ cards, randomCards, displayAlert, startGame, startMatchMaking }) => (
+	<div id="menu">
+		<CardsMenu className="cardsMenuContainer" randomCards={randomCards} cards={cards} displayAlert={displayAlert} />
+		<div id="start">
+			<div className="blank"></div>
+			<div id="startTutorial" onClick={() => {displayAlert("HowToPlay")}}> How to play </div>
+			<div id="startMatchMaking" onClick={() => {startGame("MatchMaking", cards)}}> Match Making </div>
+			<div id="startBotGame" onClick={() => {startGame("Bot", cards)}}> Play against a bot </div>
+			<div id="startTrainingGame" onClick={() => {startGame("Idle", cards)}}> Training Mod </div>
 		</div>
-	);
-}
+	</div>
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -57,4 +57,4 @@ export const pointers = {
 	active: pointerActive
 }
 
-export {dices, cards, logo, login};
+export { dices, cards, logo, login };

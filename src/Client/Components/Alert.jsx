@@ -1,9 +1,8 @@
 import React from "react";
-import {connect} from "react-redux";
-import {createStore} from "redux";
-import {Redirect} from "react-router-dom";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-import {createHashHistory} from 'history'
+import { createHashHistory } from 'history'
 
 import Header from "./Header.jsx";
 
@@ -11,7 +10,7 @@ import MatchMaking from "./MatchMaking.jsx";
 import HowToPlay from "./HowToPlay.jsx";
 import EndOfGame from "./EndOfGame.jsx";
 
-const Alert = ({alert, container, displayAlert, clearContainer}) => {
+const Alert = ({ alert, container, displayAlert, clearContainer }) => {
 
 	if (container !== null) { // This is bad. See the notes in Reducers/Navigation.js
 		clearContainer();
@@ -30,18 +29,18 @@ const Alert = ({alert, container, displayAlert, clearContainer}) => {
 
 }
 
-const mapStateToProps = (state, ownProps) => {
-	return {
+const mapStateToProps = (state, ownProps) => (
+	{
 		alert: state.Navigation.alert,
 		container: state.Navigation.container
 	}
-}
+)
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
+const mapDispatchToProps = (dispatch, ownProps) => (
+	{
 		displayAlert: () => { dispatch({type: "DisplayAlert", name: null}) },
 		clearContainer: () => { dispatch({type: "DisplayContainer", name: null}) }
 	}
-}
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);

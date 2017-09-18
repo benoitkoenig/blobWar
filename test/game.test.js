@@ -16,17 +16,15 @@ class FakeSocket {
 	}
 }
 
-export default () => {
-	describe('Game', () => {
-		describe('MatchMaking', () => {
-			it('playerJoin should emit a null countdown', (done) => {
-				const fakeSocket = new FakeSocket();
-				fakeSocket.on("action", (action) => {
-					assert.equal((action.type === "countdown" && action.value === null), true);
-					done();
-				});
-				Game.playerJoin(fakeSocket);
+describe('Game', () => {
+	describe('MatchMaking', () => {
+		it('playerJoin should emit a null countdown', (done) => {
+			const fakeSocket = new FakeSocket();
+			fakeSocket.on("action", (action) => {
+				assert.equal((action.type === "countdown" && action.value === null), true);
+				done();
 			});
+			Game.playerJoin(fakeSocket);
 		});
 	});
-}
+});
