@@ -23,14 +23,14 @@ const startGame = (player1, player2) => {
 		const toKill2 = player2.whoToKill(player1);
 		player1.kill(toKill2);
 		player2.kill(toKill1);
-		if (player1.lost() || player2.lost()) {
-			if (player1.lost() && player2.lost()) {
+		if (player1.lost || player2.lost) {
+			if (player1.lost && player2.lost) {
 				player1.emit({type: "endOfGame", value: "It's a draw"});
 				player2.emit({type: "endOfGame", value: "It's a draw"});
-			} else if (player1.lost()) {
+			} else if (player1.lost) {
 				player1.emit({type: "endOfGame", value: "Defeat"});
 				player2.emit({type: "endOfGame", value: "Victory !"});
-			} else if (player2.lost()) {
+			} else if (player2.lost) {
 				player1.emit({type: "endOfGame", value: "Victory !"});
 				player2.emit({type: "endOfGame", value: "Defeat"});
 			}

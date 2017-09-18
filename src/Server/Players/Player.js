@@ -36,25 +36,29 @@ class Player {
 		}
 
 	}
+
+	get lost() {
+		return (this._army.find(blob => blob.alive) === undefined);
+	}
+
+	static _doWeKillIt(blob, enemyBlob) {
+		if (Math.sqrt(Math.pow(enemyBlob.x-blob.x, 2) + Math.pow(enemyBlob.y-blob.y, 2)) > 0.04) return false;
+		if (!blob.alive || !enemyBlob.alive) return false;
+		if (enemyBlob.status === "fury" && blob.status !== "fury") return false;
+		if (blob.status === "ghost" || enemyBlob.status === "ghost") return false;
+		return true;
+	}
 }
 
 Player.prototype.getArmy = function() { return this._army; }
 
 Player.prototype.getArmyData = function() { return [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()]; }
 
-Player.prototype.emit = function() {} // HumanPlayer overrides this, BotPlayer doesn't
+Player.prototype.emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't
 
-Player.prototype.clear = function() {}
+Player.prototype.clear = () => {}
 
-Player.prototype.isStillConnected = function() { return false; }
-
-Player.prototype._doWeKillIt = function(blob, enemyBlob) {
-	if (Math.sqrt(Math.pow(enemyBlob.x-blob.x, 2) + Math.pow(enemyBlob.y-blob.y, 2)) > 0.04) return false;
-	if (!blob.alive || !enemyBlob.alive) return false;
-	if (enemyBlob.status == "fury" && blob.status != "fury") return false;
-	if (blob.status == "ghost" || enemyBlob.status == "ghost") return false;
-	return true;
-}
+Player.prototype.isStillConnected = () => false;
 
 Player.prototype.iterateBlobs = function() { this._army.forEach(blob => { blob.iterate(); }); }
 
@@ -63,22 +67,15 @@ Player.prototype.iterateCards = function(enemyPlayer) {
 }
 
 Player.prototype.whoToKill = function(enemyPlayer) {
-	let toKill = [];
+	const toKill = [];
 	this._army.forEach((blob) => {
 		enemyPlayer.getArmyData().forEach((enemyBlob, enemyId) => {
-			if (this._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
+			if (Player._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
 		});
 	});
 	return toKill;
 }
 
 Player.prototype.kill = function(list) { list.forEach((id) => { if (id != null) this._army[id].alive = false; this._army[id].destination = null; }); }
-
-Player.prototype.lost = function() {
-	let deads = 0;
-	this._army.forEach((blob) => { if (!blob.alive) deads +=1 ; });
-	if (deads == 3) return true;
-	return false;
-}
 
 export default Player;

@@ -1,5 +1,39 @@
 import Player from "./Player.js"
 
+const whereToBloc = (blob, enemy) => {
+	const dist = Math.sqrt(Math.pow(blob.x - enemy.x, 2) + Math.pow(blob.y - enemy.y, 2));
+	return {
+		x: blob.x + (enemy.x - blob.x) / dist * 0.06,
+		y: blob.y + (enemy.y - blob.y) / dist * 0.06,
+	}
+}
+
+const getClosestEnemy = (blob, enemyArmy) => {
+	let distance = 1000;
+	let returningId = null;
+	enemyArmy.forEach((enemy, enemyId) => {
+		const dist = Math.pow(enemy.x - blob.x, 2) + Math.pow(enemy.y - blob.y, 2);
+		if (dist < distance && enemy.alive) {
+			distance = dist;
+			returningId = enemyId;
+		}
+	});
+	return returningId;
+}
+
+const closestBlob = (posToBloc, army, pullingBlob) => {
+	let distance = 1000;
+	let returningId = null;
+	army.forEach((blob, id) => {
+		const dist = Math.pow(blob.x - posToBloc.x, 2) + Math.pow(blob.y - posToBloc.y, 2);
+		if (id != pullingBlob && blob.alive && dist < distance) {
+			distance = dist;
+			returningId = id;
+		}
+	});
+	return returningId;
+}
+
 class BotBlocGravity extends Player {
 
 	constructor() {
@@ -16,20 +50,20 @@ class BotBlocGravity extends Player {
 BotBlocGravity.prototype.iterateBlobs = function(enemyArmy) {
 	if (this._timerTillPulling > 0) { // If we only have one blob left, he first casts bloc, then gravity
 		this._timerTillPulling -= 1;
-	} else if (this._timerTillPulling == 0) { // Our last blob, 1, stops the bloc to try gravity
+	} else if (this._timerTillPulling === 0) { // Our last blob, 1, stops the bloc to try gravity
 		this._cards[1].trigger({idBlob: 1}, this._army);
 		this._timerTillPulling = -1;
 	} else if (!this._army[0].alive && !this._army[2].alive && this._timerTillPulling == null) { // Both 0 and 2 are dead, so 1 starts a bloc which he will eventually rade for a gravity
-		if (this._cards[0].blob == null) this._cards[0].trigger({idBlob: 1}, this._army);
+		if (this._cards[0].blob === null) this._cards[0].trigger({idBlob: 1}, this._army);
 		this._timerTillPulling = 160;
-	} else if (this._cards[1].blob == null && this.pullingBlob == 0) { // Blob 0, which pulls first, died
+	} else if (this._cards[1].blob === null && this.pullingBlob == 0) { // Blob 0, which pulls first, died
 		this._cards[1].trigger({idBlob: 2}, this._army);
 		this.pullingBlob = 2;
-	} else if (this.pullingBlob != null) {
-		const enemyBlob = this._getClosestEnemy(this.pullingBlob, enemyArmy);
-		const posToBloc = this._whereToBloc(this._army[this.pullingBlob], enemyArmy[enemyBlob]);
-		const blobToMove = this._closestBlob(posToBloc);
-		if (blobToMove != null) {
+	} else if (this.pullingBlob !== null) {
+		const enemyBlob = getClosestEnemy(this._army[this.pullingBlob], enemyArmy);
+		const posToBloc = whereToBloc(this._army[this.pullingBlob], enemyArmy[enemyBlob]);
+		const blobToMove = closestBlob(posToBloc, this._army, this.pullingBlob);
+		if (blobToMove !== null) {
 			if (Math.pow(this._army[blobToMove].x - posToBloc.x, 2) + Math.pow(this._army[blobToMove].y - posToBloc.y, 2) < 0.0001) {
 				if (this._cards[0].blob != this._army[blobToMove]) {
 					this._cards[0].trigger({idBlob: blobToMove}, this._army);
@@ -38,46 +72,11 @@ BotBlocGravity.prototype.iterateBlobs = function(enemyArmy) {
 				this._army[blobToMove].destination = posToBloc;
 			}
 		}
-	} else if (this._army[0].destination == null) { // When the blob 0 gets the gravity, at the beginning
+	} else if (this._army[0].destination === null) { // When the blob 0 gets the gravity, at the beginning
 		this.pullingBlob = 0;
-		this._cards[1].trigger({idBlob: 0}, this._army);
+		this._cards[1].trigger({ idBlob: 0 }, this._army);
 	}
 	Player.prototype.iterateBlobs.call(this);
-}
-
-BotBlocGravity.prototype._getClosestEnemy = function(blobId, enemyArmy) {
-	const blob = this._army[blobId];
-	let distance = 1000;
-	let returningId = null;
-	for (let enemyId in enemyArmy) {
-		const dist = Math.pow(enemyArmy[enemyId].x - blob.x, 2) + Math.pow(enemyArmy[enemyId].y - blob.y, 2);
-		if (dist < distance && enemyArmy[enemyId].alive) {
-			distance = dist;
-			returningId = enemyId;
-		}
-	}
-	return returningId;
-}
-
-BotBlocGravity.prototype._whereToBloc = function(blob, enemy) {
-	const dist = Math.sqrt(Math.pow(blob.x - enemy.x, 2) + Math.pow(blob.y - enemy.y, 2));
-	return {
-		x: blob.x + (enemy.x - blob.x) / dist * 0.06,
-		y: blob.y + (enemy.y - blob.y) / dist * 0.06,
-	}
-}
-
-BotBlocGravity.prototype._closestBlob = function(posToBloc) {
-	let distance = 1000;
-	let returningId = null;
-	for (let id in this._army) {
-		const dist = Math.pow(this._army[id].x - posToBloc.x, 2) + Math.pow(this._army[id].y - posToBloc.y, 2);
-		if (id != this.pullingBlob && this._army[id].alive && dist < distance) {
-			distance = dist;
-			returningId = id
-		}
-	}
-	return returningId;
 }
 
 export default BotBlocGravity;

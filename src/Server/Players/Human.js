@@ -23,9 +23,8 @@ HumanPlayer.prototype._initSockets = function() {
 }
 
 HumanPlayer.prototype.clear = function() {
-	this._socket.removeAllListeners("server/setDestination");
-	this._socket.removeAllListeners("server/disconnect");
-	this._socket.removeAllListeners("server/triggerCard");
+	this._socket.removeAllListeners("action");
+	this._socket.removeAllListeners("disconnect");
 }
 
 HumanPlayer.prototype.isStillConnected = function() { return this._connected; }
