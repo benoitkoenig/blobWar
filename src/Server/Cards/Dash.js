@@ -17,7 +17,7 @@ class Dash extends Card {
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
 		const speed = 0.02;
-		const distance = Math.sqrt(Math.pow(this._destination.x-this.blob.x, 2) + Math.pow(this._destination.y-this.blob.y, 2));
+		const distance = Math.hypot(this._destination.x-this.blob.x, this._destination.y-this.blob.y);
 		if (distance != 0) {
 			this.blob.orientation = Math.abs(this._destination.x-this.blob.x) >= Math.abs(this._destination.y-this.blob.y) ? (this._destination.x >= this.blob.x ? 0 : 2) : (this._destination.y >= this.blob.y ? 1 : 3);
 		}
@@ -30,7 +30,7 @@ class Dash extends Card {
 			this.blob.y += (this._destination.y-this.blob.y) / distance * speed;
 		}
 		for (let i in enemy) {// If we kill an opponent, the spell can be re-used
-			const dist = Math.sqrt(Math.pow(enemy[i].x-this.blob.x, 2) + Math.pow(enemy[i].y-this.blob.y, 2));
+			const dist = Math.hypot(enemy[i].x-this.blob.x, enemy[i].y-this.blob.y);
 			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") {
 				this._canBeReused = true;
 			}

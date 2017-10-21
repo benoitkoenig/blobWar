@@ -67,7 +67,7 @@ const appExpress = express();
 const server = http.createServer(appExpress);
 const io = socket.listen(server);
 
-appExpress.use("/", express.static(__dirname+"/Client"));
+appExpress.use("/", express.static(__dirname + "/Client"));
 
 // When a user connects, he can either look for an opponent or fight an idle opponent (bot)
 io.on("connection", (socket) => {

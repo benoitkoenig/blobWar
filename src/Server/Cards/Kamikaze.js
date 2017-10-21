@@ -9,8 +9,8 @@ export default class Kamikaze extends Card {
 
 	trigger(data, army) {
 		const blob = army[data.idBlob];
-		const distance = Math.sqrt(Math.pow(data.destination.x-blob.x, 2) + Math.pow(data.destination.y-blob.y, 2));
-		if (distance == 0) return;
+		const distance = Math.hypot(data.destination.x-blob.x, data.destination.y-blob.y);
+		if (distance === 0) return;
 		if (super.trigger(data, army)) return;
 		const speed = 0.04;
 		blob.status = "fury";

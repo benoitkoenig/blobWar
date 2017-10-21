@@ -15,7 +15,7 @@ export default class Switch extends Card {
 		for (let id in army) {
 			const satelite = army[id];
 			satelite.destination = null;
-			const dist = Math.sqrt(Math.pow(this.blob.x - satelite.x, 2) + Math.pow(this.blob.y - satelite.y, 2));
+			const dist = Math.hypot(this.blob.x - satelite.x, this.blob.y - satelite.y);
 			if (id != data.idBlob && satelite.alive) {
 				this._orbitingIds.push(id)
 				this._distances.push(dist);

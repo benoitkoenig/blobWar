@@ -1,7 +1,7 @@
 import Player from "./Player.js"
 
 const whereToBloc = (blob, enemy) => {
-	const dist = Math.sqrt(Math.pow(blob.x - enemy.x, 2) + Math.pow(blob.y - enemy.y, 2));
+	const dist = Math.hypot(blob.x - enemy.x, blob.y - enemy.y);
 	return {
 		x: blob.x + (enemy.x - blob.x) / dist * 0.06,
 		y: blob.y + (enemy.y - blob.y) / dist * 0.06,
@@ -12,7 +12,7 @@ const getClosestEnemy = (blob, enemyArmy) => {
 	let distance = 1000;
 	let returningId = null;
 	enemyArmy.forEach((enemy, enemyId) => {
-		const dist = Math.pow(enemy.x - blob.x, 2) + Math.pow(enemy.y - blob.y, 2);
+		const dist = Math.hypot(enemy.x - blob.x, enemy.y - blob.y);
 		if (dist < distance && enemy.alive) {
 			distance = dist;
 			returningId = enemyId;
@@ -25,7 +25,7 @@ const closestBlob = (posToBloc, army, pullingBlob) => {
 	let distance = 1000;
 	let returningId = null;
 	army.forEach((blob, id) => {
-		const dist = Math.pow(blob.x - posToBloc.x, 2) + Math.pow(blob.y - posToBloc.y, 2);
+		const dist = Math.hypot(blob.x - posToBloc.x, blob.y - posToBloc.y);
 		if (id != pullingBlob && blob.alive && dist < distance) {
 			distance = dist;
 			returningId = id;
@@ -64,7 +64,7 @@ BotBlocGravity.prototype.iterateBlobs = function(enemyArmy) {
 		const posToBloc = whereToBloc(this._army[this.pullingBlob], enemyArmy[enemyBlob]);
 		const blobToMove = closestBlob(posToBloc, this._army, this.pullingBlob);
 		if (blobToMove !== null) {
-			if (Math.pow(this._army[blobToMove].x - posToBloc.x, 2) + Math.pow(this._army[blobToMove].y - posToBloc.y, 2) < 0.0001) {
+			if (Math.hypot(this._army[blobToMove].x - posToBloc.x, this._army[blobToMove].y - posToBloc.y) < 0.0001) {
 				if (this._cards[0].blob != this._army[blobToMove]) {
 					this._cards[0].trigger({idBlob: blobToMove}, this._army);
 				};

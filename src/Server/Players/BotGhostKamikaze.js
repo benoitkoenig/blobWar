@@ -38,7 +38,7 @@ BotGhostKamikaze.prototype.iterateBlobs = function(enemyArmy) {
 		let idBlob = null;
 		for (let i in this._army) {
 			const blob = this._army[i];
-			const distance = Math.pow(enemyBlob.x - blob.x, 2) + Math.pow(enemyBlob.y - blob.y, 2);
+			const distance = Math.hypot(enemyBlob.x - blob.x, enemyBlob.y - blob.y);
 			if (distance < dist && blob.alive) {
 				dist = distance;
 				idBlob = i;
@@ -99,7 +99,7 @@ BotGhostKamikaze.prototype._whoMovesToLine = function(line) {
 	for (let idBlob in this._army) {
 		// dist is the distance of the blob to the line. Formula's from wikipedia
 		const blob = this._army[idBlob];
-		const dist = Math.abs(line.a * blob.x + line.b * blob.y + line.c) / Math.sqrt(Math.pow(line.a, 2) + Math.pow(line.b, 2));
+		const dist = Math.abs(line.a * blob.x + line.b * blob.y + line.c) / Math.hypot(line.a, line.b);
 		if (blob.alive && dist < distance) {
 			id = idBlob;
 			distance = dist;
@@ -118,15 +118,15 @@ BotGhostKamikaze.prototype._whoMovesToLine = function(line) {
 	*/
 	const blob = this._army[id];
 	// I set const1 = a^2+b^2 and const2 = b*blobX - a*blobY
-	const const1 = Math.pow(line.a, 2) + Math.pow(line.b, 2);
+	const const1 = line.a ** 2 + line.b ** 2;
 	const const2 = line.b * blob.x - line.a * blob.y;
 	// So now I have dX = (-a*c + b*const2) / const1 and dY = (-b*c - a*const2) / const1
 	return {
 		idBlob: id,
 		distance: distance,
 		destination: {
-			x: (-line.a*line.c + line.b*const2) / const1,
-			y: (-line.b*line.c - line.a*const2) / const1
+			x: (-line.a * line.c + line.b * const2) / const1,
+			y: (-line.b * line.c - line.a * const2) / const1
 		}
 	}
 

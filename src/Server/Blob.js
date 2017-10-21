@@ -23,7 +23,7 @@ Blob.prototype.iterate = function() {
 	if (this.currentSpell && this.currentSpell.removeIterate) return;
 	if (this.destination == null || !this.alive) return;
 	const speed = 0.005;
-	const distance = Math.sqrt(Math.pow(this.destination.x-this.x, 2) + Math.pow(this.destination.y-this.y, 2));
+	const distance = Math.hypot(this.destination.x-this.x, this.destination.y-this.y);
 	this.orientation = Math.abs(this.destination.x-this.x) >= Math.abs(this.destination.y-this.y) ? (this.destination.x >= this.x ? 0 : 2) : (this.destination.y >= this.y ? 1 : 3);
 	if (distance <= speed) {
 		this.x = this.destination.x;

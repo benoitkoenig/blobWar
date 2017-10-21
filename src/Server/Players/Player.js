@@ -7,6 +7,8 @@ import Revive from "../Cards/Revive.js"
 import Switch from "../Cards/Switch.js"
 import Orbit from "../Cards/Orbit.js"
 
+import Blob from "../Blob.js"
+
 const Cards = {
 	Dash: Dash,
 	Bloc: Bloc,
@@ -18,21 +20,19 @@ const Cards = {
 	Orbit: Orbit
 }
 
-import Blob from "../Blob.js"
-
 class Player {
 	constructor(firstPlayer, cards) {
 		this._army = [new Blob(), new Blob(), new Blob()];
 		this._cards = [new Cards[cards[0]](), new Cards[cards[1]]()];
 
 		if (firstPlayer) {
-			this._army[0].setPosition( 0.2, 0.1, 1);
-			this._army[1].setPosition( 0.5, 0.1, 1);
-			this._army[2].setPosition( 0.8, 0.1, 1);
+			this._army[0].setPosition( 0.2, 0.1, 1 );
+			this._army[1].setPosition( 0.5, 0.1, 1 );
+			this._army[2].setPosition( 0.8, 0.1, 1 );
 		} else {
-			this._army[0].setPosition( 0.2, 0.9, 3);
-			this._army[1].setPosition( 0.5, 0.9, 3);
-			this._army[2].setPosition( 0.8, 0.9, 3);
+			this._army[0].setPosition( 0.2, 0.9, 3 );
+			this._army[1].setPosition( 0.5, 0.9, 3 );
+			this._army[2].setPosition( 0.8, 0.9, 3 );
 		}
 
 	}
@@ -42,7 +42,7 @@ class Player {
 	}
 
 	static _doWeKillIt(blob, enemyBlob) {
-		if (Math.sqrt(Math.pow(enemyBlob.x-blob.x, 2) + Math.pow(enemyBlob.y-blob.y, 2)) > 0.04) return false;
+		if (Math.hypot(enemyBlob.x-blob.x, enemyBlob.y-blob.y) > 0.04) return false;
 		if (!blob.alive || !enemyBlob.alive) return false;
 		if (enemyBlob.status === "fury" && blob.status !== "fury") return false;
 		if (blob.status === "ghost" || enemyBlob.status === "ghost") return false;
@@ -68,7 +68,7 @@ Player.prototype.iterateCards = function(enemyPlayer) {
 
 Player.prototype.whoToKill = function(enemyPlayer) {
 	const toKill = [];
-	this._army.forEach((blob) => {
+	this._army.forEach(blob => {
 		enemyPlayer.getArmyData().forEach((enemyBlob, enemyId) => {
 			if (Player._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
 		});
@@ -76,6 +76,11 @@ Player.prototype.whoToKill = function(enemyPlayer) {
 	return toKill;
 }
 
-Player.prototype.kill = function(list) { list.forEach((id) => { if (id != null) this._army[id].alive = false; this._army[id].destination = null; }); }
+Player.prototype.kill = function(list) {
+	list.forEach(id => {
+		this._army[id].alive = false;
+		this._army[id].destination = null;
+	});
+}
 
 export default Player;
