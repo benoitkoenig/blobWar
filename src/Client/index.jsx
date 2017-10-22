@@ -44,10 +44,7 @@ ReactDOM.render(
 			<BrowserRouter>
 				<div>
 					<Header />
-					<Route path="/">
-						<Redirect to="/Menu" />
-					</Route>
-					<Route path="/Menu" component={Menu} />
+					<Route exact path="/" component={Menu} />
 					<Route path="/Cards" component={CardsSwitch} />
 					<Route path="/Board" component={Board} />
 					<Alert />

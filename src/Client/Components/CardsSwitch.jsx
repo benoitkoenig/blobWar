@@ -37,7 +37,7 @@ const CardsSwitch = ({ cards, data, setCard, goBack }) => {
 	return (
 		<div id='cardsSwitch'>
 			<div id='cardsContainer'> {cardsElement} </div>
-			<Link id='confirmButton' to="/Menu"> Confirm </Link>
+			<Link id='confirmButton' to="/"> Confirm </Link>
 		</div>
 	);
 }

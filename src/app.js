@@ -82,4 +82,9 @@ io.on("connection", (socket) => {
 	});
 });
 
+appExpress.use("/", (req, res) => {
+  // In case the route is unknown, we display the default page
+  res.sendFile(__dirname + "/Client/index.html");
+});
+
 server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku

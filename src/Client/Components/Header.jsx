@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-
 import { logo, login } from "../Assets/assets.js";
 
 export default () => (

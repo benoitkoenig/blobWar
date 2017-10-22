@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const MatchMaking = ({ displayAlert, displayContainer, countdown, needCards, cancelMatchMaking }) => {
 
 	const cancel = () => {
-		displayContainer("Menu");
 		displayAlert(null);
 	}
 

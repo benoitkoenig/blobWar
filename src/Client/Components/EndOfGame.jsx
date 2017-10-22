@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 const EndOfGame = ({displayAlert, displayContainer, text}) => {
 
 	const validate = () => {
-		displayContainer("Menu");
+		displayContainer("");
 		displayAlert(null);
 	}
 
