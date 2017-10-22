@@ -52,7 +52,7 @@ module.exports = [
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
 				// { test: /\.css$/, loader: "style-loader!css-loader" },
 				{ test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-				{ test: /\.(woff|png|jpg|gif)$/, loader: 'url-loader?limit=100000' }
+				{ test: /\.(woff|png|jpg|gif|eot|svg|ttf|woff|woff2)$/, loader: 'url-loader?limit=100000' }
 			]
 		},
 		plugins: [
