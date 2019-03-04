@@ -22,16 +22,14 @@ module.exports = [
 					exclude: /node_modules/,
 					loader: 'babel-loader',
 					query: {
-						presets: ["env", "react", "es2015-node"]
-					}
+						presets: ["env", "react", "es2015-node"],
+						plugins: ["transform-class-properties"],
+					},
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
-			]
+			],
 		},
 		externals: [nodeExternals()]
-/*		externals: {
-			"socket.io": "commonjs socket.io"
-		}*/
 	},
 	{
 		entry: './src/Client/index.jsx',
@@ -46,7 +44,8 @@ module.exports = [
 					exclude: /node_modules/,
 					loader: 'babel-loader',
 					query: {
-						presets: ["env", "react", "es2015-node"]
+						presets: ["env", "react", "es2015-node"],
+						plugins: ["transform-class-properties"],
 					}
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },

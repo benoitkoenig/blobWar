@@ -15,10 +15,10 @@ class Bloc extends Card {
 		if (super.iterate(army, enemy)) return;
 		if (this.blob.destination != null) this.cancel();
 	}
-}
 
-Bloc.prototype.removeStatus = function(blob) {
-	blob.status = "normal";
+	removeStatus = (blob) => {
+		blob.status = "normal";
+	}
 }
 
 export default Bloc;

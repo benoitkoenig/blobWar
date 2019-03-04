@@ -36,14 +36,14 @@ class Dash extends Card {
 			}
 		}
 	}
-}
 
-Dash.prototype.endOfCounter = function(army, enemy) {
-	this._used = (!this._canBeReused);
-	if (this.blob == null) return; // Happens if the blob has died
-	this.blob.status = "normal";
-	this.blob.currentSpell = null;
-	this.blob = null;
+	endOfCounter = (army, enemy) => {
+		this._used = (!this._canBeReused);
+		if (this.blob == null) return; // Happens if the blob has died
+		this.blob.status = "normal";
+		this.blob.currentSpell = null;
+		this.blob = null;
+	}
 }
 
 export default Dash;

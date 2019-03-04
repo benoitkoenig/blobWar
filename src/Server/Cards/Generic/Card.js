@@ -48,8 +48,8 @@ class Card {
 		}
 		return returnOk;
 	}
-}
 
-Card.prototype.cancel = function() {}
+	cancel() {}
+}
 
 export default Card;

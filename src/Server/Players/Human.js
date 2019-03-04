@@ -8,27 +8,26 @@ class HumanPlayer extends Player {
 		this._initSockets();
 		this._connected = true;
 	}
+
+	_initSockets = () => {
+		this._socket.on("action", (action) => {
+			if (action.type == "server/setDestination") {
+				this._army[action.idBlob].destination = action.destination;
+			} else if (action.type == "server/triggerCard") {
+				this._cards[action.idCard].trigger({idBlob: action.idBlob, destination: action.destination}, this._army);
+			}
+		});
+		this._socket.on("disconnect", () => { this._connected = false; });
+	}
+	
+	clear = () => {
+		this._socket.removeAllListeners("action");
+		this._socket.removeAllListeners("disconnect");
+	}
+	
+	isStillConnected = () => this._connected;
+	
+	emit = (data) => { this._socket.emit("action", data); }
 }
-
-HumanPlayer.prototype._initSockets = function() {
-	this._socket.on("action", (action) => {
-		if (action.type == "server/setDestination") {
-			this._army[action.idBlob].destination = action.destination;
-		} else if (action.type == "server/triggerCard") {
-			this._cards[action.idCard].trigger({idBlob: action.idBlob, destination: action.destination}, this._army);
-		}
-	});
-	this._socket.on("disconnect", () => { this._connected = false; });
-
-}
-
-HumanPlayer.prototype.clear = function() {
-	this._socket.removeAllListeners("action");
-	this._socket.removeAllListeners("disconnect");
-}
-
-HumanPlayer.prototype.isStillConnected = function() { return this._connected; }
-
-HumanPlayer.prototype.emit = function(data) { this._socket.emit("action", data); }
 
 export default HumanPlayer;

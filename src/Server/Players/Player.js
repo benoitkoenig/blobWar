@@ -48,39 +48,39 @@ class Player {
 		if (blob.status === "ghost" || enemyBlob.status === "ghost") return false;
 		return true;
 	}
-}
 
-Player.prototype.getArmy = function() { return this._army; }
+	getArmy = () => this._army
 
-Player.prototype.getArmyData = function() { return [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()]; }
+	getArmyData = () => [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()];
 
-Player.prototype.emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't
+	emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't
 
-Player.prototype.clear = () => {}
+	clear = () => {}
 
-Player.prototype.isStillConnected = () => false;
+	isStillConnected = () => false;
 
-Player.prototype.iterateBlobs = function() { this._army.forEach(blob => { blob.iterate(); }); }
+	iterateBlobs() { this._army.forEach(blob => { blob.iterate(); }); }
 
-Player.prototype.iterateCards = function(enemyPlayer) {
-	this._cards.forEach(card => { card.iterate(this._army, enemyPlayer.getArmy()); });
-}
+	iterateCards = (enemyPlayer) => {
+		this._cards.forEach(card => card.iterate(this._army, enemyPlayer.getArmy()));
+	}
 
-Player.prototype.whoToKill = function(enemyPlayer) {
-	const toKill = [];
-	this._army.forEach(blob => {
-		enemyPlayer.getArmyData().forEach((enemyBlob, enemyId) => {
-			if (Player._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
+	whoToKill = (enemyPlayer) => {
+		const toKill = [];
+		this._army.forEach(blob => {
+			enemyPlayer.getArmyData().forEach((enemyBlob, enemyId) => {
+				if (Player._doWeKillIt(blob, enemyBlob)) toKill.push(enemyId);
+			});
 		});
-	});
-	return toKill;
-}
+		return toKill;
+	}
 
-Player.prototype.kill = function(list) {
-	list.forEach(id => {
-		this._army[id].alive = false;
-		this._army[id].destination = null;
-	});
+	kill = (list) => {
+		list.forEach(id => {
+			this._army[id].alive = false;
+			this._army[id].destination = null;
+		});
+	}
 }
 
 export default Player;

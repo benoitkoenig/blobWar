@@ -13,10 +13,10 @@ class Ghost extends Card {
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
 	}
-}
 
-Ghost.prototype.removeStatus = function(blob) {
-	blob.status = "normal";
+	removeStatus = (blob) => {
+		blob.status = "normal";
+	}
 }
 
 export default Ghost;
