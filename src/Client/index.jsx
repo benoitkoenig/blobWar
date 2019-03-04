@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 /* I'm thinking of taking off react-router, as it creates more problems than it solves. I'm actually only keeping it because this whole project aims at testing new tools */
 import { Redirect, BrowserRouter, IndexRoute, Route, Link } from 'react-router-dom';
 import { Provider } from "react-redux";
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 
@@ -36,7 +36,8 @@ const reducers = combineReducers({
 const socket = io((window.location.href).split(":")[0] === "file" ? "http://localhost:8080/" : window.location.href);
 const socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
-const store = applyMiddleware(socketIoMiddleware)(createStore)(reducers);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(socketIoMiddleware)));
 
 ReactDOM.render(
 	(
