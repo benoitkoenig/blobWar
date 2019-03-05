@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import MatchMaking from "./MatchMaker/index.jsx";
-import HowToPlay from "./HowToPlay/index.jsx";
-import EndOfGame from "./EndOfGame/index.jsx";
+import MatchMaking from "./Components/MatchMaker/index.jsx";
+import HowToPlay from "./Components/HowToPlay/index.jsx";
+import EndOfGame from "./Components/EndOfGame/index.jsx";
 
 const Alert = ({ alert, container, displayAlert, clearContainer }) => {
 	if (container !== null) { // This is bad. See the notes in Reducers/Navigation.js

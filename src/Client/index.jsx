@@ -12,7 +12,7 @@ import Navigation from "./Reducers/Navigation.js";
 import GameState from "./Reducers/GameState.js";
 
 import Header from "./Components/Header/index.jsx";
-import Alert from "./Components/Alert.jsx";
+import Alert from "./Components/Alert/index.jsx";
 import Menu from "./Components/Menu/index.jsx";
 import CardsSwitch from "./Components/CardsSwitch/index.jsx";
 import Board from "./Components/Board/index.jsx";
