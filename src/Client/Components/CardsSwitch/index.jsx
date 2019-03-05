@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./styles.scss";
 
-import { buttons } from "../../Assets/assets";
+import { buttons } from "../../Assets";
 
 const Card = ({ cardIndex, title, description, firstSpell, secondSpell, setCard }) => (
 	<div className="card">

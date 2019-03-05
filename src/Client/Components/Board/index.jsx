@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import "./styles.scss";
 
-import { buttons, blobs, enemies, pointers, hats } from "../../Assets/assets.js";
+import { buttons, blobs, enemies, pointers, hats } from "../../Assets";
 
 // It is mostly the same as CardsMenu
 const Card = ({ title, description, buttonName, moveCard }) => (

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./styles.scss";
 
-import { buttons, dices, cards as cardsSrc } from "../../Assets/assets.js";
+import { buttons, dices, cards as cardsSrc } from "../../Assets";
 
 // A card. Quite similar to cards in CardsSwitch
 const CardMenu = ({ title, description, isSpace }) => (
