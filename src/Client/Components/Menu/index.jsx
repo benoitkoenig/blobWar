@@ -35,7 +35,7 @@ const mapStateToProps = (state, ownProps) => (
 	{
 		cards: [
 			state.Cards.cards[0] === null ? null : state.Cards.data[state.Cards.cards[0]],
-			state.Cards.cards[1] === null ? null : state.Cards.data[state.Cards.cards[1]]
+			state.Cards.cards[1] === null ? null : state.Cards.data[state.Cards.cards[1]],
 		]
 	}
 )

@@ -12,11 +12,10 @@ const Alert = ({ alert, container, displayAlert, clearContainer }) => {
 		return (<Redirect to={container} />);
 	}
 
-	let alertElement;
-
-	if (alert === "HowToPlay") {alertElement = <HowToPlay displayAlert={displayAlert} />}
-	if (alert === "EndOfGame") {alertElement = <EndOfGame />}
-	if (alert === "MatchMaking") {alertElement = <MatchMaking />}
+	const alertElement = alert === "HowToPlay" ? <HowToPlay displayAlert={displayAlert} />
+		: alert === "EndOfGame" ? <EndOfGame />
+		: alert === "MatchMaking" ? <MatchMaking />
+		: null
 
 	return (
 		<div id='alert'>{alertElement}</div>
