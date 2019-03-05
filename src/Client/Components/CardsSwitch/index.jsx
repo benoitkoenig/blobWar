@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { buttons } from "../Assets/assets";
+import "./styles.scss";
+
+import { buttons } from "../../Assets/assets";
 
 const Card = ({ cardIndex, title, description, firstSpell, secondSpell, setCard }) => (
 	<div className="card">

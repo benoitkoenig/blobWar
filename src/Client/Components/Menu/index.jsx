@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { buttons, dices, cards as cardsSrc } from "../Assets/assets.js";
+import "./styles.scss";
+
+import { buttons, dices, cards as cardsSrc } from "../../Assets/assets.js";
 
 // A card. Quite similar to cards in CardsSwitch
 const CardMenu = ({ title, description, isSpace }) => (

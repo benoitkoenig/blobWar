@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { buttons, blobs, enemies, pointers, hats } from "../Assets/assets.js";
+import "./styles.scss";
+
+import { buttons, blobs, enemies, pointers, hats } from "../../Assets/assets.js";
 
 // It is mostly the same as CardsMenu
 const Card = ({ title, description, buttonName, moveCard }) => (
@@ -12,7 +14,6 @@ const Card = ({ title, description, buttonName, moveCard }) => (
 	</div>
 );
 
-// const Blob = ({blob, selected, idBlob, team}) => {
 class Blob extends React.Component {
 	// Render the blob and any attribute attached (hat, pointer, etc..)
 
@@ -40,7 +41,6 @@ class Blob extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 const mapStateToProps = (state, ownProps) => (

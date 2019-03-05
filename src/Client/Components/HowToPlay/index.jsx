@@ -1,5 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
+
+import "./styles.scss";
 
 export default ({ displayAlert }) => (
 	<div id="darkPart" onClick={(ev) => {if (ev.target.id == "darkPart") displayAlert(null)}}>

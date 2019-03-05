@@ -2,16 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { createHashHistory } from 'history'
-
-import Header from "./Header.jsx";
-
-import MatchMaking from "./MatchMaking.jsx";
-import HowToPlay from "./HowToPlay.jsx";
-import EndOfGame from "./EndOfGame.jsx";
+import MatchMaking from "./MatchMaker/index.jsx";
+import HowToPlay from "./HowToPlay/index.jsx";
+import EndOfGame from "./EndOfGame/index.jsx";
 
 const Alert = ({ alert, container, displayAlert, clearContainer }) => {
-
 	if (container !== null) { // This is bad. See the notes in Reducers/Navigation.js
 		clearContainer();
 		return (<Redirect to={container} />);
@@ -26,7 +21,6 @@ const Alert = ({ alert, container, displayAlert, clearContainer }) => {
 	return (
 		<div id='alert'>{alertElement}</div>
 	);
-
 }
 
 const mapStateToProps = (state, ownProps) => (

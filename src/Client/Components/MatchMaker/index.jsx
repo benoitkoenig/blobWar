@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import "./styles.scss";
+
 const mapStateToProps = (state, ownProps) => {
 	return {
 		countdown: state.GameState.countdown,

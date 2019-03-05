@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 /* I'm thinking of taking off react-router, as it creates more problems than it solves. I'm actually only keeping it because this whole project aims at testing new tools */
-import { Redirect, BrowserRouter, IndexRoute, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import createSocketIoMiddleware from 'redux-socket.io';
@@ -11,19 +11,12 @@ import Cards from "./Reducers/Cards.js";
 import Navigation from "./Reducers/Navigation.js";
 import GameState from "./Reducers/GameState.js";
 
-import Header from "./Components/Header.jsx";
+import Header from "./Components/Header/index.jsx";
 import Alert from "./Components/Alert.jsx";
-import Menu from "./Components/Menu.jsx";
-import CardsSwitch from "./Components/CardsSwitch.jsx";
-import Board from "./Components/Board.jsx";
+import Menu from "./Components/Menu/index.jsx";
+import CardsSwitch from "./Components/CardsSwitch/index.jsx";
+import Board from "./Components/Board/index.jsx";
 
-import "./StyleSheets/Board.scss";
-import "./StyleSheets/CardsSwitch.scss";
-import "./StyleSheets/EndOfGame.scss";
-import "./StyleSheets/Header.scss";
-import "./StyleSheets/HowToPlay.scss";
-import "./StyleSheets/MatchMaker.scss";
-import "./StyleSheets/Menu.scss";
 import "./StyleSheets/index.scss";
 
 const reducers = combineReducers({

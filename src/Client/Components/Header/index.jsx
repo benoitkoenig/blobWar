@@ -1,6 +1,8 @@
 import React from "react";
 
-import { logo, login } from "../Assets/assets.js";
+import "./styles.scss";
+
+import { logo, login } from "../../Assets/assets.js";
 
 export default () => (
 	<div id="header">
