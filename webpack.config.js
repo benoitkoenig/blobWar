@@ -3,12 +3,12 @@ var nodeExternals = require('webpack-node-externals');
 
 module.exports = [
 	{
-		entry: './src/app.js',
+		entry: ["@babel/polyfill", "./src/app.js"],
 		output: {
 			path: __dirname,
 			filename: 'app.js'
 		},
-		target: 'electron',
+		target: 'node',
 		node: {
 			__dirname: false,
 			fs: "empty",

@@ -5,8 +5,27 @@ import BotBlocGravity from "./Players/BotBlocGravity.js"
 
 const Bots = [
 	BotGhostKamikaze,
-	BotBlocGravity
+	BotBlocGravity,
 ];
+
+function* iteratePlayer(player, enemy) {
+	yield player.iterateBlobs(enemy.getArmy());
+	yield player.iterateCards(enemy);
+	const toKill = yield player.whoToKill(enemy);
+	yield enemy.kill(toKill);
+	if (player.lost || enemy.lost) {
+		if (player.lost && enemy.lost) {
+			player.emit({type: "endOfGame", value: "It's a draw"});
+		} else if (player.lost) {
+			player.emit({type: "endOfGame", value: "Defeat"});
+		} else if (enemy.lost) {
+			player.emit({type: "endOfGame", value: "Victory !"});
+		}
+		player.clear();
+	} else {
+		player.emit({type: "update", army: player.getArmyData(), enemy: enemy.getArmyData()});
+	}
+}
 
 // A whole game consists in this piece of code being repeted 40 times per second
 const startGame = (player1, player2) => {
@@ -15,34 +34,16 @@ const startGame = (player1, player2) => {
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
 	const iteration = setInterval(() => {
-		player1.iterateBlobs(player2.getArmy());
-		player2.iterateBlobs(player1.getArmy());
-		player1.iterateCards(player2);
-		player2.iterateCards(player1);
-		const toKill1 = player1.whoToKill(player2);
-		const toKill2 = player2.whoToKill(player1);
-		player1.kill(toKill2);
-		player2.kill(toKill1);
-		if (player1.lost || player2.lost) {
-			if (player1.lost && player2.lost) {
-				player1.emit({type: "endOfGame", value: "It's a draw"});
-				player2.emit({type: "endOfGame", value: "It's a draw"});
-			} else if (player1.lost) {
-				player1.emit({type: "endOfGame", value: "Defeat"});
-				player2.emit({type: "endOfGame", value: "Victory !"});
-			} else if (player2.lost) {
-				player1.emit({type: "endOfGame", value: "Victory !"});
-				player2.emit({type: "endOfGame", value: "Defeat"});
-			}
-			player1.clear();
-			player2.clear();
-			clearInterval(iteration);
-		} else {
-			const army1 = player1.getArmy();
-			const army2 = player2.getArmy();
-			player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData()});
-			player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData()});
-			if (!player1.isStillConnected() && !player2.isStillConnected()) clearInterval(iteration);
+		const gen1 = iteratePlayer(player1, player2);
+		const gen2 = iteratePlayer(player2, player1);
+		let next1 = gen1.next();
+		let next2 = gen2.next();
+		while (!next1.done && !next2.done) { // gen1 and gen2 always terminate at the same moment
+			next1 = gen1.next(next1.value);
+			next2 = gen2.next(next2.value);
+		}
+		if (player1.lost || player2.lost || (!player1.isStillConnected() && !player2.isStillConnected())) {
+			clearInterval(iteration)
 		}
 	}, 25);
 }
@@ -96,5 +97,5 @@ const playerAgainstBot = (socket, data) => {
 export default {
 	playerJoin,
 	playerAgainstIdle,
-	playerAgainstBot
+	playerAgainstBot,
 }
