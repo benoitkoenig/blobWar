@@ -67,24 +67,28 @@ const appExpress = express();
 const server = http.createServer(appExpress);
 const io = socket.listen(server);
 
-appExpress.use("/", express.static(__dirname + "/Client"));
+if (process.argv.includes("--train")) {
+  Game.train();
+} else {
+  appExpress.use("/", express.static(__dirname + "/Client"));
 
-// When a user connects, he can either look for an opponent or fight an idle opponent (bot)
-io.on("connection", (socket) => {
-	socket.on("action", (action) => {
-		if (action.category === "Idle") {
-			Game.playerAgainstIdle(socket, action.cards);
-		} else if (action.category === "Bot") {
-			Game.playerAgainstBot(socket, action.cards);
-		} else if (action.category === "MatchMaking") {
-			Game.playerJoin(socket, action.cards);
-		}
-	});
-});
-
-appExpress.use("/", (req, res) => {
-  // In case the route is unknown, we display the default page
-  res.sendFile(__dirname + "/Client/index.html");
-});
-
-server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
+  // When a user connects, he can either look for an opponent or fight an idle opponent (bot)
+  io.on("connection", (socket) => {
+    socket.on("action", (action) => {
+      if (action.category === "Idle") {
+        Game.playerAgainstIdle(socket, action.cards);
+      } else if (action.category === "Bot") {
+        Game.playerAgainstBot(socket, action.cards);
+      } else if (action.category === "MatchMaking") {
+        Game.playerJoin(socket, action.cards);
+      }
+    });
+  });
+  
+  appExpress.use("/", (req, res) => {
+    // In case the route is unknown, we display the default page
+    res.sendFile(__dirname + "/Client/index.html");
+  });
+  
+  server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
+}

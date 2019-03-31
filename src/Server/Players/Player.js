@@ -53,7 +53,7 @@ class Player {
 
 	getArmyData = () => [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()];
 
-	emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't
+	emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't - now BotReinforcement uses emit to be aware of the end of game
 
 	clear = () => {}
 
