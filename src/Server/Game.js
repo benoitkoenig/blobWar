@@ -116,9 +116,9 @@ const playerAgainstIdle = (socket, data) => {
 }
 
 const Bots = [
-	// BotGhostKamikaze,
-	// BotBlocGravity,
-	BotReinforcementLearning,
+	BotGhostKamikaze,
+	BotBlocGravity,
+	// BotReinforcementLearning,
 ];
 
 const playerAgainstBot = (socket, data) => {
