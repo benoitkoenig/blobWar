@@ -1,7 +1,7 @@
 import IdlePlayer from "./Players/Idle.js"
 import HumanPlayer from "./Players/Human.js"
-// import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
-// import BotBlocGravity from "./Players/BotBlocGravity.js"
+import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
+import BotBlocGravity from "./Players/BotBlocGravity.js"
 import BotReinforcementLearning from "./Players/BotReinforcementLearning.js"
 
 function* iteratePlayer(player, enemy) {
@@ -122,7 +122,6 @@ const Bots = [
 ];
 
 const playerAgainstBot = (socket, data) => {
-	// startGame(new HumanPlayer(socket, true, data), new BotReinforcementLearning(false, false));
 	startGame(new HumanPlayer(socket, true, data), new Bots[parseInt(Math.random()*Bots.length)]());
 }
 
