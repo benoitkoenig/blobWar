@@ -10,8 +10,7 @@
     "electron-packager": "electron-packager . blobwar --out=desktopApps --all",
     "test": "mocha-webpack ./test/test.js",
     "speedracer": "speedracer run",
-    "speedracer-display-blob": "speedracer display .speedracer/perf-blob.perf/*",
-    "heroku-prebuild": "pip install \"python-socketio\" numpy"
+    "speedracer-display-blob": "speedracer display .speedracer/perf-blob.perf/*"
   },
   "description": "Two persons game",
   "homepage": "http://blobwar.herokuapp.com",
