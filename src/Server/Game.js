@@ -1,7 +1,7 @@
 import IdlePlayer from "./Players/Idle.js"
 import HumanPlayer from "./Players/Human.js"
-import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
-import BotBlocGravity from "./Players/BotBlocGravity.js"
+// import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
+// import BotBlocGravity from "./Players/BotBlocGravity.js"
 import BotReinforcementLearning from "./Players/BotReinforcementLearning.js"
 
 function* iteratePlayer(player, enemy) {
@@ -37,8 +37,10 @@ const startGame = (player1, player2) => {
 		await next1.value;
 		await next2.value;
 		while (!next1.done && !next2.done) { // gen1 and gen2 always terminate at the same moment
-			next1 = await gen1.next(next1.value);
-			next2 = await gen2.next(next2.value);
+			next1 = gen1.next(next1.value);
+			next2 = gen2.next(next2.value);
+			await next1.value;
+			await next2.value;
 		}
 		if (player1.lost || player2.lost || (!player1.isStillConnected() && !player2.isStillConnected())) {
 			clearInterval(iteration)
@@ -47,7 +49,13 @@ const startGame = (player1, player2) => {
 }
 
 const botTrainingGame = async (player1, player2) => {
+	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData()});
+	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData()});
+	player1.emit({type: "gameStarted"});
+	player2.emit({type: "gameStarted"});
 	while (!player1.lost && !player2.lost) {
+		player1.hasntPlayed();
+		player2.hasntPlayed();
 		const gen1 = iteratePlayer(player1, player2);
 		const gen2 = iteratePlayer(player2, player1);
 		let next1 = gen1.next();
@@ -57,7 +65,11 @@ const botTrainingGame = async (player1, player2) => {
 		while (!next1.done && !next2.done) { // gen1 and gen2 always terminate at the same moment
 			next1 = gen1.next(next1.value);
 			next2 = gen2.next(next2.value);
+			await next1.value;
+			await next2.value;
 		}
+		await player1.checkIfHasPlayed();
+		await player2.checkIfHasPlayed();
 	}
 }
 
@@ -104,8 +116,8 @@ const playerAgainstIdle = (socket, data) => {
 }
 
 const Bots = [
-	BotGhostKamikaze,
-	BotBlocGravity,
+	// BotGhostKamikaze,
+	// BotBlocGravity,
 	BotReinforcementLearning,
 ];
 
@@ -117,9 +129,10 @@ const playerAgainstBot = (socket, data) => {
 // Train the IA
 const train = async () => {
 	console.log("Training started");
+	await new Promise(resolve => setTimeout(resolve, 500));
 	for (let i=0 ; i<5 ; i++) {
 		console.log("Starting a new bot training game");
-		await botTrainingGame(new BotReinforcementLearning(true, true), new BotReinforcementLearning(false, true))
+		await botTrainingGame(new BotReinforcementLearning(true, true), new IdlePlayer())
 	}
 }
 

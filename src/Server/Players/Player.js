@@ -81,6 +81,10 @@ class Player {
 			this._army[id].destination = null;
 		});
 	}
+
+	hasntPlayed = () => {} // Used when training the ReinforcementLearningBot
+
+	checkIfHasPlayed = async () => {} // Used when training the ReinforcementLearningBot
 }
 
 export default Player;

@@ -58,37 +58,48 @@ app.on('activate', () => {
 // code. You can also put them in separate files and require them here.
 */
 
-import http from "http";
+import { spawn } from "child_process";
 import express from "express";
+import http from "http";
 import socket from "socket.io";
+
+import BotReinforcementLearning from "./Server/Players/BotReinforcementLearning.js";
 import Game from "./Server/Game.js";
 
 const appExpress = express();
 const server = http.createServer(appExpress);
 const io = socket.listen(server);
 
+appExpress.use("/", express.static(__dirname + "/Client"));
+
+// When a user connects, he can either look for an opponent or fight an idle opponent (bot)
+io.on("connection", (socket) => {
+  socket.on("action", (action) => {
+    if (action.category === "Idle") {
+      Game.playerAgainstIdle(socket, action.cards);
+    } else if (action.category === "Bot") {
+      Game.playerAgainstBot(socket, action.cards);
+    } else if (action.category === "MatchMaking") {
+      Game.playerJoin(socket, action.cards);
+    }
+  });
+
+  socket.on("connectAI", (data) => {
+    if (data.passwd === "Kore wa watashi no passwd") {
+      BotReinforcementLearning.connect(socket);
+    }
+  });
+});
+
+appExpress.use("/", (req, res) => {
+  // In case the route is unknown, we display the default page
+  res.sendFile(__dirname + "/Client/index.html");
+});
+
+server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
+
+spawn("python", ["src/AI/main.py"], {stdio: [process.stdin, process.stdout, process.stderr]});
+
 if (process.argv.includes("--train")) {
   Game.train();
-} else {
-  appExpress.use("/", express.static(__dirname + "/Client"));
-
-  // When a user connects, he can either look for an opponent or fight an idle opponent (bot)
-  io.on("connection", (socket) => {
-    socket.on("action", (action) => {
-      if (action.category === "Idle") {
-        Game.playerAgainstIdle(socket, action.cards);
-      } else if (action.category === "Bot") {
-        Game.playerAgainstBot(socket, action.cards);
-      } else if (action.category === "MatchMaking") {
-        Game.playerJoin(socket, action.cards);
-      }
-    });
-  });
-  
-  appExpress.use("/", (req, res) => {
-    // In case the route is unknown, we display the default page
-    res.sendFile(__dirname + "/Client/index.html");
-  });
-  
-  server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
 }
