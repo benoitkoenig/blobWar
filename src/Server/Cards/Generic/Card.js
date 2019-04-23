@@ -49,6 +49,16 @@ class Card {
 		return returnOk;
 	}
 
+	isAvailable() {
+		for (let name of this._composedWith) {
+			// isUnavailable is only defined for cards where triggerCheck has a sideEffect or requires data. To clean
+			if ((CardCategory[name].isUnavailable || CardCategory[name].triggerCheck).call(this)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	cancel() {}
 }
 

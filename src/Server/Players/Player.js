@@ -82,6 +82,8 @@ class Player {
 		});
 	}
 
+	getCardsStatus = () => this._cards.map(card => card.isAvailable())
+
 	hasntPlayed = () => {} // Used when training the ReinforcementLearningBot
 
 	checkIfHasPlayed = async () => {} // Used when training the ReinforcementLearningBot

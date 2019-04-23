@@ -14,6 +14,10 @@ export default { // Card casted by a specific blob
 		if (blob.currentSpell != null && blob.currentSpell._cancelable != true) return true;
 	},
 
+	isUnavailable: function() {
+		return false;
+	},
+
 	triggerDo: function(data, army) {
 		this.blob = army[data.idBlob];
 		if (this.blob.currentSpell != null) this.blob.currentSpell.cancel();

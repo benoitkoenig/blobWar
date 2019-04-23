@@ -13,6 +13,10 @@ export default { // If a blob is casting and another asks, he takes it from the 
 		this._previousBlob = this.blob;
 	},
 
+	isUnavailable: function() {
+		return false;
+	},
+
 	triggerDo: function(data, army) {
 		if (this._previousBlob != null) { // Another blob was casting it ; we take it from him
 			this.removeStatus(this._previousBlob);

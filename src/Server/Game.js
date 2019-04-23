@@ -19,7 +19,13 @@ function* iteratePlayer(player, enemy) {
 		}
 		player.clear();
 	} else {
-		player.emit({type: "update", army: player.getArmyData(), enemy: enemy.getArmyData()});
+		player.emit({
+			type: "update",
+			army: player.getArmyData(),
+			enemy: enemy.getArmyData(),
+			cards: player.getCardsStatus(),
+			enemyCards: enemy.getCardsStatus(),
+		});
 	}
 }
 
