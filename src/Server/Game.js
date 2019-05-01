@@ -138,7 +138,7 @@ const playerAgainstBot = (socket, data) => {
 	}, 50);
 }
 
-const trainThread = async () => {
+const trainParrallel = async () => {
 	for (let i=0 ; i<5000 ; i++) {
 		const bot = new BotReinforcementLearning(true);
 		await new Promise(resolve => setTimeout(resolve, 20)); // Avoids a race condition on socket messages in BotReinforcementLearning
@@ -149,11 +149,9 @@ const trainThread = async () => {
 // Train the IA
 const train = async () => {
 	console.log("Training started");
-	await new Promise(resolve => setTimeout(resolve, 500));
-	trainThread();
-	trainThread();
-	trainThread();
-	trainThread();
+	for (let i=0 ; i<4 ; i++) {
+		trainParrallel();
+	}
 }
 
 export default {

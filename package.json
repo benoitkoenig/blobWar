@@ -4,8 +4,6 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack && node app.js",
-    "train": "webpack && node app.js --train",
-    "reset-AI": "python src/AI/reset_weights_matrix.py",
     "webpack": "webpack",
     "electron": "electron",
     "electron-packager": "electron-packager . blobwar --out=desktopApps --all",
