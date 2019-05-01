@@ -4,6 +4,8 @@ import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
 import BotBlocGravity from "./Players/BotBlocGravity.js"
 import BotReinforcementLearning from "./Players/BotReinforcementLearning.js"
 
+const wait = async (s) => new Promise(resolve => setTimeout(resolve, s));
+
 function* iteratePlayer(player, enemy) {
 	yield player.iterateBlobs(enemy.getArmy());
 	yield player.iterateCards(enemy);
@@ -131,17 +133,18 @@ const Bots = [
 	BotReinforcementLearning,
 ];
 
-const playerAgainstBot = (socket, data) => {
+const playerAgainstBot = async (socket, data) => {
+	await BotReinforcementLearning.waitUntilConnected();
 	const bot = new Bots[parseInt(Math.random()*Bots.length)]();
-	setTimeout(() => { // Avoids a race condition on socket messages in BotReinforcementLearning
-		startGame(new HumanPlayer(socket, true, data), bot);
-	}, 50);
+	await wait(20);
+	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
 const trainParrallel = async () => {
 	for (let i=0 ; i<5000 ; i++) {
+		await BotReinforcementLearning.waitUntilConnected();
 		const bot = new BotReinforcementLearning(true);
-		await new Promise(resolve => setTimeout(resolve, 20)); // Avoids a race condition on socket messages in BotReinforcementLearning
+		await wait(20);
 		await botTrainingGame(bot, new IdlePlayer());
 	}
 }

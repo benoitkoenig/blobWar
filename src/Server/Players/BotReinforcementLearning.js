@@ -3,6 +3,7 @@ import Player from "./Player.js"
 class BotReinforcementLearning extends Player {
     static socket = null
     static _connected = false
+    static waitingConnectionQueue = []
     static id = 0
 
 	constructor(firstPlayer) {
@@ -36,8 +37,15 @@ class BotReinforcementLearning extends Player {
 
     static connect = (socket) => {
         BotReinforcementLearning.socket = socket;
-		socket.on("disconnect", () => { BotReinforcementLearning._connected = false; });
+        BotReinforcementLearning.waitingConnectionQueue.forEach(resolve => resolve());
+        BotReinforcementLearning.waitingConnectionQueue = [];
+        socket.on("disconnect", () => { BotReinforcementLearning._connected = false; });
         BotReinforcementLearning._connected = true;
+    }
+
+    static waitUntilConnected = async () => {
+        if (BotReinforcementLearning._connected) return;
+        await new Promise(resolve => { BotReinforcementLearning.waitingConnectionQueue.push(resolve) });
     }
 
     hasntPlayed = () => { this.hasPlayed = false; }
