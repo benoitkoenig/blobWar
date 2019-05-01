@@ -2,8 +2,8 @@ import Player from "./Player.js"
 
 class BotGhostKamikaze extends Player {
 
-	constructor() {
-		super(false, ["Ghost", "Kamikaze"]);
+	constructor(firstPlayer = false) {
+		super(firstPlayer = false, ["Ghost", "Kamikaze"]);
 		this._previousGhost = null;
 	}
 

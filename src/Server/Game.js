@@ -127,9 +127,10 @@ const playerAgainstIdle = (socket, data) => {
 	startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
 }
 
-const Bots = [
-	// BotGhostKamikaze,
-	// BotBlocGravity,
+const botOpponents = [
+	BotGhostKamikaze,
+	BotBlocGravity,
+	IdlePlayer,
 	BotReinforcementLearning,
 ];
 
@@ -144,8 +145,9 @@ const trainParrallel = async () => {
 	for (let i=0 ; i<5000 ; i++) {
 		await BotReinforcementLearning.waitUntilConnected();
 		const bot = new BotReinforcementLearning(true);
+		const opponent = new botOpponents[Math.floor(Math.random()*4)]()
 		await wait(20);
-		await botTrainingGame(bot, new IdlePlayer());
+		await botTrainingGame(bot, opponent);
 	}
 }
 
