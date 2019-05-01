@@ -11,17 +11,15 @@ def on_connect():
 
 @sio.on('create_learning_agent')
 def on_create_learning_agent(data):
-    print("[Python] Creating a new agent")
     agents[data["id"]] = Agent(sio, data["id"])
-
 
 @sio.on('action')
 def on_action(data):
     agents[data["agentId"]].action(data["data"])
 
-# @sio.on('terminate_agent')
-# def on_terminate_agent(data):
-#     del agents[data["id"]]
+@sio.on('terminate_agent')
+def on_terminate_agent(data):
+    del agents[data["agentId"]]
 
 @sio.on('disconnect')
 def on_disconnect():
