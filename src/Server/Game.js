@@ -136,7 +136,7 @@ const botOpponents = [
 
 const playerAgainstBot = async (socket, data) => {
 	await BotReinforcementLearning.waitUntilConnected();
-	const bot = new Bots[parseInt(Math.random()*Bots.length)]();
+	const bot = new BotReinforcementLearning();
 	await wait(20);
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
