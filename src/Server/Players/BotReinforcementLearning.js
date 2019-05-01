@@ -5,11 +5,10 @@ class BotReinforcementLearning extends Player {
     static _connected = false
     static id = 0
 
-	constructor(firstPlayer, training) {
-        super(firstPlayer, ["Dash", "Dash"]);
+	constructor(firstPlayer) {
+        super(firstPlayer, ["Ghost", "Bloc"]);
         this.previousState = null;
         this.actionsTook = null;
-        this.training = training;
         this.id = BotReinforcementLearning.id++;
         BotReinforcementLearning.socket.emit("create_learning_agent", { id: this.id });
         this.hasPlayed = false;
@@ -44,6 +43,8 @@ class BotReinforcementLearning extends Player {
     hasntPlayed = () => { this.hasPlayed = false; }
 
     checkIfHasPlayed = () => this.hasPlayed || new Promise((resolve) => { this.resolveOncePlayed = resolve; })
+
+    terminate = () => BotReinforcementLearning.socket.emit("terminate_agent", { agentId: this.id})
 }
 
 export default BotReinforcementLearning;

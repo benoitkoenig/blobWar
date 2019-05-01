@@ -6,7 +6,7 @@ class Blob {
 		this.orientation = 0;
 		this.alive = true;
 		this.destination = null;
-		this.status = "normal"; // normal means if he collides an enemy blob, he dies. fury means he will kill but not die
+		this.status = "normal"; // normal means if he collides an enemy blob, he dies. hat means he will kill but not die
 		this.currentSpell = null; // Used in singleBlobSpell generic card
 	}
 
@@ -35,15 +35,14 @@ class Blob {
 	}
 
 	// used to send data to the front-end. Also used to calculate which blob to kill
-	getData = () => {
-		return {
-			x: this.x,
-			y: this.y,
-			orientation: this.orientation,
-			alive: this.alive,
-			status: this.status
-		}
-	}
+	getData = () => ({
+		x: this.x,
+		y: this.y,
+		orientation: this.orientation,
+		alive: this.alive,
+		status: this.status,
+		destination: this.destination,
+	})
 }
 
 export default Blob;

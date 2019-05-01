@@ -27,7 +27,7 @@ export default class Switch extends Card {
 				x: (army[this._ids[(index+1)%this._ids.length]].x - army[this._ids[index]].x) / this._counter,
 				y: (army[this._ids[(index+1)%this._ids.length]].y - army[this._ids[index]].y) / this._counter
 			};
-			army[this._ids[index]].status = "fury";
+			army[this._ids[index]].status = "hat";
 			army[this._ids[index]].destination = null;
 			army[this._ids[index]].currentSpell = {}
 		}

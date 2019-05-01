@@ -8,7 +8,7 @@ class Bloc extends Card {
 	trigger(data, army) {
 		if (super.trigger(data, army)) return;
 		this.blob.destination = null;
-		this.blob.status = "fury";
+		this.blob.status = "hat";
 	}
 
 	iterate(army, enemy) {

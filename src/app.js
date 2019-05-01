@@ -98,7 +98,7 @@ appExpress.use("/", (req, res) => {
 
 server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
 
-// spawn("python", ["src/AI/main.py"], {stdio: [process.stdin, process.stdout, process.stderr]});
+spawn("python", ["src/AI/main.py"], {stdio: [process.stdin, process.stdout, process.stderr]});
 
 if (process.argv.includes("--train")) {
   Game.train();

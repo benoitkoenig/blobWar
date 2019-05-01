@@ -11,7 +11,7 @@ class Dash extends Card {
 		this._destination = data.destination;
 		this._canBeReused = false;
 		this.blob.destination = null;
-		this.blob.status = "fury";
+		this.blob.status = "hat";
 	}
 
 	iterate(army, enemy) {

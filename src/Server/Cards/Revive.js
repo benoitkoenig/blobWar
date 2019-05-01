@@ -16,7 +16,7 @@ export default class Revive extends Card {
 			this.blob = null;
 		} else if (!this._blobSaved.alive) { // The blob managed to die
 			this.blob.alive = true;
-			this.blob.status = "fury";
+			this.blob.status = "hat";
 			this._counter = 201;
 			this._revived = true;
 		} else { // The blob didn't manage to die

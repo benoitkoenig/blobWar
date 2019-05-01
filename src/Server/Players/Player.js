@@ -44,16 +44,16 @@ class Player {
 	static _doWeKillIt(blob, enemyBlob) {
 		if (Math.hypot(enemyBlob.x-blob.x, enemyBlob.y-blob.y) > 0.04) return false;
 		if (!blob.alive || !enemyBlob.alive) return false;
-		if (enemyBlob.status === "fury" && blob.status !== "fury") return false;
+		if (enemyBlob.status === "hat" && blob.status !== "hat") return false;
 		if (blob.status === "ghost" || enemyBlob.status === "ghost") return false;
 		return true;
 	}
 
 	getArmy = () => this._army
 
-	getArmyData = () => [this._army[0].getData(), this._army[1].getData(), this._army[2].getData()];
+	getArmyData = () => this._army.map(blob => blob.getData())
 
-	emit = () => {} // HumanPlayer overrides this, BotPlayer doesn't - now BotReinforcement uses emit to be aware of the end of game
+	emit = () => {} // HumanPlayer and BotReiforcementLearning use this
 
 	clear = () => {}
 
@@ -87,6 +87,8 @@ class Player {
 	hasntPlayed = () => {} // Used when training the ReinforcementLearningBot
 
 	checkIfHasPlayed = async () => {} // Used when training the ReinforcementLearningBot
+
+	terminate = () => {} // Used by BotReinforcementLearning
 }
 
 export default Player;

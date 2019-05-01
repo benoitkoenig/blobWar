@@ -30,7 +30,7 @@ class Blob extends React.Component {
 			opacity: this.props.blob.status == "ghost" ? 0.3 : 1
 		}
 		const blobSrc = this.props.team ? blobs[this.props.blob.orientation] : enemies[this.props.blob.orientation];
-		const hatStyle = { visibility: this.props.blob.status == "fury" ? "visible" : "hidden" };
+		const hatStyle = { visibility: this.props.blob.status == "hat" ? "visible" : "hidden" };
 		const keyBlob = this.props.selected ? "active" : this.props.idBlob == 0 ? "w" : this.props.idBlob == 1 ? "e" : "r";
 		const pointerStyle = {visibility: (this.props.team ? "visible" : "hidden")};
 		return (

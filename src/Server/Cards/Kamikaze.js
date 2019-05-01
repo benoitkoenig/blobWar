@@ -13,7 +13,7 @@ export default class Kamikaze extends Card {
 		if (distance === 0) return;
 		if (super.trigger(data, army)) return;
 		const speed = 0.04;
-		blob.status = "fury";
+		blob.status = "hat";
 		blob.orientation = Math.abs(data.destination.x-blob.x) >= Math.abs(data.destination.y-blob.y) ? (data.destination.x >= blob.x ? 0 : 2) : (data.destination.y >= blob.y ? 1 : 3);
 		this._xSpeed = (data.destination.x-blob.x) / distance * speed;
 		this._ySpeed = (data.destination.y-blob.y) / distance * speed;
