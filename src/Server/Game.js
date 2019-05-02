@@ -142,7 +142,7 @@ const playerAgainstBot = async (socket, data) => {
 }
 
 const trainParrallel = async () => {
-	for (let i=0 ; i<5000 ; i++) {
+	for (let i=0 ; i<process.env.TRAINING_EPISODES || 10000 ; i++) {
 		await BotReinforcementLearning.waitUntilConnected();
 		const bot = new BotReinforcementLearning(true);
 		const opponent = new botOpponents[Math.floor(Math.random()*4)]()
