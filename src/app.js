@@ -58,7 +58,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and require them here.
 */
 
-import { spawn } from "child_process";
 import express from "express";
 import http from "http";
 import socket from "socket.io";
@@ -91,14 +90,11 @@ io.on("connection", (socket) => {
   });
 });
 
-appExpress.use("/train", (req, res) => {
-  Game.train();
-  res.send("Training started");
-});
-
 appExpress.use("/", (req, res) => {
   // In case the route is unknown, we display the default page
   res.sendFile(__dirname + "/Client/index.html");
 });
 
 server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
+
+Game.train();
