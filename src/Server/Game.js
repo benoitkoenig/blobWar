@@ -65,7 +65,7 @@ const botTrainingGame = async (player1, player2) => {
 	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true], enemyCards: [true, true]});
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
-	while (!player1.lost && !player2.lost) {
+	while (!player1.lost && !player2.lost && (player1.isStillConnected() || player2.isStillConnected())) {
 		player1.hasntPlayed();
 		player2.hasntPlayed();
 		const gen1 = iteratePlayer(player1, player2);
@@ -91,7 +91,10 @@ const botTrainingGame = async (player1, player2) => {
 	if (player2.lost) {
 		return "Victory";
 	}
-	return "Defeat";
+	if (player1.lost) {
+		return "Defeat";
+	}
+	return "Connection error with Python"
 }
 
 const initCountdown = (socket1, data1, socket2, data2) => {
