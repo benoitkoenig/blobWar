@@ -1,8 +1,9 @@
 import IdlePlayer from "./Players/Idle.js"
 import HumanPlayer from "./Players/Human.js"
+import BotGhostBloc from "./Players/BotGhostBloc.js"
 import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
 import BotBlocGravity from "./Players/BotBlocGravity.js"
-import BotReinforcementLearning from "./Players/BotReinforcementLearning.js"
+import ReinforcementLearning from "./Players/ReinforcementLearning.js"
 
 const wait = async (s) => new Promise(resolve => setTimeout(resolve, s));
 
@@ -83,6 +84,13 @@ const botTrainingGame = async (player1, player2) => {
 	}
 	player1.terminate();
 	player2.terminate();
+	if (player1.lost && player2.lost) {
+		return "Victory";
+	}
+	if (player2.lost) {
+		return "Defeat";
+	}
+	return "Draw";
 }
 
 const initCountdown = (socket1, data1, socket2, data2) => {
@@ -127,27 +135,32 @@ const playerAgainstIdle = (socket, data) => {
 	startGame(new HumanPlayer(socket, true, data), new IdlePlayer());
 }
 
+const botReinforcementLearning = [
+	BotGhostBloc,
+]
+
 const botOpponents = [
 	BotGhostKamikaze,
 	BotBlocGravity,
 	IdlePlayer,
-	BotReinforcementLearning,
+	BotGhostBloc,
 ];
 
 const playerAgainstBot = async (socket, data) => {
-	await BotReinforcementLearning.waitUntilConnected();
-	const bot = new BotReinforcementLearning();
+	await ReinforcementLearning.waitUntilConnected();
+	const bot = new BotGhostBloc();
 	await wait(20);
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
 const trainParrallel = async () => {
 	for (let i=0 ; i<process.env.TRAINING_EPISODES || 10000 ; i++) {
-		await BotReinforcementLearning.waitUntilConnected();
-		const bot = new BotReinforcementLearning(true);
-		const opponent = new botOpponents[Math.floor(Math.random()*4)]()
+		await ReinforcementLearning.waitUntilConnected();
+		const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true);
+		const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false);
 		await wait(20);
-		await botTrainingGame(bot, opponent);
+		const result = await botTrainingGame(bot, opponent);
+		console.log(result + " from " + bot.name + " against " + opponent.name);
 	}
 }
 

@@ -2,6 +2,8 @@ import Player from "./Player.js"
 
 // A human player with a socket
 class HumanPlayer extends Player {
+	name = "HumanPlayer"
+
 	constructor(socket, firstPlayer, data) {
 		super(firstPlayer, data);
 		this._socket = socket;

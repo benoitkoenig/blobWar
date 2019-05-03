@@ -1,6 +1,7 @@
 import Player from "./Player.js"
 
 class BotGhostKamikaze extends Player {
+	name = "BotGhostKamikaze"
 
 	constructor(firstPlayer = false) {
 		super(firstPlayer = false, ["Ghost", "Kamikaze"]);

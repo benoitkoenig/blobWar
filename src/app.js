@@ -62,7 +62,7 @@ import express from "express";
 import http from "http";
 import socket from "socket.io";
 
-import BotReinforcementLearning from "./Server/Players/BotReinforcementLearning.js";
+import ReinforcementLearning from "./Server/Players/ReinforcementLearning.js";
 import Game from "./Server/Game.js";
 
 const appExpress = express();
@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
 
   socket.on("connectAI", (data) => {
     if (data.passwd === "Kore wa watashi no passwd") {
-      BotReinforcementLearning.connect(socket);
+      ReinforcementLearning.connect(socket);
     }
   });
 });
