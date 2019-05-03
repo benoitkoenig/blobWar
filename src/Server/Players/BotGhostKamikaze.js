@@ -90,8 +90,15 @@ class BotGhostKamikaze extends Player {
 		}
 		return lines[lineSelected];
 	}
-	
+
 	_whoMovesToLine = (line) => {
+		if (line.a === 0 && line.b === 0) { // If two blobs are exactly at the same pos
+			return {
+				idBlob: this._army.findIndex(blob => blob.alive),
+				distance: 0,
+				destination: null,
+			}
+		}
 		let id = -1;
 		let distance = 1000;
 		for (let idBlob in this._army) {
