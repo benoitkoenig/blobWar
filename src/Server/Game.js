@@ -1,5 +1,6 @@
 import IdlePlayer from "./Players/Idle.js"
 import HumanPlayer from "./Players/Human.js"
+import BotDashDash from "./Players/BotDashDash.js"
 import BotGhostBloc from "./Players/BotGhostBloc.js"
 import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
 import BotBlocGravity from "./Players/BotBlocGravity.js"
@@ -85,12 +86,12 @@ const botTrainingGame = async (player1, player2) => {
 	player1.terminate();
 	player2.terminate();
 	if (player1.lost && player2.lost) {
-		return "Victory";
+		return "Draw";
 	}
 	if (player2.lost) {
-		return "Defeat";
+		return "Victory";
 	}
-	return "Draw";
+	return "Defeat";
 }
 
 const initCountdown = (socket1, data1, socket2, data2) => {
@@ -137,13 +138,13 @@ const playerAgainstIdle = (socket, data) => {
 
 const botReinforcementLearning = [
 	BotGhostBloc,
+	BotDashDash,
 ]
 
 const botOpponents = [
 	BotGhostKamikaze,
 	BotBlocGravity,
 	IdlePlayer,
-	BotGhostBloc,
 ];
 
 const playerAgainstBot = async (socket, data) => {
