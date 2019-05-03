@@ -6,12 +6,12 @@ class ReinforcementLearning extends Player {
     static waitingConnectionQueue = []
     static id = 0
 
-	constructor(firstPlayer, cards) {
+	constructor(firstPlayer, cards, name) {
         super(firstPlayer, cards);
         this.previousState = null;
         this.actionsTook = null;
         this.id = ReinforcementLearning.id++;
-        ReinforcementLearning.socket.emit("create_learning_agent", { id: this.id, name: this.name });
+        ReinforcementLearning.socket.emit("create_learning_agent", { id: this.id, name });
         this.hasPlayed = false;
         this.resolveOncePlayed = () => {};
         this.initSocket();
