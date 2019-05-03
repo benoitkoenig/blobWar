@@ -44,6 +44,10 @@ class Dash extends Card {
 		this.blob.currentSpell = null;
 		this.blob = null;
 	}
+
+	removeStatus = (blob) => {
+		blob.status = "normal";
+	}
 }
 
 export default Dash;
