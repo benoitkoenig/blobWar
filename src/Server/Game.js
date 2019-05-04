@@ -148,6 +148,8 @@ const botOpponents = [
 	BotGhostKamikaze,
 	BotBlocGravity,
 	IdlePlayer,
+	BotGhostBloc,
+	BotDashDash,
 ];
 
 const playerAgainstBot = async (socket, data) => {
