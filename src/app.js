@@ -97,4 +97,6 @@ appExpress.use("/", (req, res) => {
 
 server.listen(process.env.PORT || 8080); // process.env.PORT is for Heroku
 
-Game.train();
+if (process.argv.includes("--train")) {
+  Game.train();
+}

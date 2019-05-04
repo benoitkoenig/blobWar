@@ -4,6 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack && node app.js",
+    "train": "webpack && node app.js --train",
     "webpack": "webpack",
     "electron": "electron",
     "electron-packager": "electron-packager . blobwar --out=desktopApps --all",
