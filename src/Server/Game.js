@@ -154,21 +154,20 @@ const botOpponents = [
 
 const playerAgainstBot = async (socket, data) => {
 	await ReinforcementLearning.waitUntilConnected();
-	const bot = new BotGhostBloc();
+	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
 	await wait(20);
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
 const trainParrallel = async () => {
-	for (let i=0 ; i<process.env.TRAINING_EPISODES || 10000 ; i++) {
 		await ReinforcementLearning.waitUntilConnected();
 		const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true);
 		const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false);
 		await wait(20);
 		const result = await botTrainingGame(bot, opponent);
 		console.log(result + " from " + bot.name + " against " + opponent.name);
+		trainParrallel();
 	}
-}
 
 // Train the IA
 const train = async () => {
