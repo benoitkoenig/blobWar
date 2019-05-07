@@ -19,19 +19,21 @@ class ReinforcementLearning extends Player {
 
     callResolveOncePlayed = () => this.resolveOncePlayed()
 
-    handleAction = (action) => {
-        if (action.type == "server/setDestination") {
-            this._army[action.idBlob].destination = action.destination;
-        } else if (action.type == "server/triggerCard") {
-            this._cards[action.idCard].trigger({idBlob: action.idBlob, destination: action.destination}, this._army);
-        }
+    handleActions = (actions) => {
+        actions.forEach(action => {
+            if (action.type == "server/setDestination") {
+                this._army[action.idBlob].destination = action.destination;
+            } else if (action.type == "server/triggerCard") {
+                this._cards[action.idCard].trigger({idBlob: action.idBlob, destination: action.destination}, this._army);
+            }
+        });
         this.hasPlayed = true;
         this.resolveOncePlayed();
     }
 
     initSocket = () => {
         ReinforcementLearning.socket.on("disconnect", this.callResolveOncePlayed);
-        ReinforcementLearning.socket.on("action-" + this.id, this.handleAction);
+        ReinforcementLearning.socket.on("action-" + this.id, this.handleActions);
     }
 
     emit = (data) => {
@@ -60,7 +62,7 @@ class ReinforcementLearning extends Player {
     terminate = () => {
         ReinforcementLearning.socket.emit("terminate_agent", { agentId: this.id});
         ReinforcementLearning.socket.removeListener("disconnect", this.callResolveOncePlayed);
-        ReinforcementLearning.socket.removeListener("action-" + this.id, this.handleAction);
+        ReinforcementLearning.socket.removeListener("action-" + this.id, this.handleActions);
     }
 }
 
