@@ -6,8 +6,8 @@ class ReinforcementLearning extends Player {
     static waitingConnectionQueue = []
     static id = 0
 
-	constructor(firstPlayer, cards, name) {
-        super(firstPlayer, cards);
+	constructor(firstPlayer, cards, name, exploratoryStarts=false) {
+        super(firstPlayer, cards, exploratoryStarts);
         this.previousState = null;
         this.actionsTook = null;
         this.id = ReinforcementLearning.id++;

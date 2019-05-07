@@ -21,11 +21,14 @@ const Cards = {
 }
 
 class Player {
-	constructor(firstPlayer, cards) {
+	constructor(firstPlayer, cards, exploratoryStarts=false) {
 		this._army = [new Blob(), new Blob(), new Blob()];
 		this._cards = [new Cards[cards[0]](), new Cards[cards[1]]()];
-
-		if (firstPlayer) {
+		if (exploratoryStarts) {
+			this._army[0].setPosition( Math.random(), Math.random(), 1 );
+			this._army[1].setPosition( Math.random(), Math.random(), 1 );
+			this._army[2].setPosition( Math.random(), Math.random(), 1 );
+		} else if (firstPlayer) {
 			this._army[0].setPosition( 0.2, 0.1, 1 );
 			this._army[1].setPosition( 0.5, 0.1, 1 );
 			this._army[2].setPosition( 0.8, 0.1, 1 );

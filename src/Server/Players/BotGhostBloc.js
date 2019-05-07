@@ -5,8 +5,8 @@ const name = "BotGhostBloc"
 class BotGhostBloc extends ReinforcementLearning {
     name = name
 
-    constructor(firstPlayer = false) {
-        super(firstPlayer, ["Ghost", "Bloc"], name);
+    constructor(firstPlayer = false, exploratoryStarts=false) {
+        super(firstPlayer, ["Ghost", "Bloc"], name, exploratoryStarts);
     }
 }
 

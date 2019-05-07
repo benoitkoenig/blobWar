@@ -37,8 +37,8 @@ const closestBlob = (posToBloc, army, pullingBlob) => {
 class BotBlocGravity extends Player {
 	name = "BotBlocGravity"
 
-	constructor(firstPlayer = false) {
-		super(firstPlayer, ["Bloc", "Gravity"]);
+	constructor(firstPlayer = false, exploratoryStarts=false) {
+		super(firstPlayer, ["Bloc", "Gravity"], exploratoryStarts);
 		this._army[0].destination = {x: 0.2, y: 0.6};
 		this._army[1].destination = {x: 0.2, y: 0.5};
 		this._army[2].destination = {x: 0.2, y: 0.7};
