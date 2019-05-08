@@ -86,13 +86,13 @@ const botTrainingGame = async (player1, player2) => {
 	player1.terminate();
 	player2.terminate();
 	if (player1.lost && player2.lost) {
-		return "Draw";
+		return "   Draw";
 	}
 	if (player2.lost) {
 		return "Victory";
 	}
 	if (player1.lost) {
-		return "Defeat";
+		return " Defeat";
 	}
 	return "Connection error with Python"
 }
@@ -157,8 +157,7 @@ const botOpponents = [
 
 const playerAgainstBot = async (socket, data) => {
 	await ReinforcementLearning.waitUntilConnected();
-	// const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
-	const bot = new botReinforcementLearning[1](false);
+	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
 	await wait(20);
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
