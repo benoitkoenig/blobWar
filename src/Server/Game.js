@@ -142,9 +142,6 @@ const playerAgainstIdle = (socket, data) => {
 const botReinforcementLearning = [
 	BotGhostBloc,
 	BotDashDash,
-	BotDashDash,
-	BotDashDash,
-	BotDashDash,
 ]
 
 const botOpponents = [

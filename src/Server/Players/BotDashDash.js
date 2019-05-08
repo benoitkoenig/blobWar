@@ -1,6 +1,6 @@
 import ReinforcementLearning from "./ReinforcementLearning.js";
 
-const name = "BotDashDash"
+const name = "RBotDashDash"
 
 class BotGhostBloc extends ReinforcementLearning {
     name = name
