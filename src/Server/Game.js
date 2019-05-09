@@ -155,26 +155,32 @@ const botOpponents = [
 const playerAgainstBot = async (socket, data) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
-	await wait(20);
+	await wait(40);
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
-const trainParrallel = async () => {
+const trainParrallel = async (exploratoryStarts=false) => {
 	await ReinforcementLearning.waitUntilConnected();
-	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true, true);
-	const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false, true);
-	await wait(20);
-	const result = await botTrainingGame(bot, opponent);
-	console.log(result + " from " + bot.name + " against " + opponent.name);
+	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true, exploratoryStarts);
+	const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false, exploratoryStarts);
+	await wait(40);
+	if (!bot.lost && !opponent.lost) {
+		const result = await botTrainingGame(bot, opponent);
+		console.log(result + " from " + bot.name + " against " + opponent.name);
+	} else {
+		bot.terminate();
+		opponent.terminate();
+	}
 	trainParrallel();
 }
 
 // Train the IA
 const train = async () => {
 	console.log("Training started");
-	for (let i=0 ; i<4 ; i++) {
-		trainParrallel();
-	}
+	trainParrallel();
+	trainParrallel(true);
+	trainParrallel(true);
+	trainParrallel(true);
 }
 
 export default {
