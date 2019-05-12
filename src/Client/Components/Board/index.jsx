@@ -123,4 +123,6 @@ class Board extends React.Component {
 	}
 }
 
+export const UnconnectedBoard = Board;
+
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

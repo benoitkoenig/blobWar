@@ -9,6 +9,7 @@ import Alert from "./Components/Alert/index.jsx";
 import Menu from "./Components/Menu/index.jsx";
 import CardsSwitch from "./Components/CardsSwitch/index.jsx";
 import Board from "./Components/Board/index.jsx";
+import ImgGenerator from "./Components/ImgGenerator/index.jsx";
 
 import store from "./Reducers/store.js";
 
@@ -23,6 +24,7 @@ ReactDOM.render(
 					<Route exact path="/" component={Menu} />
 					<Route path="/Cards" component={CardsSwitch} />
 					<Route path="/Board" component={Board} />
+					<Route path="/ImgGenerator" component={ImgGenerator} />
 					<Alert />
 				</div>
 			</BrowserRouter>
