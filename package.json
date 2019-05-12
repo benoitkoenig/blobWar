@@ -10,7 +10,8 @@
     "electron-packager": "electron-packager . blobwar --out=desktopApps --all",
     "test": "mocha-webpack ./test/test.js",
     "speedracer": "speedracer run",
-    "speedracer-display-blob": "speedracer display .speedracer/perf-blob.perf/*"
+    "speedracer-display-blob": "speedracer display .speedracer/perf-blob.perf/*",
+    "repng": "repng"
   },
   "description": "Two persons game",
   "homepage": "http://blobwar.herokuapp.com",
@@ -37,6 +38,7 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-socket.io": "^1.3.1",
+    "repng": "^3.2.0",
     "sass-loader": "^6.0.3",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3",
@@ -46,10 +48,10 @@
     "webpack-node-externals": "^1.5.4"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "electron": "^1.6.2",
-    "electron-packager": "^8.6.0",
-    "mocha": "^3.3.0",
-    "mocha-webpack": "^0.7.0"
+    "chai": "^4.2.0",
+    "electron": "^5.0.1",
+    "electron-packager": "^13.1.1",
+    "mocha": "^6.1.4",
+    "mocha-webpack": "^1.1.0"
   }
 }
