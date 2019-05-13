@@ -3,23 +3,17 @@ import { connect } from "react-redux";
 
 import "./styles.scss";
 
-const mapStateToProps = (state, ownProps) => {
-	return {
-		countdown: state.GameState.countdown,
-		needCards: state.Cards.cards[0] === null || state.Cards.cards[1] === null
-	}
-}
+const mapStateToProps = (state, ownProps) => ({
+	countdown: state.GameState.countdown,
+	needCards: state.Cards.cards[0] === null || state.Cards.cards[1] === null,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		displayContainer: (name) => { dispatch({type: "DisplayContainer", name: name}); },
-		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); },
-		cancelMatchMaking: () => { dispatch({type: "server/cancelMatchMaking"}); }
-	}
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); },
+	cancelMatchMaking: () => { dispatch({type: "server/cancelMatchMaking"}); },
+});
 
-const MatchMaking = ({ displayAlert, displayContainer, countdown, needCards, cancelMatchMaking }) => {
-
+const MatchMaking = ({ displayAlert, countdown, needCards, cancelMatchMaking }) => {
 	const cancel = () => {
 		displayAlert(null);
 	}
@@ -57,7 +51,6 @@ const MatchMaking = ({ displayAlert, displayContainer, countdown, needCards, can
 			</div>
 		);
 	}
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MatchMaking);

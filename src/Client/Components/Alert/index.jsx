@@ -25,14 +25,14 @@ const Alert = ({ alert, container, displayAlert, clearContainer }) => {
 const mapStateToProps = (state, ownProps) => (
 	{
 		alert: state.Navigation.alert,
-		container: state.Navigation.container
+		container: state.Navigation.container,
 	}
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => (
 	{
 		displayAlert: () => { dispatch({type: "DisplayAlert", name: null}) },
-		clearContainer: () => { dispatch({type: "DisplayContainer", name: null}) }
+		clearContainer: () => { dispatch({type: "DisplayContainer", name: null}) },
 	}
 )
 

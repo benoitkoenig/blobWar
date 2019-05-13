@@ -48,14 +48,14 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 			if (cards[0] === null || cards[1] === null) {
 				dispatch({type: "DisplayAlert", name: "MatchMaking"});
 			} else {
-				dispatch({type: "server/StartGame", category: category, cards: [cards[0].title, cards[1].title]})
+				dispatch({type: "server/StartGame", category: category, cards: [cards[0].title, cards[1].title]});
 			}
 		}
 	}
 )
 
 // The left side of the menu is a different React class bc it is quite complex, while the right side consists only of three buttons
-const Menu = ({ cards, randomCards, displayAlert, startGame, startMatchMaking }) => (
+const Menu = ({ cards, randomCards, displayAlert, startGame }) => (
 	<div id="menu">
 		<CardsMenu className="cardsMenuContainer" randomCards={randomCards} cards={cards} displayAlert={displayAlert} />
 		<div id="start">

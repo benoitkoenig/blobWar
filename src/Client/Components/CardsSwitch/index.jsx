@@ -27,11 +27,10 @@ const mapStateToProps = (state, ownProps) => (
 const mapDispatchToProps = (dispatch, ownProps) => (
 	{
 		setCard: (index, value) => { dispatch({type: "SetCard", index: index, value: value}); },
-		goBack: () => { dispatch({type: "DisplayContainer", name: "Menu"}) }
 	}
 )
 
-const CardsSwitch = ({ cards, data, setCard, goBack }) => {
+const CardsSwitch = ({ cards, data, setCard }) => {
 	const cardsElement = []; // The list of cards which is displayed
 	for (var i=0 ; i<data.length ; i++) {
 		cardsElement.push(<Card key={i.toString()} cardIndex={i} title={data[i].title} description={data[i].description} setCard={setCard} firstSpell={cards[0] == i} secondSpell={cards[1] == i} />);

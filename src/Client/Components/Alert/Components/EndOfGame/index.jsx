@@ -5,19 +5,18 @@ import "./styles.scss";
 
 const mapStateToProps = (state, ownProps) => (
 	{
-		text: state.GameState.endOfGameValue
+		text: state.GameState.endOfGameValue,
 	}
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => (
 	{
 		displayContainer: (name) => { dispatch({type: "DisplayContainer", name: name}); },
-		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); }
+		displayAlert: (name) => { dispatch({type: "DisplayAlert", name: name}); },
 	}
 )
 
 const EndOfGame = ({displayAlert, displayContainer, text}) => {
-
 	const validate = () => {
 		displayContainer("");
 		displayAlert(null);
