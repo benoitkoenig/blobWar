@@ -17,18 +17,14 @@ const Card = ({ cardIndex, title, description, firstSpell, secondSpell, setCard 
 	</div>
 );
 
-const mapStateToProps = (state, ownProps) => (
-	{
-		cards: state.Cards.cards,
-		data: state.Cards.data
-	}
-)
+const mapStateToProps = (state, ownProps) => ({
+	cards: state.Cards.cards,
+	data: state.Cards.data,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => (
-	{
-		setCard: (index, value) => { dispatch({type: "SetCard", index: index, value: value}); },
-	}
-)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	setCard: (index, value) => { dispatch({ type: "SetCard", index, value }); },
+});
 
 const CardsSwitch = ({ cards, data, setCard }) => {
 	const cardsElement = []; // The list of cards which is displayed
