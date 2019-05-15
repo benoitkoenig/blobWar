@@ -30,12 +30,12 @@ class Dash extends Card {
 			this.blob.x += (this._destination.x - this.blob.x) / distance * SPEED;
 			this.blob.y += (this._destination.y - this.blob.y) / distance * SPEED;
 		}
-		for (let i in enemy) {// If we kill an opponent, the spell can be re-used
-			const dist = Math.hypot(enemy[i].x - this.blob.x, enemy[i].y - this.blob.y);
-			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") {
+		enemy.forEach(otherBlob => {
+			const dist = Math.hypot(otherBlob.x - this.blob.x, otherBlob.y - this.blob.y);
+			if (dist <= 0.04 && otherBlob.alive && otherBlob.status != "ghost") {
 				this._canBeReused = true;
 			}
-		}
+		});
 	}
 
 	endOfCounter = (army, enemy) => {

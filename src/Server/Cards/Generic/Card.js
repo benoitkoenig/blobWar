@@ -31,32 +31,18 @@ class Card {
 	}
 
 	trigger(data, army) {
-		let shouldReturn = false;
-		for (let name of this._composedWith) {
-			shouldReturn = CardCategory[name].triggerCheck.call(this, data, army) || shouldReturn;
-		}
-		if (shouldReturn) return true;
-		for (let name of this._composedWith) {
-			CardCategory[name].triggerDo.call(this, data, army);
-		}
+		const shouldReturn = this._composedWith.map(name => CardCategory[name].triggerCheck.call(this, data, army));
+		if (shouldReturn.find(isTrue => isTrue)) return true;
+		this._composedWith.forEach(name => CardCategory[name].triggerDo.call(this, data, army));
 	}
 
 	iterate(army, enemy) {
-		let returnOk = false;
-		for (let name of this._composedWith) {
-			returnOk = CardCategory[name].iterate.call(this, army, enemy) || returnOk;
-		}
-		return returnOk;
+		const returnOk = this._composedWith.map(name => CardCategory[name].iterate.call(this, army, enemy));
+		return returnOk.find(isTrue => isTrue);
 	}
 
 	isAvailable() {
-		for (let name of this._composedWith) {
-			// isUnavailable is only defined for cards where triggerCheck has a sideEffect or requires data. To clean
-			if ((CardCategory[name].isUnavailable || CardCategory[name].triggerCheck).call(this)) {
-				return false;
-			}
-		}
-		return true;
+		return !(this._composedWith.find(name => (CardCategory[name].isUnavailable || CardCategory[name].triggerCheck).call(this)));
 	}
 
 	cancel() {}

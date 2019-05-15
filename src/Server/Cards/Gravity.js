@@ -9,16 +9,16 @@ export default class Gravity extends Card {
 
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
-		for (var i=0 ; i<enemy.length ; i++) {
-			const dist = Math.hypot(enemy[i].x - this.blob.x, enemy[i].y - this.blob.y);
+		enemy.forEach(otherBlob => {
+			const dist = Math.hypot(otherBlob.x - this.blob.x, otherBlob.y - this.blob.y);
 			const speed = .001 / dist;
 			if (speed >= dist) {
-				enemy[i].x = this.blob.x;
-				enemy[i].y = this.blob.y;
+				otherBlob.x = this.blob.x;
+				otherBlob.y = this.blob.y;
 			} else {
-				enemy[i].x += (this.blob.x - enemy[i].x) / dist * speed;
-				enemy[i].y += (this.blob.y - enemy[i].y) / dist * speed;				
+				otherBlob.x += (this.blob.x - otherBlob.x) / dist * speed;
+				otherBlob.y += (this.blob.y - otherBlob.y) / dist * speed;				
 			}
-		}
+		});
 	}
 }
