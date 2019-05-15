@@ -1,5 +1,7 @@
 import Card from "./Generic/Card.js"
 
+const SPEED = 0.04;
+
 export default class Kamikaze extends Card {
 	constructor() {
 		super(["SingleBlobSpell", "FirstToCast", "RemoveIterate"]);
@@ -9,14 +11,13 @@ export default class Kamikaze extends Card {
 
 	trigger(data, army) {
 		const blob = army[data.idBlob];
-		const distance = Math.hypot(data.destination.x-blob.x, data.destination.y-blob.y);
+		const distance = Math.hypot(data.destination.x - blob.x, data.destination.y - blob.y);
 		if (distance === 0) return;
 		if (super.trigger(data, army)) return;
-		const speed = 0.04;
 		blob.status = "hat";
 		blob.orientation = Math.abs(data.destination.x-blob.x) >= Math.abs(data.destination.y-blob.y) ? (data.destination.x >= blob.x ? 0 : 2) : (data.destination.y >= blob.y ? 1 : 3);
-		this._xSpeed = (data.destination.x-blob.x) / distance * speed;
-		this._ySpeed = (data.destination.y-blob.y) / distance * speed;
+		this._xSpeed = (data.destination.x-blob.x) / distance * SPEED;
+		this._ySpeed = (data.destination.y-blob.y) / distance * SPEED;
 	}
 
 	iterate(army, enemy) {

@@ -5,7 +5,7 @@ export default class Switch extends Card {
 		super(["SingleBlobSpell", "LastToCast", "Cancelable"]);
 	}
 
-	removeStatus(blob) {}
+	removeStatus() {}
 
 	trigger(data, army) {
 		if (super.trigger(data, army)) return;
@@ -32,35 +32,27 @@ export default class Switch extends Card {
 
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
-		if (this.blob.destination != null) {
+		if ((this.blob.destination != null) || this._orbitingIds.every(id => (id === null))) {
 			this.cancel();
 			return;
 		}
-		let nullIndexes = 0;
-		for (let index in this._orbitingIds) {
-			const i = this._orbitingIds[index];
+		this._orbitingIds.forEach((i, index) => {
+			if (i === null) return;
 			const blob = army[i];
-			if (i == null) {
-				nullIndexes++;
-			} else if (blob.destination != null) { // cancel the spell if he moves
+			if (blob.destination != null) { // cancel the spell if he moves
 				blob.currentSpell.cancel();
-			} else {
-				const blob = army[i];
-				this._angles[index] += Math.PI / 80;
-				if (this._distances[i] != 0) { // Not necessary, but avoid approximations
-					const x = this.blob.x + this._distances[index] * Math.cos(this._angles[index]);
-					const y = this.blob.y + this._distances[index] * Math.sin(this._angles[index]);
-					if (x < 0 || y < 0 || x > 1 || y > 1) {
-						blob.currentSpell.cancel();
-					} else {
-						blob.x = this.blob.x + this._distances[index] * Math.cos(this._angles[index]);
-						blob.y = this.blob.y + this._distances[index] * Math.sin(this._angles[index]);
-					}
-				}
+				return;
 			}
-		}
-		if (nullIndexes == this._orbitingIds.length) {
-			this.cancel();
-		}
+			this._angles[index] += Math.PI / 80;
+			if (this._distances[i] === 0) return; // Not necessary, but avoids approximations
+			const x = this.blob.x + this._distances[index] * Math.cos(this._angles[index]);
+			const y = this.blob.y + this._distances[index] * Math.sin(this._angles[index]);
+			if (x < 0 || y < 0 || x > 1 || y > 1) {
+				blob.currentSpell.cancel();
+				return;
+			}
+			blob.x = x;
+			blob.y = y;
+		});
 	}
 }

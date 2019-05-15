@@ -1,5 +1,7 @@
 import Card from "./Generic/Card.js"
 
+const SPEED = 0.02;
+
 class Dash extends Card {
 	constructor() {
 		super(["SingleBlobSpell", "FirstToCast", "UseOnce", "Counter", "RemoveIterate"]);
@@ -16,21 +18,20 @@ class Dash extends Card {
 
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
-		const speed = 0.02;
-		const distance = Math.hypot(this._destination.x-this.blob.x, this._destination.y-this.blob.y);
+		const distance = Math.hypot(this._destination.x - this.blob.x, this._destination.y - this.blob.y);
 		if (distance != 0) {
-			this.blob.orientation = Math.abs(this._destination.x-this.blob.x) >= Math.abs(this._destination.y-this.blob.y) ? (this._destination.x >= this.blob.x ? 0 : 2) : (this._destination.y >= this.blob.y ? 1 : 3);
+			this.blob.orientation = Math.abs(this._destination.x - this.blob.x) >= Math.abs(this._destination.y - this.blob.y) ? (this._destination.x >= this.blob.x ? 0 : 2) : (this._destination.y >= this.blob.y ? 1 : 3);
 		}
-		if (distance <= speed) {
+		if (distance <= SPEED) {
 			this.blob.x = this._destination.x;
 			this.blob.y = this._destination.y;
 			this.blob.destination = null;
 		} else {
-			this.blob.x += (this._destination.x-this.blob.x) / distance * speed;
-			this.blob.y += (this._destination.y-this.blob.y) / distance * speed;
+			this.blob.x += (this._destination.x - this.blob.x) / distance * SPEED;
+			this.blob.y += (this._destination.y - this.blob.y) / distance * SPEED;
 		}
 		for (let i in enemy) {// If we kill an opponent, the spell can be re-used
-			const dist = Math.hypot(enemy[i].x-this.blob.x, enemy[i].y-this.blob.y);
+			const dist = Math.hypot(enemy[i].x - this.blob.x, enemy[i].y - this.blob.y);
 			if (dist <= 0.04 && enemy[i].alive && enemy[i].status != "ghost") {
 				this._canBeReused = true;
 			}

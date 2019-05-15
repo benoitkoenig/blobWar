@@ -6,7 +6,7 @@ export default class Revive extends Card {
 		this.counterMax = 81;
 	}
 
-	removeStatus(blob) {}
+	removeStatus() {}
 
 	endOfCounter(army, enemy) {
 		this.blob = this.blob != null ? this.blob : this._blobSaved; // this.blob == null if he died
@@ -29,9 +29,4 @@ export default class Revive extends Card {
 		this._revived = false;
 		this._blobSaved = this.blob; // this.blob will be overwritten if the blob dies
 	}
-
-	iterate(army, enemy) {
-		if (super.iterate(army, enemy)) return;
-	}
-
 }

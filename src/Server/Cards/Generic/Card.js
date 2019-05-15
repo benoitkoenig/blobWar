@@ -13,13 +13,13 @@ import RemoveIterate from "./RemoveIterate.js"
 import Cancelable from "./Cancelable.js"
 
 const CardCategory = {
-	SingleBlobSpell: SingleBlobSpell,
-	LastToCast: LastToCast,
-	FirstToCast: FirstToCast,
-	UseOnce: UseOnce,
-	Counter: Counter,
-	RemoveIterate: RemoveIterate,
-	Cancelable: Cancelable
+	SingleBlobSpell,
+	LastToCast,
+	FirstToCast,
+	UseOnce,
+	Counter,
+	RemoveIterate,
+	Cancelable
 };
 
 class Card {

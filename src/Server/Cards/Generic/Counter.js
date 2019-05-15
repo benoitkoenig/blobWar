@@ -4,7 +4,7 @@ export default {
 	},
 
 	triggerCheck: function(data, army) {
-		if (this._counter != 0) return true;
+		return (this._counter != 0);
 	},
 
 	triggerDo: function(data, army) {
@@ -18,5 +18,5 @@ export default {
 			this.endOfCounter(army, enemy)
 			return true;
 		};
-	}
+	},
 }

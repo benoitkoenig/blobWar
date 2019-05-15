@@ -6,9 +6,7 @@ export default { // A blob cannot cast this card if another blob is already cast
 		return (this.blob != null); // if a blob is currently casting, then we cancel the new trigger
 	},
 
-	triggerDo: function(data, army) {
-	},
+	triggerDo: function(data, army) {},
 
-	iterate: function(army, enemy) {
-	}
+	iterate: function(army, enemy) {},
 }

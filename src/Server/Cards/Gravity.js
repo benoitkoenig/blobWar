@@ -7,14 +7,10 @@ export default class Gravity extends Card {
 
 	removeStatus() {}
 
-	trigger(data, army) {
-		if (super.trigger(data, army)) return;
-	}
-
 	iterate(army, enemy) {
 		if (super.iterate(army, enemy)) return;
 		for (var i=0 ; i<enemy.length ; i++) {
-			const dist = Math.hypot(enemy[i].x-this.blob.x, enemy[i].y-this.blob.y);
+			const dist = Math.hypot(enemy[i].x - this.blob.x, enemy[i].y - this.blob.y);
 			const speed = .001 / dist;
 			if (speed >= dist) {
 				enemy[i].x = this.blob.x;

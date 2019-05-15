@@ -4,13 +4,12 @@ export default {
 	},
 
 	triggerCheck: function(data, army) {
-		if (this._used) return true;
+		return this._used;
 	},
 
 	triggerDo: function(data, army) {
 		this._used = true;
 	},
 
-	iterate: function(army, enemy) {
-	}
+	iterate: function(army, enemy) {},
 }

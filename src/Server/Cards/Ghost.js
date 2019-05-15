@@ -10,10 +10,6 @@ class Ghost extends Card {
 		this.blob.status = "ghost";
 	}
 
-	iterate(army, enemy) {
-		if (super.iterate(army, enemy)) return;
-	}
-
 	removeStatus = (blob) => {
 		blob.status = "normal";
 	}

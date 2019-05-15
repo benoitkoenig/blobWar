@@ -5,7 +5,7 @@ export default { // If a blob is casting and another asks, he takes it from the 
 	},
 
 	triggerCheck: function(data, army) {
-		if (this.blob == army[data.idBlob]) {
+		if (this.blob === army[data.idBlob]) {
 			// The blob re-triggered the card to cancel the spell
 			this.cancel();
 			return true;
@@ -25,6 +25,5 @@ export default { // If a blob is casting and another asks, he takes it from the 
 		}
 	},
 
-	iterate: function(army, enemy) {
-	}
+	iterate: function(army, enemy) {},
 }

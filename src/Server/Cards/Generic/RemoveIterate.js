@@ -8,5 +8,5 @@ export default {
 
 	triggerDo: function(data, army) {},
 
-	iterate: function(army, enemy) {}
+	iterate: function(army, enemy) {},
 }
