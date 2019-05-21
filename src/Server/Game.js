@@ -63,6 +63,8 @@ const startGame = (player1, player2) => {
 const botTrainingGame = async (player1, player2) => {
 	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true], enemyCards: [true, true]});
 	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true], enemyCards: [true, true]});
+	await player1.checkIfHasPlayed();
+	await player2.checkIfHasPlayed();
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
 	while (!player1.lost && !player2.lost && (player1.isStillConnected() || player2.isStillConnected())) {
@@ -141,15 +143,15 @@ const playerAgainstIdle = (socket, data) => {
 
 const botReinforcementLearning = [
 	BotGhostBloc,
-	BotDashDash,
+	// BotDashDash,
 ]
 
 const botOpponents = [
-	BotGhostKamikaze,
-	BotBlocGravity,
+	// BotGhostKamikaze,
+	// BotBlocGravity,
 	IdlePlayer,
-	BotGhostBloc,
-	BotDashDash,
+	// BotGhostBloc,
+	// BotDashDash,
 ];
 
 const playerAgainstBot = async (socket, data) => {
@@ -163,7 +165,7 @@ const trainParrallel = async (exploratoryStarts=false) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true, exploratoryStarts);
 	const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false, exploratoryStarts);
-	await wait(40);
+	await wait(200);
 	if (!bot.lost && !opponent.lost) {
 		const result = await botTrainingGame(bot, opponent);
 		console.log(result + " from " + bot.name + " against " + opponent.name);
@@ -177,10 +179,7 @@ const trainParrallel = async (exploratoryStarts=false) => {
 // Train the IA
 const train = async () => {
 	console.log("Training started");
-	trainParrallel();
-	trainParrallel(true);
-	trainParrallel(true);
-	trainParrallel(true);
+	trainParrallel(false);
 }
 
 export default {
