@@ -27,7 +27,7 @@ class Player {
 		if (exploratoryStarts) {
 			this._army.forEach(blob => {
 				blob.setPosition( Math.random(), Math.random(), 1 );
-				blob.alive = (Math.random() > 0.8);
+				blob.alive = (Math.random() < 0.8);
 			})
 		} else if (firstPlayer) {
 			this._army[0].setPosition( 0.2, 0.1, 1 );

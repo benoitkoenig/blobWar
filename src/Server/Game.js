@@ -8,27 +8,33 @@ import ReinforcementLearning from "./Players/ReinforcementLearning.js"
 
 const wait = async (s) => new Promise(resolve => setTimeout(resolve, s));
 
-function* iteratePlayer(player, enemy) {
-	yield player.iterateBlobs(enemy.getArmy());
-	yield player.iterateCards(enemy);
-	const toKill = yield player.whoToKill(enemy);
-	yield enemy.kill(toKill);
-	if (player.lost || enemy.lost) {
-		if (player.lost && enemy.lost) {
-			player.emit({type: "endOfGame", value: "It's a draw"});
+function* iteratePlayer(player, enemyPlayer, isItTimeout) {
+	yield player.iterateBlobs(enemyPlayer.getArmy());
+	yield player.iterateCards(enemyPlayer);
+	const toKill = yield player.whoToKill(enemyPlayer);
+	yield enemyPlayer.kill(toKill);
+	const army = player.getArmyData();
+	const enemy = enemyPlayer.getArmyData();
+	const cards = player.getCardsStatus();
+	const enemyCards = enemyPlayer.getCardsStatus();
+	if (player.lost || enemyPlayer.lost || isItTimeout) {
+		if (player.lost && enemyPlayer.lost) {
+			player.emit({type: "endOfGame", value: "It's a draw", army, enemy, cards, enemyCards});
 		} else if (player.lost) {
-			player.emit({type: "endOfGame", value: "Defeat"});
-		} else if (enemy.lost) {
-			player.emit({type: "endOfGame", value: "Victory !"});
+			player.emit({type: "endOfGame", value: "Defeat", army, enemy, cards, enemyCards});
+		} else if (enemyPlayer.lost) {
+			player.emit({type: "endOfGame", value: "Victory !", army, enemy, cards, enemyCards});
+		} else {
+			player.emit({type: "endOfGame", value: "Timeout", army, enemy, cards, enemyCards});
 		}
 		player.clear();
 	} else {
 		player.emit({
 			type: "update",
-			army: player.getArmyData(),
-			enemy: enemy.getArmyData(),
-			cards: player.getCardsStatus(),
-			enemyCards: enemy.getCardsStatus(),
+			army,
+			enemy,
+			cards,
+			enemyCards,
 		});
 	}
 }
@@ -60,6 +66,8 @@ const startGame = (player1, player2) => {
 	}, 25);
 }
 
+const timeoutNb = 10000
+
 const botTrainingGame = async (player1, player2) => {
 	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true], enemyCards: [true, true]});
 	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true], enemyCards: [true, true]});
@@ -67,11 +75,13 @@ const botTrainingGame = async (player1, player2) => {
 	await player2.checkIfHasPlayed();
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
-	while (!player1.lost && !player2.lost && (player1.isStillConnected() || player2.isStillConnected())) {
+	let t = 0;
+	while (!player1.lost && !player2.lost && (player1.isStillConnected() || player2.isStillConnected()) && t < timeoutNb) {
+		t += 1;
 		player1.hasntPlayed();
 		player2.hasntPlayed();
-		const gen1 = iteratePlayer(player1, player2);
-		const gen2 = iteratePlayer(player2, player1);
+		const gen1 = iteratePlayer(player1, player2, t === timeoutNb);
+		const gen2 = iteratePlayer(player2, player1, t === timeoutNb);
 		let next1 = gen1.next();
 		let next2 = gen2.next();
 		await next1.value;
@@ -88,13 +98,16 @@ const botTrainingGame = async (player1, player2) => {
 	player1.terminate();
 	player2.terminate();
 	if (player1.lost && player2.lost) {
-		return "   Draw";
+		return "    Draw";
 	}
 	if (player2.lost) {
-		return "Victory";
+		return "Victory!";
 	}
 	if (player1.lost) {
-		return " Defeat";
+		return "  Defeat";
+	}
+	if (t === timeoutNb) {
+		return " Timeout";
 	}
 	return "Connection error with Python"
 }
@@ -173,13 +186,13 @@ const trainParrallel = async (exploratoryStarts=false) => {
 		bot.terminate();
 		opponent.terminate();
 	}
-	trainParrallel();
+	trainParrallel(exploratoryStarts);
 }
 
 // Train the IA
 const train = async () => {
 	console.log("Training started");
-	trainParrallel(false);
+	trainParrallel(true);
 }
 
 export default {
