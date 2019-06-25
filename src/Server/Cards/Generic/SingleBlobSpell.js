@@ -1,11 +1,15 @@
 export default { // Card casted by a specific blob
 	init: function() {
 		this.blob = null;
-		this.cancel = () => { // This functionis defined in the spell context
+		this.idBlobCasting = null;
+		this.cancel = () => { // This function is defined in the spell context
 			this.removeStatus(this.blob);
 			this.blob.currentSpell = null;
 			this.blob = null;
+			this.idBlobCasting = null;
 		}
+
+		this.getCurrentBlob = () => { return this.idBlobCasting; }
 	},
 
 	triggerCheck: function(data, army) {
@@ -20,6 +24,7 @@ export default { // Card casted by a specific blob
 
 	triggerDo: function(data, army) {
 		this.blob = army[data.idBlob];
+		this.idBlobCasting = data.idBlob;
 		if (this.blob.currentSpell != null) this.blob.currentSpell.cancel();
 		this.blob.currentSpell = this;
 	},
@@ -28,6 +33,11 @@ export default { // Card casted by a specific blob
 		if (this.blob && !this.blob.alive) {
 			this.cancel();
 		}
-		if (this.blob == null) return true;
-	}
+		if (this.blob == null) {
+			if (this.idBlobCasting !== null) {
+				this.idBlobCasting = null;
+			}
+			return true;
+		}
+	},
 }

@@ -25,7 +25,7 @@ const CardCategory = {
 class Card {
 	constructor(composedWith) {
 		this._composedWith = composedWith;
-		for (let name of composedWith) {
+		for (const name of composedWith) {
 			CardCategory[name].init.call(this);
 		}
 	}
@@ -46,6 +46,10 @@ class Card {
 	}
 
 	cancel() {}
+
+	getCurrentBlob() {
+		return null;
+	}
 }
 
 export default Card;

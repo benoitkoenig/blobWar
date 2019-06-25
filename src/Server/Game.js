@@ -66,7 +66,7 @@ const startGame = (player1, player2) => {
 	}, 25);
 }
 
-const timeoutNb = 10000
+const timeoutNb = 4000
 
 const botTrainingGame = async (player1, player2) => {
 	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true], enemyCards: [true, true]});
@@ -156,12 +156,12 @@ const playerAgainstIdle = (socket, data) => {
 
 const botReinforcementLearning = [
 	BotGhostBloc,
-	// BotDashDash,
+	BotDashDash,
 ]
 
 const botOpponents = [
-	// BotGhostKamikaze,
-	// BotBlocGravity,
+	BotGhostKamikaze,
+	BotBlocGravity,
 	IdlePlayer,
 	// BotGhostBloc,
 	// BotDashDash,
@@ -192,6 +192,9 @@ const trainParrallel = async (exploratoryStarts=false) => {
 // Train the IA
 const train = async () => {
 	console.log("Training started");
+	trainParrallel(true);
+	trainParrallel(true);
+	trainParrallel(true);
 	trainParrallel(true);
 }
 

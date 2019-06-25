@@ -86,7 +86,10 @@ class Player {
 		});
 	}
 
-	getCardsStatus = () => this._cards.map(card => card.isAvailable())
+	getCardsStatus = () => ({
+		availability: this._cards.map(card => card.isAvailable()),
+		currentBlob: this._cards.map(card => card.getCurrentBlob()),
+	})
 
 	hasntPlayed = () => {} // Used when training the ReinforcementLearningBot
 
