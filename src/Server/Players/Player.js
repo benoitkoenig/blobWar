@@ -96,6 +96,8 @@ class Player {
 	checkIfHasPlayed = async () => {} // Used when training the ReinforcementLearningBot
 
 	terminate = () => {} // Used by ReinforcementLearning
+
+	wait_for_initialization = () => Promise.resolve() // Used by ReinforcementLearning
 }
 
 export default Player;

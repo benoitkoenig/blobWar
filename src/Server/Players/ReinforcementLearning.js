@@ -11,6 +11,8 @@ class ReinforcementLearning extends Player {
         this.previousState = null;
         this.actionsTook = null;
         this.id = ReinforcementLearning.id++;
+        this.bot_initialized = false;
+        this.resolve_when_initialized = () => {}
         ReinforcementLearning.socket.emit("create_learning_agent", { id: this.id, name });
         this.hasPlayed = false;
         this.resolveOncePlayed = () => {};
@@ -34,6 +36,17 @@ class ReinforcementLearning extends Player {
     initSocket = () => {
         ReinforcementLearning.socket.on("disconnect", this.callResolveOncePlayed);
         ReinforcementLearning.socket.on("action-" + this.id, this.handleActions);
+        ReinforcementLearning.socket.once("learning_agent_created-" + this.id, () => {
+            this.resolve_when_initialized();
+            this.bot_initialized = true;
+        });
+    }
+
+    wait_for_initialization = () => {
+        if (this.bot_initialized) {
+            return Promise.resolve()
+        }
+        return new Promise(resolve => { this.resolve_when_initialized = resolve; })
     }
 
     emit = (data) => {

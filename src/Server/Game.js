@@ -170,7 +170,7 @@ const botOpponents = [
 const playerAgainstBot = async (socket, data) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
-	await wait(40);
+	await bot.wait_for_initialization()
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
@@ -178,7 +178,8 @@ const trainParrallel = async (exploratoryStarts=false) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true, exploratoryStarts);
 	const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false, exploratoryStarts);
-	await wait(200);
+	await bot.wait_for_initialization()
+	await opponent.wait_for_initialization()
 	if (!bot.lost && !opponent.lost) {
 		const result = await botTrainingGame(bot, opponent);
 		console.log(result + " from " + bot.name + " against " + opponent.name);
