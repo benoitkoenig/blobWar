@@ -97,7 +97,7 @@ class Player {
 
 	terminate = () => {} // Used by ReinforcementLearning
 
-	wait_for_initialization = () => Promise.resolve() // Used by ReinforcementLearning
+	waitForInitialization = () => Promise.resolve() // Used by ReinforcementLearning
 }
 
 export default Player;

@@ -6,8 +6,6 @@ import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
 import BotBlocGravity from "./Players/BotBlocGravity.js"
 import ReinforcementLearning from "./Players/ReinforcementLearning.js"
 
-const wait = async (s) => new Promise(resolve => setTimeout(resolve, s));
-
 function* iteratePlayer(player, enemyPlayer, isItTimeout) {
 	yield player.iterateBlobs(enemyPlayer.getArmy());
 	yield player.iterateCards(enemyPlayer);
@@ -170,7 +168,7 @@ const botOpponents = [
 const playerAgainstBot = async (socket, data) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](false);
-	await bot.wait_for_initialization()
+	await bot.waitForInitialization()
 	startGame(new HumanPlayer(socket, true, data), bot);
 }
 
@@ -178,8 +176,8 @@ const trainParrallel = async (exploratoryStarts=false) => {
 	await ReinforcementLearning.waitUntilConnected();
 	const bot = new botReinforcementLearning[Math.floor(Math.random()*botReinforcementLearning.length)](true, exploratoryStarts);
 	const opponent = new botOpponents[Math.floor(Math.random()*botOpponents.length)](false, exploratoryStarts);
-	await bot.wait_for_initialization()
-	await opponent.wait_for_initialization()
+	await bot.waitForInitialization()
+	await opponent.waitForInitialization()
 	if (!bot.lost && !opponent.lost) {
 		const result = await botTrainingGame(bot, opponent);
 		console.log(result + " from " + bot.name + " against " + opponent.name);

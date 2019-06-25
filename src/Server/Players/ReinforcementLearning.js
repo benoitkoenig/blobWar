@@ -42,7 +42,7 @@ class ReinforcementLearning extends Player {
         });
     }
 
-    wait_for_initialization = () => {
+    waitForInitialization = () => {
         if (this.bot_initialized) {
             return Promise.resolve()
         }
