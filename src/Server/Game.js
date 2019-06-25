@@ -14,16 +14,15 @@ function* iteratePlayer(player, enemyPlayer, isItTimeout) {
 	const army = player.getArmyData();
 	const enemy = enemyPlayer.getArmyData();
 	const cards = player.getCardsStatus();
-	const enemyCards = enemyPlayer.getCardsStatus();
 	if (player.lost || enemyPlayer.lost || isItTimeout) {
 		if (player.lost && enemyPlayer.lost) {
-			player.emit({type: "endOfGame", value: "It's a draw", army, enemy, cards, enemyCards});
+			player.emit({type: "endOfGame", value: "It's a draw", army, enemy, cards});
 		} else if (player.lost) {
-			player.emit({type: "endOfGame", value: "Defeat", army, enemy, cards, enemyCards});
+			player.emit({type: "endOfGame", value: "Defeat", army, enemy, cards});
 		} else if (enemyPlayer.lost) {
-			player.emit({type: "endOfGame", value: "Victory !", army, enemy, cards, enemyCards});
+			player.emit({type: "endOfGame", value: "Victory !", army, enemy, cards});
 		} else {
-			player.emit({type: "endOfGame", value: "Timeout", army, enemy, cards, enemyCards});
+			player.emit({type: "endOfGame", value: "Timeout", army, enemy, cards});
 		}
 		player.clear();
 	} else {
@@ -32,15 +31,14 @@ function* iteratePlayer(player, enemyPlayer, isItTimeout) {
 			army,
 			enemy,
 			cards,
-			enemyCards,
 		});
 	}
 }
 
 // A whole game consists in this piece of code being repeted 40 times per second
 const startGame = (player1, player2) => {
-	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true], enemyCards: [true, true]});
-	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true], enemyCards: [true, true]});
+	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true]});
+	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true]});
 	player1.emit({type: "gameStarted"});
 	player2.emit({type: "gameStarted"});
 	const iteration = setInterval(async () => {
@@ -67,8 +65,8 @@ const startGame = (player1, player2) => {
 const timeoutNb = 4000
 
 const botTrainingGame = async (player1, player2) => {
-	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true], enemyCards: [true, true]});
-	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true], enemyCards: [true, true]});
+	player1.emit({type: "update", army: player1.getArmyData(), enemy: player2.getArmyData(), cards: [true, true]});
+	player2.emit({type: "update", army: player2.getArmyData(), enemy: player1.getArmyData(), cards: [true, true]});
 	await player1.checkIfHasPlayed();
 	await player2.checkIfHasPlayed();
 	player1.emit({type: "gameStarted"});
