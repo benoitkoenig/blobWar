@@ -2,6 +2,7 @@ import IdlePlayer from "./Players/Idle.js"
 import HumanPlayer from "./Players/Human.js"
 import BotDashDash from "./Players/BotDashDash.js"
 import BotGhostBloc from "./Players/BotGhostBloc.js"
+import BotGhostSwitch from "./Players/BotGhostSwitch.js"
 import BotGhostKamikaze from "./Players/BotGhostKamikaze.js"
 import BotBlocGravity from "./Players/BotBlocGravity.js"
 import ReinforcementLearning from "./Players/ReinforcementLearning.js"
@@ -153,14 +154,16 @@ const playerAgainstIdle = (socket, data) => {
 const botReinforcementLearning = [
 	BotGhostBloc,
 	BotDashDash,
+	BotGhostSwitch,
 ]
 
 const botOpponents = [
 	BotGhostKamikaze,
 	BotBlocGravity,
 	IdlePlayer,
-	// BotGhostBloc,
-	// BotDashDash,
+	BotGhostBloc,
+	BotDashDash,
+	BotGhostSwitch,
 ];
 
 const playerAgainstBot = async (socket, data) => {
