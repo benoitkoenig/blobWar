@@ -5,11 +5,19 @@ import { UnconnectedBoard } from "../Board/index.jsx";
 
 const randint = (n) => parseInt(Math.random() * n);
 
-const generateBlob = () => ({
+const generateDeadBlob = () => ({
+    x: 0.,
+    y: 0.,
+    orientation: 0,
+    alive: false,
+    status: "normal",
+})
+
+const generateBlob = (forceAlive) => ({
     x: Math.random(),
     y: Math.random(),
     orientation: randint(4),
-    alive: (Math.random() < 0.8),
+    alive: (forceAlive || (Math.random() < 0.8)),
     status: ["normal", "hat", "ghost"][randint(3)],
 });
 
@@ -57,8 +65,20 @@ class ImgGenerator extends React.Component {
     }
 
     render () {
-        const army = [generateBlob(), generateBlob(), generateBlob()];
-        const enemy = [generateBlob(), generateBlob(), generateBlob()];
+        // For generating data to train detection and localization
+        // const army = [generateBlob(), generateBlob(), generateBlob()];
+        // const enemy = [generateBlob(), generateBlob(), generateBlob()];
+
+        // For generating data to train classification
+        const army = [generateDeadBlob(), generateDeadBlob(), generateDeadBlob()];
+        const enemy = [generateDeadBlob(), generateDeadBlob(), generateDeadBlob()];
+        const i = randint(6)
+        if (i < 3) {
+            army[i] = generateBlob(true);
+        } else {
+            enemy[i - 3] = generateBlob(true);
+        }
+
         this.data[this.state.i] = { army, enemy };
         const props = {
             cards: [{ title: "Card0", description: "" }, { title: "Card1", description: "" }],
