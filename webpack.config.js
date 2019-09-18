@@ -22,8 +22,8 @@ module.exports = [
 					exclude: /node_modules/,
 					loader: 'babel-loader',
 					query: {
-						presets: ["env", "react", "es2015-node"],
-						plugins: ["transform-class-properties"],
+						presets: ["@babel/preset-env", "@babel/preset-react"],
+						plugins: ["@babel/plugin-proposal-class-properties"],
 					},
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
@@ -44,8 +44,8 @@ module.exports = [
 					exclude: /node_modules/,
 					loader: 'babel-loader',
 					query: {
-						presets: ["env", "react", "es2015-node"],
-						plugins: ["transform-class-properties"],
+						presets: ["@babel/preset-env", "@babel/preset-react"],
+						plugins: ["@babel/plugin-proposal-class-properties"],
 					}
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
