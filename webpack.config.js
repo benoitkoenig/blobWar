@@ -3,7 +3,7 @@ var nodeExternals = require('webpack-node-externals');
 
 module.exports = [
 	{
-		entry: ["@babel/polyfill", "./src/app.js"],
+		entry: './src/app.js',
 		output: {
 			path: __dirname,
 			filename: 'app.js'
@@ -21,10 +21,6 @@ module.exports = [
 					test: /\.js$/,
 					exclude: /node_modules/,
 					loader: 'babel-loader',
-					query: {
-						presets: ["@babel/preset-env", "@babel/preset-react"],
-						plugins: ["@babel/plugin-proposal-class-properties"],
-					},
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" }
 			],
@@ -43,10 +39,6 @@ module.exports = [
 					test: /\.jsx$/,
 					exclude: /node_modules/,
 					loader: 'babel-loader',
-					query: {
-						presets: ["@babel/preset-env", "@babel/preset-react"],
-						plugins: ["@babel/plugin-proposal-class-properties"],
-					}
 				},
 				{ test: /\.json$/, exclude: /node_modules/, loader: "json-loader" },
 				// { test: /\.css$/, loader: "style-loader!css-loader" },
