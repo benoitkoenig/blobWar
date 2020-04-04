@@ -1,5 +1,3 @@
-import { assert } from "chai";
-
 import Game from "../src/Server/Game.js";
 
 class FakeSocket {
@@ -21,7 +19,7 @@ describe('Game', () => {
 		it('playerJoin should emit a null countdown', (done) => {
 			const fakeSocket = new FakeSocket();
 			fakeSocket.on("action", (action) => {
-				assert.equal((action.type === "countdown" && action.value === null), true);
+				expect((action.type === "countdown" && action.value === null)).toBe(true);
 				done();
 			});
 			Game.playerJoin(fakeSocket);
